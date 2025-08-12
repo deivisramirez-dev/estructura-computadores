@@ -120,11 +120,6 @@ npx http-server -p 8000
 
 ## 🎯 Casos de Uso
 
-### Para Profesores
-- **Presentación en clase**: Material de apoyo visual
-- **Explicación de conceptos**: Diagramas interactivos
-- **Evaluación**: Herramienta de repaso
-- **Investigación**: Base para proyectos
 
 ### Para Estudiantes
 - **Aprendizaje autónomo**: Explorar conceptos a su ritmo
@@ -155,7 +150,7 @@ Para contribuir al proyecto:
 2. Crea una rama para tu feature (`git checkout -b feature/nueva-funcionalidad`)
 3. Realiza tus cambios
 4. Haz commit de tus cambios (`git commit -am 'Añadir nueva funcionalidad'`)
-5. Push a la rama (`git push origin feature/nueva-funcionalidad`)
+5. Push a la rama (`git push origin feature/nueva-funcionalidad`)git 
 6. Crea un Pull Request
 
 ## 📄 Licencia
@@ -169,14 +164,7 @@ Para preguntas o sugerencias:
 - Consulta el código fuente para entender la implementación
 - Contacta al equipo docente del curso
 
-## 🙏 Agradecimientos
-
-- **UNIR**: Universidad Internacional de La Rioja
-- **Equipo Docente**: Por la dirección y supervisión del proyecto
-- **Comunidad**: Por las contribuciones y mejoras
-
----
 
 **Desarrollado para el curso de Estructura de Computadores - UNIR**
 
-*Última actualización: Diciembre 2024*
+*Última actualización: Agosto 2025*

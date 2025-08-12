@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Ley de Moore - Evolución de Transistores</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1><i class="fas fa-microchip"></i> Dashboard Ley de Moore</h1>
+            <p class="subtitle">Evolución Histórica de Transistores en Computación</p>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="navigation">
+            <button class="nav-btn active" data-section="overview">
+                <i class="fas fa-chart-line"></i> Visión General
+            </button>
+            <button class="nav-btn" data-section="timeline">
+                <i class="fas fa-history"></i> Línea de Tiempo
+            </button>
+            <button class="nav-btn" data-section="predictions">
+                <i class="fas fa-crystal-ball"></i> Predicciones
+            </button>
+            <button class="nav-btn" data-section="comparison">
+                <i class="fas fa-balance-scale"></i> Comparaciones
+            </button>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Overview Section -->
+            <section id="overview" class="content-section active">
+                <div class="section-header">
+                    <h2><i class="fas fa-chart-line"></i> Visión General de la Ley de Moore</h2>
+                    <p>Análisis de la evolución de transistores y su impacto en la computación</p>
+                </div>
+                
+                <div class="content-grid">
+                    <!-- Key Metrics Card -->
+                    <div class="card metrics-card">
+                        <h3><i class="fas fa-tachometer-alt"></i> Métricas Clave</h3>
+                        <div class="metrics-grid">
+                            <div class="metric-item">
+                                <div class="metric-value" id="current-transistors">2,600,000,000</div>
+                                <div class="metric-label">Transistores Actuales (2024)</div>
+                            </div>
+                            <div class="metric-item">
+                                <div class="metric-value" id="doubling-time">18-24</div>
+                                <div class="metric-label">Meses de Duplicación</div>
+                            </div>
+                            <div class="metric-item">
+                                <div class="metric-value" id="growth-rate">41.4%</div>
+                                <div class="metric-label">Tasa de Crecimiento Anual</div>
+                            </div>
+                            <div class="metric-item">
+                                <div class="metric-value" id="years-active">60</div>
+                                <div class="metric-label">Años Activa</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Main Chart Card -->
+                    <div class="card chart-card">
+                        <h3><i class="fas fa-chart-area"></i> Evolución de Transistores (1965-2024)</h3>
+                        <div class="chart-container">
+                            <canvas id="mooreChart"></canvas>
+                        </div>
+                        <div class="chart-controls">
+                            <button class="control-btn" id="logScale">Escala Logarítmica</button>
+                            <button class="control-btn" id="linearScale">Escala Lineal</button>
+                            <button class="control-btn" id="animateChart">Animar</button>
+                        </div>
+                    </div>
+
+                    <!-- Law Definition Card -->
+                    <div class="card law-definition">
+                        <h3><i class="fas fa-quote-left"></i> La Ley de Moore</h3>
+                        <div class="law-content">
+                            <p class="law-statement">"El número de transistores en un circuito integrado se duplica aproximadamente cada 18-24 meses."</p>
+                            <div class="law-author">- Gordon Moore, Intel (1965)</div>
+                            <div class="law-details">
+                                <div class="detail-item">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    <span><strong>Formulación Original:</strong> 1965</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-industry"></i>
+                                    <span><strong>Industria:</strong> Semiconductores</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-target"></i>
+                                    <span><strong>Objetivo:</strong> Predicción de evolución tecnológica</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Impact Card -->
+                    <div class="card impact-card">
+                        <h3><i class="fas fa-rocket"></i> Impacto en la Computación</h3>
+                        <div class="impact-grid">
+                            <div class="impact-item">
+                                <i class="fas fa-desktop"></i>
+                                <h4>Computadoras Personales</h4>
+                                <p>Evolución de mainframes a dispositivos personales potentes</p>
+                            </div>
+                            <div class="impact-item">
+                                <i class="fas fa-mobile-alt"></i>
+                                <h4>Dispositivos Móviles</h4>
+                                <p>Smartphones con capacidad de supercomputadora</p>
+                            </div>
+                            <div class="impact-item">
+                                <i class="fas fa-brain"></i>
+                                <h4>Inteligencia Artificial</h4>
+                                <p>Procesamiento masivo para algoritmos complejos</p>
+                            </div>
+                            <div class="impact-item">
+                                <i class="fas fa-network-wired"></i>
+                                <h4>Internet de las Cosas</h4>
+                                <p>Dispositivos inteligentes interconectados</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Timeline Section -->
+            <section id="timeline" class="content-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-history"></i> Línea de Tiempo Histórica</h2>
+                    <p>Hitos importantes en la evolución de los transistores</p>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="card timeline-card">
+                        <h3><i class="fas fa-clock"></i> Cronología de la Ley de Moore</h3>
+                        <div class="timeline-container">
+                            <div class="timeline-item" data-year="1965">
+                                <div class="timeline-marker"></div>
+                                <div class="timeline-content">
+                                    <h4>1965 - Formulación Original</h4>
+                                    <p>Gordon Moore publica su observación en Electronics Magazine</p>
+                                    <div class="timeline-details">
+                                        <span class="transistor-count">2,300 transistores</span>
+                                        <span class="process-node">10 μm</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="timeline-item" data-year="1971">
+                                <div class="timeline-marker"></div>
+                                <div class="timeline-content">
+                                    <h4>1971 - Intel 4004</h4>
+                                    <p>Primer microprocesador comercial</p>
+                                    <div class="timeline-details">
+                                        <span class="transistor-count">2,300 transistores</span>
+                                        <span class="process-node">10 μm</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="timeline-item" data-year="1985">
+                                <div class="timeline-marker"></div>
+                                <div class="timeline-content">
+                                    <h4>1985 - Intel 80386</h4>
+                                    <p>Procesador de 32 bits</p>
+                                    <div class="timeline-details">
+                                        <span class="transistor-count">275,000 transistores</span>
+                                        <span class="process-node">1.5 μm</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="timeline-item" data-year="1993">
+                                <div class="timeline-marker"></div>
+                                <div class="timeline-content">
+                                    <h4>1993 - Intel Pentium</h4>
+                                    <p>Procesador superescalar</p>
+                                    <div class="timeline-details">
+                                        <span class="transistor-count">3.1 millones</span>
+                                        <span class="process-node">0.8 μm</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="timeline-item" data-year="2000">
+                                <div class="timeline-marker"></div>
+                                <div class="timeline-content">
+                                    <h4>2000 - Intel Pentium 4</h4>
+                                    <p>Arquitectura NetBurst</p>
+                                    <div class="timeline-details">
+                                        <span class="transistor-count">42 millones</span>
+                                        <span class="process-node">180 nm</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="timeline-item" data-year="2010">
+                                <div class="timeline-marker"></div>
+                                <div class="timeline-content">
+                                    <h4>2010 - Intel Core i7</h4>
+                                    <p>Arquitectura Nehalem</p>
+                                    <div class="timeline-details">
+                                        <span class="transistor-count">774 millones</span>
+                                        <span class="process-node">45 nm</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="timeline-item" data-year="2020">
+                                <div class="timeline-marker"></div>
+                                <div class="timeline-content">
+                                    <h4>2020 - Apple M1</h4>
+                                    <p>Procesador ARM personalizado</p>
+                                    <div class="timeline-details">
+                                        <span class="transistor-count">16 mil millones</span>
+                                        <span class="process-node">5 nm</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="timeline-item" data-year="2024">
+                                <div class="timeline-marker active"></div>
+                                <div class="timeline-content">
+                                    <h4>2024 - Estado Actual</h4>
+                                    <p>Límites físicos y nuevos enfoques</p>
+                                    <div class="timeline-details">
+                                        <span class="transistor-count">2.6 mil millones</span>
+                                        <span class="process-node">3 nm</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Predictions Section -->
+            <section id="predictions" class="content-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-crystal-ball"></i> Predicciones y Futuro</h2>
+                    <p>Proyecciones sobre el futuro de la Ley de Moore</p>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="card prediction-chart">
+                        <h3><i class="fas fa-chart-line"></i> Proyecciones Futuras</h3>
+                        <div class="chart-container">
+                            <canvas id="predictionChart"></canvas>
+                        </div>
+                        <div class="prediction-controls">
+                            <label for="predictionYear">Año de Proyección:</label>
+                            <input type="range" id="predictionYear" min="2024" max="2050" value="2030">
+                            <span id="yearDisplay">2030</span>
+                        </div>
+                    </div>
+
+                    <div class="card challenges-card">
+                        <h3><i class="fas fa-exclamation-triangle"></i> Desafíos Actuales</h3>
+                        <div class="challenges-grid">
+                            <div class="challenge-item">
+                                <i class="fas fa-thermometer-half"></i>
+                                <h4>Disipación de Calor</h4>
+                                <p>Densidad de transistores genera problemas térmicos</p>
+                                <div class="challenge-impact">Alto</div>
+                            </div>
+                            <div class="challenge-item">
+                                <i class="fas fa-bolt"></i>
+                                <h4>Consumo de Energía</h4>
+                                <p>Fuga de corriente en transistores nanométricos</p>
+                                <div class="challenge-impact">Alto</div>
+                            </div>
+                            <div class="challenge-item">
+                                <i class="fas fa-ruler"></i>
+                                <h4>Límites Físicos</h4>
+                                <p>Barreras cuánticas en escalas atómicas</p>
+                                <div class="challenge-impact">Crítico</div>
+                            </div>
+                            <div class="challenge-item">
+                                <i class="fas fa-dollar-sign"></i>
+                                <h4>Costos de Fabricación</h4>
+                                <p>Inversiones masivas en nuevas tecnologías</p>
+                                <div class="challenge-impact">Medio</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card solutions-card">
+                        <h3><i class="fas fa-lightbulb"></i> Soluciones Emergentes</h3>
+                        <div class="solutions-grid">
+                            <div class="solution-item">
+                                <i class="fas fa-cube"></i>
+                                <h4>Arquitectura 3D</h4>
+                                <p>Apilamiento vertical de transistores</p>
+                                <div class="solution-status">En desarrollo</div>
+                            </div>
+                            <div class="solution-item">
+                                <i class="fas fa-atom"></i>
+                                <h4>Computación Cuántica</h4>
+                                <p>Nuevo paradigma de procesamiento</p>
+                                <div class="solution-status">Experimental</div>
+                            </div>
+                            <div class="solution-item">
+                                <i class="fas fa-dna"></i>
+                                <h4>Computación Biológica</h4>
+                                <p>Uso de biomoléculas para procesamiento</p>
+                                <div class="solution-status">Investigación</div>
+                            </div>
+                            <div class="solution-item">
+                                <i class="fas fa-brain"></i>
+                                <h4>Computación Neuromórfica</h4>
+                                <p>Imitación de redes neuronales biológicas</p>
+                                <div class="solution-status">Emergente</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Comparison Section -->
+            <section id="comparison" class="content-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-balance-scale"></i> Comparaciones y Análisis</h2>
+                    <p>Análisis comparativo de diferentes aspectos de la evolución</p>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="card comparison-chart">
+                        <h3><i class="fas fa-chart-bar"></i> Comparación de Fabricantes</h3>
+                        <div class="chart-container">
+                            <canvas id="comparisonChart"></canvas>
+                        </div>
+                        <div class="comparison-legend">
+                            <div class="legend-item">
+                                <span class="legend-color intel"></span>
+                                <span>Intel</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color amd"></span>
+                                <span>AMD</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color apple"></span>
+                                <span>Apple</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color samsung"></span>
+                                <span>Samsung</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card performance-card">
+                        <h3><i class="fas fa-tachometer-alt"></i> Rendimiento vs Transistores</h3>
+                        <div class="performance-metrics">
+                            <div class="metric-row">
+                                <span class="metric-label">Transistores por mm²</span>
+                                <div class="metric-bar">
+                                    <div class="bar-fill" style="width: 85%"></div>
+                                    <span class="bar-value">85%</span>
+                                </div>
+                            </div>
+                            <div class="metric-row">
+                                <span class="metric-label">Frecuencia de Reloj</span>
+                                <div class="metric-bar">
+                                    <div class="bar-fill" style="width: 65%"></div>
+                                    <span class="bar-value">65%</span>
+                                </div>
+                            </div>
+                            <div class="metric-row">
+                                <span class="metric-label">Eficiencia Energética</span>
+                                <div class="metric-bar">
+                                    <div class="bar-fill" style="width: 90%"></div>
+                                    <span class="bar-value">90%</span>
+                                </div>
+                            </div>
+                            <div class="metric-row">
+                                <span class="metric-label">Costo por Transistor</span>
+                                <div class="metric-bar">
+                                    <div class="bar-fill" style="width: 95%"></div>
+                                    <span class="bar-value">95%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card industry-card">
+                        <h3><i class="fas fa-industry"></i> Impacto en la Industria</h3>
+                        <div class="industry-grid">
+                            <div class="industry-item">
+                                <h4>Electrónica de Consumo</h4>
+                                <div class="industry-progress">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 95%"></div>
+                                    </div>
+                                    <span>95% Impacto</span>
+                                </div>
+                            </div>
+                            <div class="industry-item">
+                                <h4>Telecomunicaciones</h4>
+                                <div class="industry-progress">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 88%"></div>
+                                    </div>
+                                    <span>88% Impacto</span>
+                                </div>
+                            </div>
+                            <div class="industry-item">
+                                <h4>Automotriz</h4>
+                                <div class="industry-progress">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 75%"></div>
+                                    </div>
+                                    <span>75% Impacto</span>
+                                </div>
+                            </div>
+                            <div class="industry-item">
+                                <h4>Aeroespacial</h4>
+                                <div class="industry-progress">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 82%"></div>
+                                    </div>
+                                    <span>82% Impacto</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>&copy; 2024 Dashboard Ley de Moore - UNIR Estructura de Computadores</p>
+            <p>Datos históricos basados en la evolución real de la industria de semiconductores</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

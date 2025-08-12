@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lienzo Didáctico - Curso Estructura de Computadores</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1><i class="fas fa-microchip"></i> Estructura Computadores</h1>
+            <p class="subtitle">Fundamentos del Diseño y Evolución - Tema 1</p>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="navigation">
+            <button class="nav-btn active" data-section="fundamentos">
+                <i class="fas fa-cogs"></i> Fundamentos
+            </button>
+            <button class="nav-btn" data-section="evolucion">
+                <i class="fas fa-chart-line"></i> Evolución
+            </button>
+            <button class="nav-btn" data-section="paralelismo">
+                <i class="fas fa-network-wired"></i> Paralelismo
+            </button>
+            <button class="nav-btn" data-section="taxonomia">
+                <i class="fas fa-sitemap"></i> Taxonomía Flynn
+            </button>
+            <button class="nav-btn" data-section="prestaciones">
+                <i class="fas fa-tachometer-alt"></i> Prestaciones
+            </button>
+            <a href="Moore/index.html" class="nav-btn moore-dashboard" target="_blank">
+                <i class="fas fa-microchip"></i> Dashboard Moore
+            </a>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Fundamentos Section -->
+            <section id="fundamentos" class="content-section active">
+                <div class="section-header">
+                    <h2><i class="fas fa-cogs"></i> Fundamentos de la Arquitectura</h2>
+                    <p>Definición, estructura y niveles de descripción</p>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="card definition-card">
+                        <h3><i class="fas fa-quote-left"></i> Definición</h3>
+                        <p class="highlight">"Estructura o diseño básico de un sistema informático, que incluye los componentes hardware y software que lo conforman y la forma en que se interconectan entre sí para realizar tareas específicas."</p>
+                        <div class="definition-details">
+                            <div class="detail-item">
+                                <i class="fas fa-layer-group"></i>
+                                <span>Incluye estructura, organización y funcionalidad</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-code"></i>
+                                <span>Define la interfaz entre hardware y software</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Evolución Histórica de la Definición -->
+                        <div class="definition-evolution">
+                            <h4><i class="fas fa-history"></i> Evolución Histórica</h4>
+                            <div class="evolution-timeline">
+                                <div class="evolution-item">
+                                    <span class="year">1964</span>
+                                    <div class="evolution-content">
+                                        <h5>Primer uso del término</h5>
+                                        <p>Presentación del sistema S/360 de IBM</p>
+                                    </div>
+                                </div>
+                                <div class="evolution-item">
+                                    <span class="year">1964-1980s</span>
+                                    <div class="evolution-content">
+                                        <h5>Definición estricta</h5>
+                                        <p>Perspectiva del programador de lenguaje de máquina</p>
+                                        <ul>
+                                            <li>Registros visibles</li>
+                                            <li>Estructura de memoria</li>
+                                            <li>Juego de instrucciones</li>
+                                            <li>Excluye microarquitectura y tecnología</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="evolution-item">
+                                    <span class="year">Actualidad</span>
+                                    <div class="evolution-content">
+                                        <h5>Definición moderna</h5>
+                                        <p>"Conjunto de instrucciones, recursos y características del procesador visibles para el software"</p>
+                                        <ul>
+                                            <li>Niveles jerárquicos de abstracción</li>
+                                            <li>Integración de arquitectura y tecnología</li>
+                                            <li>Lenguaje ensamblador</li>
+                                            <li>Organización específica del computador</li>
+                                            <li>Sistema operativo</li>
+                                            <li>Evaluación de prestaciones</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card levels-card">
+                        <h3><i class="fas fa-stairs"></i> Niveles de Descripción del Computador</h3>
+                        <p class="levels-intro">Distintos modelos de niveles desarrollados a lo largo de la evolución de los computadores:</p>
+                        
+                        <div class="levels-models">
+                            <div class="model-item" data-model="blaaw">
+                                <div class="model-header">
+                                    <i class="fas fa-layer-group"></i>
+                                    <h4>Niveles Conceptuales de Blaaw (1970)</h4>
+                                </div>
+                                <p>Estructura conceptual que organiza los diferentes niveles de abstracción en el diseño de computadores.</p>
+                            </div>
+                            
+                            <div class="model-item" data-model="bell-newell">
+                                <div class="model-header">
+                                    <i class="fas fa-sitemap"></i>
+                                    <h4>Niveles Estructurales de Bell y Newell (1971)</h4>
+                                </div>
+                                <p>Modelo que describe la organización estructural de los componentes del computador en diferentes niveles.</p>
+                            </div>
+                            
+                            <div class="model-item" data-model="levy">
+                                <div class="model-header">
+                                    <i class="fas fa-code-branch"></i>
+                                    <h4>Niveles de Interpretación de Levy (1978)</h4>
+                                </div>
+                                <p>Sistema de niveles que describe cómo se interpretan y ejecutan las instrucciones en diferentes capas.</p>
+                            </div>
+                            
+                            <div class="model-item" data-model="tanenbaum">
+                                <div class="model-header">
+                                    <i class="fas fa-cogs"></i>
+                                    <h4>Niveles Funcionales de Tanenbaum (1986)</h4>
+                                </div>
+                                <p>Arquitectura funcional que organiza los niveles según las funciones que realizan en el sistema.</p>
+                            </div>
+                        </div>
+
+                        <!-- Modelo Integrador de Siete Niveles -->
+                        <div class="seven-levels-model">
+                            <h3><i class="fas fa-stairs"></i> Modelo Integrador de Siete Niveles (Figura 1)</h3>
+                            <p class="model-description">Combinando perspectivas estructurales y funcionales, se presenta un modelo integrador desarrollado en siete niveles de abstracción:</p>
+                            
+                            <div class="levels-diagram">
+                                <div class="level" data-level="7">
+                                    <span class="level-number">7</span>
+                                    <span class="level-name">Niveles Software Superiores</span>
+                                </div>
+                                <div class="level" data-level="6">
+                                    <span class="level-number">6</span>
+                                    <span class="level-name">Nivel de Sistema Operativo</span>
+                                </div>
+                                <div class="level" data-level="5">
+                                    <span class="level-number">5</span>
+                                    <span class="level-name">Nivel de Sistema Computador</span>
+                                </div>
+                                <div class="level" data-level="4">
+                                    <span class="level-number">4</span>
+                                    <span class="level-name">Nivel de Transferencia entre Registros</span>
+                                </div>
+                                <div class="level" data-level="3">
+                                    <span class="level-number">3</span>
+                                    <span class="level-name">Nivel de Lógica Digital</span>
+                                </div>
+                                <div class="level" data-level="2">
+                                    <span class="level-number">2</span>
+                                    <span class="level-name">Nivel de Circuito Electrónico</span>
+                                </div>
+                                <div class="level" data-level="1">
+                                    <span class="level-number">1</span>
+                                    <span class="level-name">Nivel de Componentes Físicos</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Conceptos para Interpretar el Modelo -->
+                        <div class="model-concepts">
+                            <h4><i class="fas fa-lightbulb"></i> Conceptos para Interpretar el Modelo</h4>
+                            <div class="concepts-grid">
+                                <div class="concept-item">
+                                    <h5><i class="fas fa-cube"></i> Estructura</h5>
+                                    <p>Los componentes que un nivel inferior utiliza para dar soporte a un nivel superior.</p>
+                                    <div class="concept-example">
+                                        <span class="example-label">Ejemplo:</span>
+                                        <span>Transistores → Compuertas → ALU → Procesador</span>
+                                    </div>
+                                </div>
+                                <div class="concept-item">
+                                    <h5><i class="fas fa-sitemap"></i> Organización</h5>
+                                    <p>Los flujos de control y de datos entre los componentes.</p>
+                                    <div class="concept-example">
+                                        <span class="example-label">Ejemplo:</span>
+                                        <span>Buses, señales de control, caminos de datos</span>
+                                    </div>
+                                </div>
+                                <div class="concept-item">
+                                    <h5><i class="fas fa-cogs"></i> Descripción Funcional</h5>
+                                    <p>Las características de comportamiento de un elemento, que sirven de base para un nivel superior.</p>
+                                    <div class="concept-example">
+                                        <span class="example-label">Ejemplo:</span>
+                                        <span>Comportamiento de una ALU para el nivel de sistema</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card architecture-types">
+                        <h3><i class="fas fa-building"></i> Tipos de Arquitectura</h3>
+                        <div class="architecture-grid">
+                            <div class="arch-type">
+                                <h4><i class="fas fa-cube"></i> Arquitectura Concreta</h4>
+                                <ul>
+                                    <li>Estructura física</li>
+                                    <li>Organización de componentes</li>
+                                    <li>Implementación real</li>
+                                </ul>
+                            </div>
+                            <div class="arch-type">
+                                <h4><i class="fas fa-brain"></i> Arquitectura Abstracta</h4>
+                                <ul>
+                                    <li>Descripción funcional</li>
+                                    <li>Comportamiento lógico</li>
+                                    <li>Especificación de interfaz</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Evolución Section -->
+            <section id="evolucion" class="content-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-chart-line"></i> Evolución y Prestaciones</h2>
+                    <p>Factores que influyen en el desarrollo de la arquitectura</p>
+                </div>
+
+                <div class="content-grid">
+                    <div class="card evolution-factors">
+                        <h3><i class="fas fa-puzzle-piece"></i> Factores de Evolución</h3>
+                        <div class="factors-diagram">
+                            <div class="factor center">
+                                <i class="fas fa-microchip"></i>
+                                <span>Arquitectura</span>
+                            </div>
+                            <div class="factor top">
+                                <i class="fas fa-cogs"></i>
+                                <span>Tecnología</span>
+                            </div>
+                            <div class="factor right">
+                                <i class="fas fa-mobile-alt"></i>
+                                <span>Aplicaciones</span>
+                            </div>
+                            <div class="factor bottom">
+                                <i class="fas fa-chart-bar"></i>
+                                <span>Mercado</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card performance-metrics">
+                        <h3><i class="fas fa-tachometer-alt"></i> Métricas de Rendimiento</h3>
+                        <div class="metrics-formula">
+                            <div class="formula">
+                                <span class="formula-text">Tiempo de Ejecución = NI × CPI × T</span>
+                                <div class="formula-breakdown">
+                                    <div class="metric">
+                                        <span class="metric-name">NI</span>
+                                        <span class="metric-desc">Número de Instrucciones</span>
+                                    </div>
+                                    <div class="metric">
+                                        <span class="metric-name">CPI</span>
+                                        <span class="metric-desc">Ciclos por Instrucción</span>
+                                    </div>
+                                    <div class="metric">
+                                        <span class="metric-name">T</span>
+                                        <span class="metric-desc">Tiempo de Ciclo</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card moores-law">
+                        <h3><i class="fas fa-chart-exponential"></i> Ley de Moore</h3>
+                        <div class="moore-content">
+                            <p class="moore-statement">"La densidad de transistores en circuitos integrados se duplica aproximadamente cada 18-24 meses."</p>
+                            <div class="moore-timeline">
+                                <div class="timeline-item">
+                                    <span class="year">1971</span>
+                                    <span class="transistors">2,300</span>
+                                </div>
+                                <div class="timeline-item">
+                                    <span class="year">1985</span>
+                                    <span class="transistors">275,000</span>
+                                </div>
+                                <div class="timeline-item">
+                                    <span class="year">2000</span>
+                                    <span class="transistors">42,000,000</span>
+                                </div>
+                                <div class="timeline-item">
+                                    <span class="year">2020</span>
+                                    <span class="transistors">50,000,000,000</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Paralelismo Section -->
+            <section id="paralelismo" class="content-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-network-wired"></i> Paralelismo en Arquitecturas</h2>
+                    <p>Técnicas y niveles de paralelismo en computadores</p>
+                </div>
+
+                <div class="content-grid">
+                    <div class="card parallelism-definition">
+                        <h3><i class="fas fa-sync-alt"></i> ¿Qué es el Paralelismo?</h3>
+                        <div class="parallelism-explanation">
+                            <p class="highlight">"El paralelismo permite el uso simultáneo de recursos para mejorar el rendimiento del computador."</p>
+                            <div class="parallelism-benefits">
+                                <div class="benefit">
+                                    <i class="fas fa-rocket"></i>
+                                    <span>Mayor velocidad de procesamiento</span>
+                                </div>
+                                <div class="benefit">
+                                    <i class="fas fa-users"></i>
+                                    <span>Múltiples tareas simultáneas</span>
+                                </div>
+                                <div class="benefit">
+                                    <i class="fas fa-chart-line"></i>
+                                    <span>Mejor utilización de recursos</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card parallelism-techniques">
+                        <h3><i class="fas fa-tools"></i> Técnicas Fundamentales</h3>
+                        <div class="techniques-grid">
+                            <div class="technique">
+                                <h4><i class="fas fa-copy"></i> Replicación de Elementos</h4>
+                                <div class="technique-visual">
+                                    <div class="replication-demo">
+                                        <div class="element original">CPU</div>
+                                        <div class="arrow">→</div>
+                                        <div class="elements-copied">
+                                            <div class="element">CPU1</div>
+                                            <div class="element">CPU2</div>
+                                            <div class="element">CPU3</div>
+                                            <div class="element">CPU4</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p>Duplicar componentes para procesar múltiples tareas en paralelo</p>
+                            </div>
+                            <div class="technique">
+                                <h4><i class="fas fa-stream"></i> Segmentación de Cauce</h4>
+                                <div class="technique-visual">
+                                    <div class="pipeline-demo">
+                                        <div class="pipeline-stage">Fetch</div>
+                                        <div class="pipeline-stage">Decode</div>
+                                        <div class="pipeline-stage">Execute</div>
+                                        <div class="pipeline-stage">Memory</div>
+                                        <div class="pipeline-stage">Write</div>
+                                    </div>
+                                </div>
+                                <p>Dividir la ejecución de instrucciones en etapas superpuestas</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card parallelism-levels">
+                        <h3><i class="fas fa-layer-group"></i> Niveles de Paralelismo</h3>
+                        <div class="levels-hierarchy">
+                            <div class="level-item">
+                                <span class="level-title">Nivel de Instrucción</span>
+                                <span class="level-desc">Paralelismo dentro de una instrucción</span>
+                            </div>
+                            <div class="level-item">
+                                <span class="level-title">Nivel de Datos</span>
+                                <span class="level-desc">Mismo código, diferentes datos</span>
+                            </div>
+                            <div class="level-item">
+                                <span class="level-title">Nivel de Tarea</span>
+                                <span class="level-desc">Diferentes tareas independientes</span>
+                            </div>
+                            <div class="level-item">
+                                <span class="level-title">Nivel de Programa</span>
+                                <span class="level-desc">Diferentes programas simultáneos</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Taxonomía Flynn Section -->
+            <section id="taxonomia" class="content-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-sitemap"></i> Taxonomía de Flynn</h2>
+                    <p>Clasificación de arquitecturas según flujo de instrucciones y datos</p>
+                </div>
+
+                <div class="content-grid">
+                    <div class="card flynn-intro">
+                        <h3><i class="fas fa-info-circle"></i> Clasificación Flynn</h3>
+                        <p>La taxonomía de Flynn clasifica los computadores según el número de flujos de instrucciones y datos que pueden procesar simultáneamente.</p>
+                        <div class="flynn-matrix">
+                            <div class="matrix-header">
+                                <span></span>
+                                <span>Single Data</span>
+                                <span>Multiple Data</span>
+                            </div>
+                            <div class="matrix-row">
+                                <span class="matrix-label">Single Instruction</span>
+                                <div class="matrix-cell" data-type="sisd">SISD</div>
+                                <div class="matrix-cell" data-type="simd">SIMD</div>
+                            </div>
+                            <div class="matrix-row">
+                                <span class="matrix-label">Multiple Instruction</span>
+                                <div class="matrix-cell" data-type="misd">MISD</div>
+                                <div class="matrix-cell" data-type="mimd">MIMD</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card flynn-parallelism-types">
+                        <h3><i class="fas fa-sync-alt"></i> Tipos de Paralelismo en Flynn</h3>
+                        <div class="parallelism-types">
+                            <div class="parallelism-type">
+                                <h4><i class="fas fa-vector-square"></i> Paralelismo de Datos</h4>
+                                <p>La misma función o instrucción se ejecuta en paralelo, pero en cada ejecución se aplica sobre un conjunto de datos distinto.</p>
+                                <div class="parallelism-characteristics">
+                                    <span class="characteristic">• Común en arquitecturas SIMD</span>
+                                    <span class="characteristic">• Procesamiento vectorial</span>
+                                    <span class="characteristic">• GPU y procesadores vectoriales</span>
+                                </div>
+                            </div>
+                            <div class="parallelism-type">
+                                <h4><i class="fas fa-code-branch"></i> Paralelismo Funcional</h4>
+                                <p>Varias funciones o tareas (iguales o distintas) se ejecutan en paralelo.</p>
+                                <div class="parallelism-characteristics">
+                                    <span class="characteristic">• Característico de arquitecturas MIMD</span>
+                                    <span class="characteristic">• Multiprocesadores y multicomputadores</span>
+                                    <span class="characteristic">• Mayor flexibilidad</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card functional-parallelism-levels">
+                        <h3><i class="fas fa-layer-group"></i> Niveles de Paralelismo Funcional</h3>
+                        <p class="granularity-intro">El paralelismo funcional se clasifica según la "granularidad" o el tamaño de las tareas que se ejecutan en paralelo:</p>
+                        <div class="granularity-levels">
+                            <div class="granularity-level">
+                                <div class="level-header">
+                                    <span class="level-name">Nivel de Instrucción</span>
+                                    <span class="granularity">Granularidad Fina</span>
+                                </div>
+                                <p>Paralelismo a nivel de instrucciones individuales (ILP - Instruction Level Parallelism)</p>
+                                <div class="level-examples">
+                                    <span class="example">• Pipeline de instrucciones</span>
+                                    <span class="example">• Ejecución superescalar</span>
+                                    <span class="example">• Predicción de saltos</span>
+                                </div>
+                            </div>
+                            <div class="granularity-level">
+                                <div class="level-header">
+                                    <span class="level-name">Nivel de Bucle o Hebra</span>
+                                    <span class="granularity">Granularidad Fina-Media</span>
+                                </div>
+                                <p>Ejecución paralela de bucles o hilos (threads)</p>
+                                <div class="level-examples">
+                                    <span class="example">• Paralelización de bucles</span>
+                                    <span class="example">• Multithreading</span>
+                                    <span class="example">• Hyperthreading</span>
+                                </div>
+                            </div>
+                            <div class="granularity-level">
+                                <div class="level-header">
+                                    <span class="level-name">Nivel de Procedimiento</span>
+                                    <span class="granularity">Granularidad Media</span>
+                                </div>
+                                <p>Ejecución paralela de procesos o procedimientos</p>
+                                <div class="level-examples">
+                                    <span class="example">• Multiprocesamiento</span>
+                                    <span class="example">• Procesos concurrentes</span>
+                                    <span class="example">• Comunicación entre procesos</span>
+                                </div>
+                            </div>
+                            <div class="granularity-level">
+                                <div class="level-header">
+                                    <span class="level-name">Nivel de Programa</span>
+                                    <span class="granularity">Granularidad Gruesa</span>
+                                </div>
+                                <p>Ejecución paralela de programas completos</p>
+                                <div class="level-examples">
+                                    <span class="example">• Sistemas distribuidos</span>
+                                    <span class="example">• Clusters de computadores</span>
+                                    <span class="example">• Computación en la nube</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card flynn-details">
+                        <h3><i class="fas fa-list"></i> Tipos de Arquitectura</h3>
+                        <div class="flynn-types">
+                            <div class="flynn-type" data-type="sisd">
+                                <h4><i class="fas fa-microchip"></i> SISD</h4>
+                                <p><strong>Single Instruction, Single Data</strong></p>
+                                <ul>
+                                    <li>Un procesador, un flujo de datos</li>
+                                    <li>Arquitectura tradicional secuencial</li>
+                                    <li>Ejemplo: Procesador monocore clásico</li>
+                                </ul>
+                            </div>
+                            <div class="flynn-type" data-type="simd">
+                                <h4><i class="fas fa-vector-square"></i> SIMD</h4>
+                                <p><strong>Single Instruction, Multiple Data</strong></p>
+                                <ul>
+                                    <li>Una instrucción, múltiples datos</li>
+                                    <li>Procesamiento vectorial</li>
+                                    <li>Ejemplo: GPU, procesadores vectoriales</li>
+                                </ul>
+                            </div>
+                            <div class="flynn-type" data-type="misd">
+                                <h4><i class="fas fa-project-diagram"></i> MISD</h4>
+                                <p><strong>Multiple Instruction, Single Data</strong></p>
+                                <ul>
+                                    <li>Múltiples instrucciones, un dato</li>
+                                    <li>Arquitectura poco común</li>
+                                    <li>Ejemplo: Sistemas de redundancia</li>
+                                </ul>
+                            </div>
+                            <div class="flynn-type" data-type="mimd">
+                                <h4><i class="fas fa-server"></i> MIMD</h4>
+                                <p><strong>Multiple Instruction, Multiple Data</strong></p>
+                                <ul>
+                                    <li>Múltiples instrucciones, múltiples datos</li>
+                                    <li>Arquitectura más flexible</li>
+                                    <li>Ejemplo: Multicores, clusters</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card mimd-configurations">
+                        <h3><i class="fas fa-network-wired"></i> Configuraciones MIMD</h3>
+                        <div class="mimd-types">
+                            <div class="mimd-type">
+                                <h4><i class="fas fa-microchips"></i> Multiprocesadores</h4>
+                                <div class="mimd-visual">
+                                    <div class="shared-memory">
+                                        <div class="memory">Memoria Compartida</div>
+                                        <div class="processors">
+                                            <div class="processor">P1</div>
+                                            <div class="processor">P2</div>
+                                            <div class="processor">P3</div>
+                                            <div class="processor">P4</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p>Múltiples procesadores con memoria compartida</p>
+                            </div>
+                            <div class="mimd-type">
+                                <h4><i class="fas fa-sitemap"></i> Multicomputadores</h4>
+                                <div class="mimd-visual">
+                                    <div class="distributed-memory">
+                                        <div class="node">
+                                            <div class="processor">P1</div>
+                                            <div class="memory">M1</div>
+                                        </div>
+                                        <div class="node">
+                                            <div class="processor">P2</div>
+                                            <div class="memory">M2</div>
+                                        </div>
+                                        <div class="node">
+                                            <div class="processor">P3</div>
+                                            <div class="memory">M3</div>
+                                        </div>
+                                        <div class="node">
+                                            <div class="processor">P4</div>
+                                            <div class="memory">M4</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p>Múltiples computadores con memoria distribuida</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Prestaciones Section -->
+            <section id="prestaciones" class="content-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-tachometer-alt"></i> Evaluación de Prestaciones</h2>
+                    <p>Factores tecnológicos y métodos de evaluación del rendimiento</p>
+                </div>
+
+                <div class="content-grid">
+                    <div class="card performance-factors">
+                        <h3><i class="fas fa-chart-pie"></i> Factores Tecnológicos</h3>
+                        <div class="factors-chart">
+                            <div class="factor-item">
+                                <div class="factor-icon">
+                                    <i class="fas fa-microchip"></i>
+                                </div>
+                                <div class="factor-content">
+                                    <h4>Densidad de Integración</h4>
+                                    <p>Número de transistores por unidad de área</p>
+                                    <div class="factor-details">
+                                        <span>• Ley de Moore: duplicación cada 18-24 meses</span>
+                                        <span>• Mayor complejidad en menor espacio</span>
+                                        <span>• Mejoras en eficiencia energética</span>
+                                    </div>
+                                    <div class="factor-progress">
+                                        <div class="progress-bar" style="width: 85%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="factor-item">
+                                <div class="factor-icon">
+                                    <i class="fas fa-hdd"></i>
+                                </div>
+                                <div class="factor-content">
+                                    <h4>Capacidad de Almacenamiento</h4>
+                                    <p>Cantidad de datos que puede almacenar</p>
+                                    <div class="factor-details">
+                                        <span>• Memorias semiconductoras más grandes</span>
+                                        <span>• Mejores tecnologías de almacenamiento</span>
+                                        <span>• Mayor velocidad de acceso</span>
+                                    </div>
+                                    <div class="factor-progress">
+                                        <div class="progress-bar" style="width: 90%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="factor-item">
+                                <div class="factor-icon">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div class="factor-content">
+                                    <h4>Frecuencia de Funcionamiento</h4>
+                                    <p>Velocidad de reloj del procesador</p>
+                                    <div class="factor-details">
+                                        <span>• Mayor frecuencia máxima de funcionamiento</span>
+                                        <span>• Mejoras en arquitectura de pipeline</span>
+                                        <span>• Optimización de ciclos por instrucción</span>
+                                    </div>
+                                    <div class="factor-progress">
+                                        <div class="progress-bar" style="width: 75%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card application-market-evolution">
+                        <h3><i class="fas fa-globe"></i> Evolución de Aplicaciones y Mercado</h3>
+                        <div class="evolution-impact">
+                            <div class="impact-section">
+                                <h4><i class="fas fa-flask"></i> Computación Científica</h4>
+                                <p>Necesidades de procesamiento intensivo que impulsan el desarrollo de nuevas arquitecturas.</p>
+                                <div class="impact-examples">
+                                    <span>• Simulaciones complejas</span>
+                                    <span>• Análisis de datos masivos</span>
+                                    <span>• Modelado matemático</span>
+                                </div>
+                            </div>
+                            <div class="impact-section">
+                                <h4><i class="fas fa-network-wired"></i> Comunicación Global</h4>
+                                <p>El desarrollo de Internet y las redes globales condiciona la evolución arquitectónica.</p>
+                                <div class="impact-examples">
+                                    <span>• Procesamiento de redes</span>
+                                    <span>• Servidores web y aplicaciones</span>
+                                    <span>• Comunicación en tiempo real</span>
+                                </div>
+                            </div>
+                            <div class="impact-section">
+                                <h4><i class="fas fa-mobile-alt"></i> Dispositivos Móviles</h4>
+                                <p>Nuevas demandas de eficiencia energética y portabilidad.</p>
+                                <div class="impact-examples">
+                                    <span>• Optimización de consumo</span>
+                                    <span>• Procesamiento multimedia</span>
+                                    <span>• Conectividad inalámbrica</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card performance-limitations">
+                        <h3><i class="fas fa-exclamation-triangle"></i> Limitaciones Tecnológicas</h3>
+                        <div class="limitations-list">
+                            <div class="limitation">
+                                <i class="fas fa-thermometer-half"></i>
+                                <div class="limitation-content">
+                                    <h4>Disipación de Calor</h4>
+                                    <p>Mayor densidad = más calor generado</p>
+                                </div>
+                            </div>
+                            <div class="limitation">
+                                <i class="fas fa-bolt"></i>
+                                <div class="limitation-content">
+                                    <h4>Consumo de Energía</h4>
+                                    <p>Límites físicos de potencia</p>
+                                </div>
+                            </div>
+                            <div class="limitation">
+                                <i class="fas fa-ruler"></i>
+                                <div class="limitation-content">
+                                    <h4>Límites Físicos</h4>
+                                    <p>Restricciones de tamaño y materiales</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card market-evolution">
+                        <h3><i class="fas fa-chart-line"></i> Evolución de Mercado</h3>
+                        <div class="market-timeline">
+                            <div class="timeline-event">
+                                <span class="year">1980s</span>
+                                <span class="event">Computadoras personales</span>
+                            </div>
+                            <div class="timeline-event">
+                                <span class="year">1990s</span>
+                                <span class="event">Internet y redes</span>
+                            </div>
+                            <div class="timeline-event">
+                                <span class="year">2000s</span>
+                                <span class="event">Dispositivos móviles</span>
+                            </div>
+                            <div class="timeline-event">
+                                <span class="year">2010s</span>
+                                <span class="event">Computación en la nube</span>
+                            </div>
+                            <div class="timeline-event">
+                                <span class="year">2020s</span>
+                                <span class="event">IA y computación cuántica</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>&copy; 2024 - Lienzo Didáctico Estructura de Computadores | UNIR</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estructura de Computadores - Portal Principal</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1 class="main-title">
+                    <i class="fas fa-microchip"></i>
+                    Estructura de Computadores
+                </h1>
+                <p class="subtitle">Portal de Recursos Interactivos para el Aprendizaje</p>
+            </div>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="nav">
+            <div class="nav-content">
+                <div class="nav-info">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>Programa de Ingeniería Informática</span>
+                </div>
+                <div class="nav-controls">
+                    <button class="btn btn-secondary" onclick="toggleTheme()">
+                        <i class="fas fa-moon"></i>
+                        <span>Tema Oscuro</span>
+                    </button>
+                    <button class="btn btn-primary" onclick="showHelp()">
+                        <i class="fas fa-question-circle"></i>
+                        <span>Ayuda</span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main">
+            <!-- Welcome Section -->
+            <section class="welcome-section">
+                <div class="welcome-card">
+                    <div class="welcome-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h2>Bienvenido al Portal de Estructura de Computadores</h2>
+                    <p>Explora los temas del curso a través de recursos interactivos diseñados para facilitar tu aprendizaje.</p>
+                    <div class="welcome-features">
+                        <div class="feature">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Gráficos Interactivos</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-calculator"></i>
+                            <span>Calculadoras</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-mobile-alt"></i>
+                            <span>Diseño Responsivo</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Topics Grid -->
+            <section class="topics-section">
+                <h2 class="section-title">Temas del Curso</h2>
+                <div class="topics-grid">
+                    <!-- Tema 1 -->
+                    <div class="topic-card" onclick="navigateToTopic('Tema1')">
+                        <div class="topic-icon">
+                            <i class="fas fa-cogs"></i>
+                        </div>
+                        <div class="topic-content">
+                            <h3>Tema 1: Fundamentos</h3>
+                            <p>Evolución de los computadores, paralelismo y taxonomía Flynn</p>
+                            <div class="topic-features">
+                                <span class="feature-tag">Ley de Moore</span>
+                                <span class="feature-tag">Paralelismo</span>
+                                <span class="feature-tag">Taxonomía Flynn</span>
+                            </div>
+                        </div>
+                        <div class="topic-arrow">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </div>
+
+                    <!-- Tema 2 -->
+                    <div class="topic-card" onclick="navigateToTopic('Tema2')">
+                        <div class="topic-icon">
+                            <i class="fas fa-tachometer-alt"></i>
+                        </div>
+                        <div class="topic-content">
+                            <h3>Tema 2: Evaluación de Prestaciones</h3>
+                            <p>Medidas de rendimiento, benchmarks y análisis de costes</p>
+                            <div class="topic-features">
+                                <span class="feature-tag">MIPS y MFLOPS</span>
+                                <span class="feature-tag">Ley de Amdahl</span>
+                                <span class="feature-tag">Benchmarks</span>
+                            </div>
+                        </div>
+                        <div class="topic-arrow">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </div>
+
+                    <!-- Tema 3 -->
+                    <div class="topic-card" onclick="navigateToTopic('Tema3')">
+                        <div class="topic-icon">
+                            <i class="fas fa-microchip"></i>
+                        </div>
+                        <div class="topic-content">
+                            <h3>Tema 3: Arquitectura del Procesador</h3>
+                            <p>Organización del procesador y técnicas de mejora del rendimiento</p>
+                            <div class="topic-features">
+                                <span class="feature-tag">Pipeline</span>
+                                <span class="feature-tag">Cache</span>
+                                <span class="feature-tag">Arquitectura</span>
+                            </div>
+                        </div>
+                        <div class="topic-arrow">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </div>
+
+                    <!-- Tema 4 (Futuro) -->
+                    <div class="topic-card topic-disabled">
+                        <div class="topic-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="topic-content">
+                            <h3>Tema 4: Memoria</h3>
+                            <p>Jerarquía de memoria y técnicas de optimización</p>
+                            <div class="topic-features">
+                                <span class="feature-tag">Próximamente</span>
+                            </div>
+                        </div>
+                        <div class="topic-arrow">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                    </div>
+
+                    <!-- Tema 5 (Futuro) -->
+                    <div class="topic-card topic-disabled">
+                        <div class="topic-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="topic-content">
+                            <h3>Tema 5: Entrada/Salida</h3>
+                            <p>Sistemas de entrada/salida y buses</p>
+                            <div class="topic-features">
+                                <span class="feature-tag">Próximamente</span>
+                            </div>
+                        </div>
+                        <div class="topic-arrow">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                    </div>
+
+                    <!-- Tema 6 (Futuro) -->
+                    <div class="topic-card topic-disabled">
+                        <div class="topic-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="topic-content">
+                            <h3>Tema 6: Paralelismo</h3>
+                            <p>Arquitecturas paralelas y computación distribuida</p>
+                            <div class="topic-features">
+                                <span class="feature-tag">Próximamente</span>
+                            </div>
+                        </div>
+                        <div class="topic-arrow">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Quick Access -->
+            <section class="quick-access-section">
+                <h2 class="section-title">Acceso Rápido</h2>
+                <div class="quick-access-grid">
+                    <div class="quick-card" onclick="navigateToTopic('Tema1/Moore')">
+                        <i class="fas fa-chart-line"></i>
+                        <h4>Ley de Moore</h4>
+                        <p>Dashboard interactivo</p>
+                    </div>
+                    <div class="quick-card" onclick="navigateToTopic('Tema2')">
+                        <i class="fas fa-calculator"></i>
+                        <h4>Calculadoras</h4>
+                        <p>MIPS, MFLOPS, CPU Time</p>
+                    </div>
+                    <div class="quick-card" onclick="showProgress()">
+                        <i class="fas fa-chart-bar"></i>
+                        <h4>Progreso</h4>
+                        <p>Estado del curso</p>
+                    </div>
+                    <div class="quick-card" onclick="showResources()">
+                        <i class="fas fa-book"></i>
+                        <h4>Recursos</h4>
+                        <p>Material adicional</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Estructura de Computadores</h4>
+                    <p>Portal de recursos interactivos para el aprendizaje de arquitectura de computadores.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Enlaces Útiles</h4>
+                    <ul>
+                        <li><a href="#" onclick="showHelp()">Ayuda</a></li>
+                        <li><a href="#" onclick="showAbout()">Acerca de</a></li>
+                        <li><a href="#" onclick="showContact()">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Estado del Sistema</h4>
+                    <div class="status-indicators">
+                        <div class="status-item">
+                            <span class="status-dot status-online"></span>
+                            <span>Sistema Online</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-dot status-online"></span>
+                            <span>Todos los temas disponibles</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Estructura de Computadores. Todos los derechos reservados.</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Help Modal -->
+    <div id="helpModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-question-circle"></i> Ayuda</h3>
+                <button class="modal-close" onclick="closeModal('helpModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="help-section">
+                    <h4>¿Cómo usar el portal?</h4>
+                    <ul>
+                        <li><strong>Navegación:</strong> Haz clic en cualquier tema para acceder a sus recursos interactivos.</li>
+                        <li><strong>Acceso Rápido:</strong> Utiliza las tarjetas de acceso rápido para funciones específicas.</li>
+                        <li><strong>Tema Oscuro:</strong> Cambia entre tema claro y oscuro con el botón correspondiente.</li>
+                        <li><strong>Responsivo:</strong> El portal se adapta automáticamente a diferentes tamaños de pantalla.</li>
+                    </ul>
+                </div>
+                <div class="help-section">
+                    <h4>Características de los Temas</h4>
+                    <ul>
+                        <li><strong>Gráficos Interactivos:</strong> Visualiza conceptos complejos de forma dinámica.</li>
+                        <li><strong>Calculadoras:</strong> Realiza cálculos automáticos con fórmulas predefinidas.</li>
+                        <li><strong>Animaciones:</strong> Aprende a través de demostraciones animadas.</li>
+                        <li><strong>Ejemplos Prácticos:</strong> Aplica los conceptos con casos reales.</li>
+                    </ul>
+                </div>
+                <div class="help-section">
+                    <h4>Atajos de Teclado</h4>
+                    <ul>
+                        <li><strong>F11:</strong> Pantalla completa</li>
+                        <li><strong>ESC:</strong> Cerrar modales</li>
+                        <li><strong>Ctrl + D:</strong> Cambiar tema</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Progress Modal -->
+    <div id="progressModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-chart-bar"></i> Progreso del Curso</h3>
+                <button class="modal-close" onclick="closeModal('progressModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="progress-overview">
+                    <div class="progress-item">
+                        <div class="progress-header">
+                            <h4>Tema 1: Fundamentos</h4>
+                            <span class="progress-percentage">100%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 100%"></div>
+                        </div>
+                        <p>Completado - Ley de Moore, Paralelismo, Taxonomía Flynn</p>
+                    </div>
+                    <div class="progress-item">
+                        <div class="progress-header">
+                            <h4>Tema 2: Evaluación de Prestaciones</h4>
+                            <span class="progress-percentage">100%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 100%"></div>
+                        </div>
+                        <p>Completado - MIPS, MFLOPS, Ley de Amdahl, Benchmarks</p>
+                    </div>
+                    <div class="progress-item">
+                        <div class="progress-header">
+                            <h4>Tema 3: Arquitectura del Procesador</h4>
+                            <span class="progress-percentage">100%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 100%"></div>
+                        </div>
+                        <p>Completado - Cachés, Memoria Virtual, Políticas de Escritura</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

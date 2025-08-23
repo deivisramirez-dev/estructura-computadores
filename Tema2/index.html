@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lienzo Didáctico - Evaluación de Prestaciones de Computadores</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1><i class="fas fa-tachometer-alt"></i> Evaluación de Prestaciones</h1>
+            <p class="subtitle">Medidas de Rendimiento y Benchmarks - Tema 2</p>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="navigation">
+            <div class="nav-buttons">
+                <button class="nav-btn active" data-section="introduccion">
+                    <i class="fas fa-info-circle"></i> Introducción
+                </button>
+                <button class="nav-btn" data-section="medidas">
+                    <i class="fas fa-ruler"></i> Medidas de Prestaciones
+                </button>
+                <button class="nav-btn" data-section="tiempo-cpu">
+                    <i class="fas fa-clock"></i> Tiempo de CPU
+                </button>
+                <button class="nav-btn" data-section="mips-mflops">
+                    <i class="fas fa-calculator"></i> MIPS y MFLOPS
+                </button>
+                <button class="nav-btn" data-section="benchmarks">
+                    <i class="fas fa-vial"></i> Benchmarks
+                </button>
+                <button class="nav-btn" data-section="ley-amdahl">
+                    <i class="fas fa-chart-line"></i> Ley de Amdahl
+                </button>
+                <button class="nav-btn" data-section="coste">
+                    <i class="fas fa-dollar-sign"></i> Coste
+                </button>
+            </div>
+            <div class="nav-controls">
+                <button class="btn btn-back" onclick="goToMainPortal()">
+                    <i class="fas fa-home"></i>
+                    <span>Portal Principal</span>
+                </button>
+                <button class="btn btn-secondary" onclick="toggleTheme()">
+                    <i class="fas fa-moon"></i>
+                    <span>Tema Oscuro</span>
+                </button>
+                <button class="btn btn-primary" onclick="toggleFullscreen()">
+                    <i class="fas fa-expand"></i>
+                    <span>Pantalla Completa</span>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Introducción Section -->
+            <section id="introduccion" class="content-section active">
+                <div class="section-header">
+                    <h2><i class="fas fa-info-circle"></i> Introducción a la Evaluación de Prestaciones</h2>
+                    <p>Análisis de parámetros y benchmarks para medir el rendimiento de computadores</p>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="card definition-card">
+                        <h3><i class="fas fa-quote-left"></i> Definición</h3>
+                        <p class="highlight">"La evaluación de las prestaciones de un computador implica el análisis de diversos parámetros y el uso de benchmarks para medir su rendimiento."</p>
+                        <div class="definition-details">
+                            <div class="detail-item">
+                                <i class="fas fa-chart-bar"></i>
+                                <span>Análisis de parámetros de rendimiento</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-vial"></i>
+                                <span>Uso de benchmarks estandarizados</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-balance-scale"></i>
+                                <span>Comparación efectiva entre computadores</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card metrics-overview">
+                        <h3><i class="fas fa-tachometer-alt"></i> Parámetros Clave</h3>
+                        <div class="metrics-grid">
+                            <div class="metric-item">
+                                <i class="fas fa-clock"></i>
+                                <span>Tiempo de CPU</span>
+                            </div>
+                            <div class="metric-item">
+                                <i class="fas fa-tachometer-alt"></i>
+                                <span>MIPS</span>
+                            </div>
+                            <div class="metric-item">
+                                <i class="fas fa-calculator"></i>
+                                <span>MFLOPS</span>
+                            </div>
+                            <div class="metric-item">
+                                <i class="fas fa-chart-line"></i>
+                                <span>Ley de Amdahl</span>
+                            </div>
+                            <div class="metric-item">
+                                <i class="fas fa-chart-area"></i>
+                                <span>Ley de Gustafson</span>
+                            </div>
+                            <div class="metric-item">
+                                <i class="fas fa-vial"></i>
+                                <span>Benchmarks</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card importance-card">
+                        <h3><i class="fas fa-star"></i> Importancia de la Evaluación</h3>
+                        <div class="importance-list">
+                            <div class="importance-item">
+                                <i class="fas fa-check-circle"></i>
+                                <div>
+                                    <h4>Comparación Objetiva</h4>
+                                    <p>Permite comparar computadores de manera efectiva y estandarizada</p>
+                                </div>
+                            </div>
+                            <div class="importance-item">
+                                <i class="fas fa-check-circle"></i>
+                                <div>
+                                    <h4>Optimización</h4>
+                                    <p>Identifica cuellos de botella y áreas de mejora</p>
+                                </div>
+                            </div>
+                            <div class="importance-item">
+                                <i class="fas fa-check-circle"></i>
+                                <div>
+                                    <h4>Selección de Hardware</h4>
+                                    <p>Ayuda en la toma de decisiones para adquisiciones</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Medidas de Prestaciones Section -->
+            <section id="medidas" class="content-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-ruler"></i> Medidas de Prestaciones en Computadores</h2>
+                    <p>Parámetros y métricas para evaluar el rendimiento de sistemas computacionales</p>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="card measures-card">
+                        <h3><i class="fas fa-list"></i> Medidas Principales</h3>
+                        <div class="measures-grid">
+                            <div class="measure-item">
+                                <i class="fas fa-stopwatch"></i>
+                                <h4>Tiempo de Respuesta</h4>
+                                <p>Tiempo total para completar una tarea</p>
+                            </div>
+                            <div class="measure-item">
+                                <i class="fas fa-industry"></i>
+                                <h4>Productividad</h4>
+                                <p>Cantidad de trabajo realizado por unidad de tiempo</p>
+                            </div>
+                            <div class="measure-item">
+                                <i class="fas fa-cogs"></i>
+                                <h4>Funcionalidad</h4>
+                                <p>Capacidad para realizar tareas específicas</p>
+                            </div>
+                            <div class="measure-item">
+                                <i class="fas fa-expand-arrows-alt"></i>
+                                <h4>Expansibilidad</h4>
+                                <p>Capacidad de crecimiento del sistema</p>
+                            </div>
+                            <div class="measure-item">
+                                <i class="fas fa-chart-line"></i>
+                                <h4>Escalabilidad</h4>
+                                <p>Capacidad de mantener rendimiento al crecer</p>
+                            </div>
+                            <div class="measure-item">
+                                <i class="fas fa-percentage"></i>
+                                <h4>Eficiencia</h4>
+                                <p>Relación entre recursos utilizados y resultados obtenidos</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card specific-measures">
+                        <h3><i class="fas fa-calculator"></i> Medidas Específicas</h3>
+                        <div class="specific-grid">
+                            <div class="specific-item">
+                                <h4><i class="fas fa-clock"></i> Tiempo de CPU</h4>
+                                <p>Tiempo que el procesador dedica a ejecutar un programa</p>
+                                <div class="formula">TCPU = NI × CPI × Tciclo</div>
+                            </div>
+                            <div class="specific-item">
+                                <h4><i class="fas fa-sync"></i> CPI (Ciclos Por Instrucción)</h4>
+                                <p>Número medio de ciclos de reloj por instrucción</p>
+                                <div class="formula">CPI = Ciclos Totales / Número de Instrucciones</div>
+                            </div>
+                            <div class="specific-item">
+                                <h4><i class="fas fa-list-ol"></i> Número de Instrucciones</h4>
+                                <p>Cantidad total de instrucciones ejecutadas</p>
+                                <div class="formula">NI = Instrucciones del Programa</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card components-card">
+                        <h3><i class="fas fa-microchip"></i> Componentes Críticos</h3>
+                        <div class="components-grid">
+                            <div class="component-item">
+                                <i class="fas fa-memory"></i>
+                                <h4>Organización de Memoria</h4>
+                                <p>Estructura y jerarquía de memoria que afecta el rendimiento</p>
+                                <ul>
+                                    <li>Cache L1, L2, L3</li>
+                                    <li>Memoria RAM</li>
+                                    <li>Memoria virtual</li>
+                                </ul>
+                            </div>
+                            <div class="component-item">
+                                <i class="fas fa-microchip"></i>
+                                <h4>Procesador</h4>
+                                <p>Arquitectura y características del CPU</p>
+                                <ul>
+                                    <li>Frecuencia de reloj</li>
+                                    <li>Número de núcleos</li>
+                                    <li>Pipeline de instrucciones</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tiempo de CPU Section -->
+            <section id="tiempo-cpu" class="content-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-clock"></i> Cálculo del Tiempo de CPU</h2>
+                    <p>Fórmula fundamental para evaluar el rendimiento de programas</p>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="card formula-card">
+                        <h3><i class="fas fa-square-root-alt"></i> Fórmula Principal</h3>
+                        <div class="formula-display">
+                            <div class="formula-main">TCPU = NI × CPI × Tciclo</div>
+                            <div class="formula-breakdown">
+                                <div class="formula-term">
+                                    <span class="term">TCPU</span>
+                                    <span class="description">Tiempo de CPU</span>
+                                </div>
+                                <div class="formula-term">
+                                    <span class="term">NI</span>
+                                    <span class="description">Número de Instrucciones</span>
+                                </div>
+                                <div class="formula-term">
+                                    <span class="term">CPI</span>
+                                    <span class="description">Ciclos Por Instrucción</span>
+                                </div>
+                                <div class="formula-term">
+                                    <span class="term">Tciclo</span>
+                                    <span class="description">Periodo de la señal de reloj</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card calculator-card">
+                        <h3><i class="fas fa-calculator"></i> Calculadora Interactiva</h3>
+                        <div class="calculator">
+                            <div class="input-group">
+                                <label for="ni-input">Número de Instrucciones (NI):</label>
+                                <input type="number" id="ni-input" placeholder="1000000" value="1000000">
+                            </div>
+                            <div class="input-group">
+                                <label for="cpi-input">CPI (Ciclos Por Instrucción):</label>
+                                <input type="number" id="cpi-input" placeholder="1.5" value="1.5" step="0.1">
+                            </div>
+                            <div class="input-group">
+                                <label for="tcycle-input">Tiempo de Ciclo (ns):</label>
+                                <input type="number" id="tcycle-input" placeholder="0.5" value="0.5" step="0.1">
+                            </div>
+                            <button id="calculate-btn" class="calculate-btn">
+                                <i class="fas fa-calculator"></i> Calcular Tiempo de CPU
+                            </button>
+                            <div class="result" id="cpu-result">
+                                <h4>Resultado:</h4>
+                                <div class="result-value" id="cpu-time">0.75 ms</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card weighted-card">
+                        <h3><i class="fas fa-balance-scale"></i> CPI Promedio Ponderado</h3>
+                        <p>Cuando hay diferentes tipos de instrucciones, se utiliza un promedio ponderado:</p>
+                        <div class="formula-display">
+                            <div class="formula-main">CPI = Σ(CPIi × Fi)</div>
+                            <div class="formula-breakdown">
+                                <div class="formula-term">
+                                    <span class="term">CPIi</span>
+                                    <span class="description">CPI del tipo de instrucción i</span>
+                                </div>
+                                <div class="formula-term">
+                                    <span class="term">Fi</span>
+                                    <span class="description">Frecuencia del tipo de instrucción i</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="example">
+                            <h4>Ejemplo:</h4>
+                            <ul>
+                                <li>Instrucciones A: CPI = 1, Frecuencia = 60%</li>
+                                <li>Instrucciones B: CPI = 2, Frecuencia = 30%</li>
+                                <li>Instrucciones C: CPI = 3, Frecuencia = 10%</li>
+                                <li><strong>CPI Promedio = 1×0.6 + 2×0.3 + 3×0.1 = 1.5</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- MIPS y MFLOPS Section -->
+            <section id="mips-mflops" class="content-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-calculator"></i> MIPS y MFLOPS como Medidas de Rendimiento</h2>
+                    <p>Métricas estándar para evaluar el rendimiento de procesadores</p>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="card mips-card">
+                        <h3><i class="fas fa-tachometer-alt"></i> MIPS (Millones de Instrucciones Por Segundo)</h3>
+                        <div class="metric-definition">
+                            <div class="formula-display">
+                                <div class="formula-main">MIPS = NI / TCPU × 10⁶</div>
+                            </div>
+                            <div class="metric-details">
+                                <div class="detail-item">
+                                    <i class="fas fa-info-circle"></i>
+                                    <span>Mide la velocidad de procesamiento de instrucciones</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                    <span>No considera la complejidad de las instrucciones</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-chart-bar"></i>
+                                    <span>Útil para comparar procesadores similares</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="calculator">
+                            <div class="input-group">
+                                <label for="mips-ni">Número de Instrucciones:</label>
+                                <input type="number" id="mips-ni" placeholder="1000000" value="1000000">
+                            </div>
+                            <div class="input-group">
+                                <label for="mips-time">Tiempo de CPU (segundos):</label>
+                                <input type="number" id="mips-time" placeholder="0.001" value="0.001" step="0.001">
+                            </div>
+                            <button id="calculate-mips-btn" class="calculate-btn">
+                                <i class="fas fa-calculator"></i> Calcular MIPS
+                            </button>
+                            <div class="result" id="mips-result">
+                                <h4>MIPS:</h4>
+                                <div class="result-value" id="mips-value">1000 MIPS</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card mflops-card">
+                        <h3><i class="fas fa-calculator"></i> MFLOPS (Millones de Operaciones en Coma Flotante Por Segundo)</h3>
+                        <div class="metric-definition">
+                            <div class="formula-display">
+                                <div class="formula-main">MFLOPS = Operaciones_en_Coma_Flotante / TCPU × 10⁶</div>
+                            </div>
+                            <div class="metric-details">
+                                <div class="detail-item">
+                                    <i class="fas fa-info-circle"></i>
+                                    <span>Específico para operaciones en coma flotante</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-star"></i>
+                                    <span>Relevante para aplicaciones científicas</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-chart-line"></i>
+                                    <span>Mejor indicador para cálculos numéricos</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="calculator">
+                            <div class="input-group">
+                                <label for="mflops-ops">Operaciones en Coma Flotante:</label>
+                                <input type="number" id="mflops-ops" placeholder="500000" value="500000">
+                            </div>
+                            <div class="input-group">
+                                <label for="mflops-time">Tiempo de CPU (segundos):</label>
+                                <input type="number" id="mflops-time" placeholder="0.001" value="0.001" step="0.001">
+                            </div>
+                            <button id="calculate-mflops-btn" class="calculate-btn">
+                                <i class="fas fa-calculator"></i> Calcular MFLOPS
+                            </button>
+                            <div class="result" id="mflops-result">
+                                <h4>MFLOPS:</h4>
+                                <div class="result-value" id="mflops-value">500 MFLOPS</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card comparison-card">
+                        <h3><i class="fas fa-balance-scale"></i> Comparación MIPS vs MFLOPS</h3>
+                        <div class="comparison-table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Aspecto</th>
+                                        <th>MIPS</th>
+                                        <th>MFLOPS</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Enfoque</strong></td>
+                                        <td>Instrucciones generales</td>
+                                        <td>Operaciones en coma flotante</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Aplicación</strong></td>
+                                        <td>Procesamiento general</td>
+                                        <td>Cálculos científicos</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Precisión</strong></td>
+                                        <td>Limitada</td>
+                                        <td>Alta para cálculos numéricos</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Uso típico</strong></td>
+                                        <td>Comparación de CPUs</td>
+                                        <td>Evaluación de supercomputadoras</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Benchmarks Section -->
+            <section id="benchmarks" class="content-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-vial"></i> Tipos de Programas de Prueba (Benchmarks)</h2>
+                    <p>Programas estandarizados para comparar el rendimiento de computadores</p>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="card benchmarks-types">
+                        <h3><i class="fas fa-list"></i> Clasificación de Benchmarks</h3>
+                        <div class="benchmarks-grid">
+                            <div class="benchmark-item">
+                                <i class="fas fa-desktop"></i>
+                                <h4>Aplicaciones Reales</h4>
+                                <p>Programas completos utilizados en entornos de producción</p>
+                                <ul>
+                                    <li>Microsoft Office</li>
+                                    <li>Adobe Photoshop</li>
+                                    <li>Videojuegos</li>
+                                </ul>
+                            </div>
+                            <div class="benchmark-item">
+                                <i class="fas fa-cog"></i>
+                                <h4>Kernels</h4>
+                                <p>Partes críticas de aplicaciones que consumen más recursos</p>
+                                <ul>
+                                    <li>FFT (Fast Fourier Transform)</li>
+                                    <li>Ordenamiento</li>
+                                    <li>Búsqueda</li>
+                                </ul>
+                            </div>
+                            <div class="benchmark-item">
+                                <i class="fas fa-code"></i>
+                                <h4>Simples</h4>
+                                <p>Programas pequeños que miden aspectos específicos</p>
+                                <ul>
+                                    <li>Dhrystone</li>
+                                    <li>Whetstone</li>
+                                    <li>Linpack</li>
+                                </ul>
+                            </div>
+                            <div class="benchmark-item">
+                                <i class="fas fa-flask"></i>
+                                <h4>Sintéticos</h4>
+                                <p>Programas artificiales diseñados para medir características específicas</p>
+                                <ul>
+                                    <li>SPEC CPU</li>
+                                    <li>3DMark</li>
+                                    <li>PCMark</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card organizations-card">
+                        <h3><i class="fas fa-building"></i> Organizaciones Estandarizadoras</h3>
+                        <div class="organizations-grid">
+                            <div class="organization-item">
+                                <i class="fas fa-chart-line"></i>
+                                <h4>SPEC (Standard Performance Evaluation Corporation)</h4>
+                                <p>Organización líder en benchmarks de CPU y sistemas</p>
+                                <ul>
+                                    <li>SPEC CPU 2017</li>
+                                    <li>SPECjvm2008</li>
+                                    <li>SPECweb2009</li>
+                                </ul>
+                            </div>
+                            <div class="organization-item">
+                                <i class="fas fa-database"></i>
+                                <h4>TPC (Transaction Processing Performance Council)</h4>
+                                <p>Especializada en benchmarks de bases de datos</p>
+                                <ul>
+                                    <li>TPC-C (OLTP)</li>
+                                    <li>TPC-H (Decision Support)</li>
+                                    <li>TPC-E (Enterprise)</li>
+                                </ul>
+                            </div>
+                            <div class="organization-item">
+                                <i class="fas fa-mobile-alt"></i>
+                                <h4>EEMBC (Embedded Microprocessor Benchmark Consortium)</h4>
+                                <p>Benchmarks para sistemas embebidos</p>
+                                <ul>
+                                    <li>CoreMark</li>
+                                    <li>AutoBench</li>
+                                    <li>TeleBench</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card benchmark-process">
+                        <h3><i class="fas fa-play-circle"></i> Proceso de Benchmarking</h3>
+                        <div class="process-steps">
+                            <div class="step">
+                                <div class="step-number">1</div>
+                                <div class="step-content">
+                                    <h4>Selección de Benchmarks</h4>
+                                    <p>Elegir programas representativos de la carga de trabajo</p>
+                                </div>
+                            </div>
+                            <div class="step">
+                                <div class="step-number">2</div>
+                                <div class="step-content">
+                                    <h4>Configuración del Sistema</h4>
+                                    <p>Preparar el entorno de pruebas de manera consistente</p>
+                                </div>
+                            </div>
+                            <div class="step">
+                                <div class="step-number">3</div>
+                                <div class="step-content">
+                                    <h4>Ejecución de Pruebas</h4>
+                                    <p>Ejecutar los benchmarks múltiples veces</p>
+                                </div>
+                            </div>
+                            <div class="step">
+                                <div class="step-number">4</div>
+                                <div class="step-content">
+                                    <h4>Análisis de Resultados</h4>
+                                    <p>Procesar y comparar los datos obtenidos</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Ley de Amdahl Section -->
+            <section id="ley-amdahl" class="content-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-chart-line"></i> Mejora de Prestaciones y Ley de Amdahl</h2>
+                    <p>Límites teóricos en la mejora de rendimiento de sistemas computacionales</p>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="card gain-card">
+                        <h3><i class="fas fa-arrow-up"></i> Ganancia de Velocidad</h3>
+                        <div class="formula-display">
+                            <div class="formula-main">Sp = Vp / V1</div>
+                            <div class="formula-breakdown">
+                                <div class="formula-term">
+                                    <span class="term">Sp</span>
+                                    <span class="description">Ganancia de velocidad</span>
+                                </div>
+                                <div class="formula-term">
+                                    <span class="term">Vp</span>
+                                    <span class="description">Velocidad mejorada</span>
+                                </div>
+                                <div class="formula-term">
+                                    <span class="term">V1</span>
+                                    <span class="description">Velocidad original</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card amdahl-card">
+                        <h3><i class="fas fa-chart-line"></i> Ley de Amdahl</h3>
+                        <div class="formula-display">
+                            <div class="formula-main">Sp = 1 / (f + (1-f)/p)</div>
+                            <div class="formula-breakdown">
+                                <div class="formula-term">
+                                    <span class="term">f</span>
+                                    <span class="description">Fracción de tiempo sin mejora</span>
+                                </div>
+                                <div class="formula-term">
+                                    <span class="term">p</span>
+                                    <span class="description">Mejora introducida</span>
+                                </div>
+                                <div class="formula-term">
+                                    <span class="term">Sp</span>
+                                    <span class="description">Aceleración máxima</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="amdahl-calculator">
+                            <div class="input-group">
+                                <label for="fraction-input">Fracción sin mejora (f):</label>
+                                <input type="range" id="fraction-input" min="0" max="1" step="0.01" value="0.1">
+                                <span id="fraction-value">0.1</span>
+                            </div>
+                            <div class="input-group">
+                                <label for="improvement-input">Mejora (p):</label>
+                                <input type="range" id="improvement-input" min="1" max="100" step="1" value="10">
+                                <span id="improvement-value">10x</span>
+                            </div>
+                            <div class="result" id="amdahl-result">
+                                <h4>Aceleración Máxima:</h4>
+                                <div class="result-value" id="speedup-value">5.26x</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card chart-card">
+                        <h3><i class="fas fa-chart-area"></i> Gráfico de la Ley de Amdahl</h3>
+                        <div class="chart-container">
+                            <canvas id="amdahlChart"></canvas>
+                        </div>
+                        <div class="chart-controls">
+                            <button class="control-btn" id="update-chart">Actualizar Gráfico</button>
+                        </div>
+                    </div>
+
+                    <div class="card implications-card">
+                        <h3><i class="fas fa-lightbulb"></i> Implicaciones de la Ley de Amdahl</h3>
+                        <div class="implications-list">
+                            <div class="implication-item">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <div>
+                                    <h4>Límite Fundamental</h4>
+                                    <p>Existe un límite máximo de mejora independientemente de la optimización</p>
+                                </div>
+                            </div>
+                            <div class="implication-item">
+                                <i class="fas fa-percentage"></i>
+                                <div>
+                                    <h4>Importancia de la Paralelización</h4>
+                                    <p>Cuanto mayor sea la fracción paralelizable, mayor será la mejora posible</p>
+                                </div>
+                            </div>
+                            <div class="implication-item">
+                                <i class="fas fa-chart-bar"></i>
+                                <div>
+                                    <h4>Rendimiento Decreciente</h4>
+                                    <p>Los beneficios de la paralelización disminuyen con el número de procesadores</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Coste Section -->
+            <section id="coste" class="content-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-dollar-sign"></i> Coste de un Computador</h2>
+                    <p>Factores que influyen en el precio y la curva de aprendizaje en fabricación</p>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="card cost-factors">
+                        <h3><i class="fas fa-list"></i> Factores que Afectan el Coste</h3>
+                        <div class="factors-grid">
+                            <div class="factor-item">
+                                <i class="fas fa-microchip"></i>
+                                <h4>Tecnología</h4>
+                                <p>Proceso de fabricación y materiales utilizados</p>
+                                <ul>
+                                    <li>Nodo de proceso (7nm, 5nm, 3nm)</li>
+                                    <li>Materiales semiconductores</li>
+                                    <li>Tecnologías de fabricación</li>
+                                </ul>
+                            </div>
+                            <div class="factor-item">
+                                <i class="fas fa-sitemap"></i>
+                                <h4>Estructura y Organización</h4>
+                                <p>Arquitectura interna del procesador</p>
+                                <ul>
+                                    <li>Número de núcleos</li>
+                                    <li>Cache y memoria</li>
+                                    <li>Interconexiones</li>
+                                </ul>
+                            </div>
+                            <div class="factor-item">
+                                <i class="fas fa-code"></i>
+                                <h4>Conjunto de Instrucciones</h4>
+                                <p>Complejidad del ISA</p>
+                                <ul>
+                                    <li>RISC vs CISC</li>
+                                    <li>Extensiones especializadas</li>
+                                    <li>Compatibilidad</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card learning-curve">
+                        <h3><i class="fas fa-chart-line"></i> Curva de Aprendizaje en Fabricación</h3>
+                        <div class="curve-explanation">
+                            <p>El coste de los componentes tiende a disminuir con el tiempo debido a:</p>
+                            <div class="curve-factors">
+                                <div class="curve-factor">
+                                    <i class="fas fa-industry"></i>
+                                    <h4>Mejoras en Procesos</h4>
+                                    <p>Optimización de técnicas de fabricación</p>
+                                </div>
+                                <div class="curve-factor">
+                                    <i class="fas fa-chart-bar"></i>
+                                    <h4>Economías de Escala</h4>
+                                    <p>Reducción de costes por volumen de producción</p>
+                                </div>
+                                <div class="curve-factor">
+                                    <i class="fas fa-lightbulb"></i>
+                                    <h4>Innovación Tecnológica</h4>
+                                    <p>Nuevas tecnologías más eficientes</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="costChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="card cost-analysis">
+                        <h3><i class="fas fa-calculator"></i> Análisis de Costes</h3>
+                        <div class="cost-breakdown">
+                            <div class="cost-item">
+                                <h4>Coste de Desarrollo</h4>
+                                <div class="cost-bar">
+                                    <div class="cost-fill" style="width: 60%">60%</div>
+                                </div>
+                                <p>Investigación, diseño y desarrollo</p>
+                            </div>
+                            <div class="cost-item">
+                                <h4>Coste de Fabricación</h4>
+                                <div class="cost-bar">
+                                    <div class="cost-fill" style="width: 25%">25%</div>
+                                </div>
+                                <p>Producción y materiales</p>
+                            </div>
+                            <div class="cost-item">
+                                <h4>Coste de Marketing</h4>
+                                <div class="cost-bar">
+                                    <div class="cost-fill" style="width: 10%">10%</div>
+                                </div>
+                                <p>Publicidad y distribución</p>
+                            </div>
+                            <div class="cost-item">
+                                <h4>Otros Costes</h4>
+                                <div class="cost-bar">
+                                    <div class="cost-fill" style="width: 5%">5%</div>
+                                </div>
+                                <p>Administración y soporte</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,112 @@
+{
+  "name": "tema3-arquitectura-procesador",
+  "version": "1.0.0",
+  "description": "Recursos interactivos para el aprendizaje de Arquitectura del Procesador - Cachés y Memoria Virtual",
+  "main": "index.html",
+  "scripts": {
+    "start": "python -m http.server 8000",
+    "serve": "npx serve .",
+    "dev": "python -m http.server 8000 --bind 127.0.0.1",
+    "build": "echo 'No build process required for static files'",
+    "test": "echo 'No tests specified'",
+    "lint": "echo 'No linting configured'"
+  },
+  "keywords": [
+    "arquitectura",
+    "procesador",
+    "caches",
+    "memoria-virtual",
+    "educacion",
+    "interactivo",
+    "simulador",
+    "calculadora",
+    "rendimiento",
+    "computadores",
+    "ingenieria-informatica",
+    "unir"
+  ],
+  "author": {
+    "name": "Equipo de Estructura de Computadores",
+    "email": "estructura.computadores@unir.net",
+    "url": "https://www.unir.net"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/unir/estructura-computadores.git",
+    "directory": "Tema3"
+  },
+  "bugs": {
+    "url": "https://github.com/unir/estructura-computadores/issues"
+  },
+  "homepage": "https://unir.github.io/estructura-computadores/Tema3/",
+  "engines": {
+    "node": ">=14.0.0",
+    "npm": ">=6.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "not ie 11"
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "serve": "^14.2.0"
+  },
+  "peerDependencies": {},
+  "optionalDependencies": {},
+  "bundledDependencies": [],
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
+  ],
+  "cpu": [
+    "x64",
+    "arm64"
+  ],
+  "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/unir"
+  },
+  "man": "./README.md",
+  "directories": {
+    "lib": ".",
+    "bin": ".",
+    "man": ".",
+    "doc": ".",
+    "example": ".",
+    "test": "."
+  },
+  "files": [
+    "index.html",
+    "styles.css",
+    "script.js",
+    "README.md",
+    "package.json"
+  ],
+  "config": {
+    "port": 8000,
+    "host": "localhost"
+  },
+  "preferGlobal": false,
+  "bin": {},
+  "man": {},
+  "contributors": [
+    {
+      "name": "Profesor de Estructura de Computadores",
+      "email": "profesor.ec@unir.net"
+    }
+  ],
+  "maintainers": [
+    {
+      "name": "Equipo de Desarrollo UNIR",
+      "email": "desarrollo@unir.net"
+    }
+  ]
+}

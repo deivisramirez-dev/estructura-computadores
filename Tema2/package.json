@@ -1,7 +1,7 @@
 {
-  "name": "lienzo-didactico-arquitectura-computadores",
+  "name": "lienzo-didactico-evaluacion-prestaciones",
   "version": "1.0.0",
-  "description": "Lienzo didáctico interactivo para el curso de Estructura de Computadores - UNIR",
+  "description": "Lienzo didáctico interactivo para la Evaluación de Prestaciones de Computadores - UNIR",
   "main": "index.html",
   "scripts": {
     "start": "python -m http.server 8000",
@@ -19,8 +19,12 @@
     "didáctico",
     "unir",
     "estructura",
-    "flynn",
-    "paralelismo"
+    "prestaciones",
+    "evaluación",
+    "mips",
+    "mflops",
+    "amdahl",
+    "benchmarks"
   ],
   "author": "Equipo Docente UNIR",
   "license": "Educational",

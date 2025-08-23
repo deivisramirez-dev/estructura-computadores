@@ -155,7 +155,7 @@ Para contribuir al proyecto:
 
 ## 📄 Licencia
 
-Este proyecto está diseñado para uso educativo en el contexto de la UNIR.
+Este proyecto está diseñado para uso educativo.
 
 ## 📞 Soporte
 
@@ -165,6 +165,6 @@ Para preguntas o sugerencias:
 - Contacta al equipo docente del curso
 
 
-**Desarrollado para el curso de Estructura de Computadores - UNIR**
+**Desarrollado por el docente Deivis Eduard Ramirez Martinez para el curso de Estructura de Computadores - **
 
 *Última actualización: Agosto 2025*

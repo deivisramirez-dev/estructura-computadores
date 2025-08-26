@@ -1,0 +1,70 @@
+{
+  "name": "tema5-procesadores-segmentados",
+  "version": "1.0.0",
+  "description": "Canvas didáctico interactivo sobre Procesadores segmentados para la asignatura de Estructura de Computadores",
+  "main": "index.html",
+  "scripts": {
+    "start": "python -m http.server 8000",
+    "dev": "python -m http.server 8000",
+    "serve": "python -m http.server 8000",
+    "build": "echo 'No build process required for static HTML/CSS/JS'",
+    "test": "echo 'No tests specified'",
+    "lint": "echo 'No linting configured'"
+  },
+  "keywords": [
+    "procesadores-segmentados",
+    "pipeline",
+    "riesgos",
+    "hazards",
+    "forwarding",
+    "prediccion-saltos",
+    "superscalar",
+    "optimizacion",
+    "estructura-computadores",
+    "educacion",
+    "interactivo",
+    "simulador",
+    "canvas-didactico"
+  ],
+  "author": "Estudiante de Estructura de Computadores",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/usuario/estructura-computadores.git"
+  },
+  "bugs": {
+    "url": "https://github.com/usuario/estructura-computadores/issues"
+  },
+  "homepage": "https://github.com/usuario/estructura-computadores#readme",
+  "dependencies": {
+    "chart.js": "^4.4.0"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ],
+  "contributors": [],
+  "funding": [],
+  "files": [
+    "index.html",
+    "styles.css",
+    "script.js",
+    "README.md"
+  ],
+  "directories": {
+    "lib": ".",
+    "test": "."
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "man": [],
+  "config": {
+    "port": 8000
+  }
+}

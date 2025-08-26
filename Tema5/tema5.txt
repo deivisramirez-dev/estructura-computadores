@@ -1,0 +1,904 @@
+Tema 5
+
+Estructura de Computadores
+
+Procesadores
+segmentados
+
+Índice
+Esquema
+
+3
+
+Ideas clave
+
+4
+
+5.1. Introducción y objetivos
+
+4
+
+5.2. Introducción
+
+4
+
+© Universidad Internacional de La Rioja (UNIR)
+
+5.3. Principios de segmentación y mejora de
+prestaciones
+
+7
+
+5.4. Diseño de un procesador segmentado
+
+9
+
+5.5. Optimización de causes funcionales
+
+16
+
+5.6. Interrupciones en un procesador segmentado 17
+5.7. Referencias bibliográficas
+
+19
+
+A fondo
+
+20
+
+Actividades
+
+22
+
+Test
+
+23
+
+© Universidad Internacional de La Rioja (UNIR)
+
+Tr a t a m i e n t o d e
+i n ter r u p c i o n es en
+p r o c es a d o r es
+s egmen ta d o s
+
+O p ti mi za c i ó n d e
+c a u c es
+
+D i s eñ o d e u n
+p r o c es a d o r
+s egmen ta d o
+
+Pri nci pios de l a
+s egmen ta c i ó n y
+mej o r a d e
+p r es ta c i o n es
+
+I n tr od u c c i ón
+
+No lineales
+
+Lineales
+
+Alternativas de diseño de un procesador
+segmentado
+
+Instrucciones de acceso a memoria
+
+Instrucciones de salto
+
+Soluciones a conflictos RAW
+
+Otros parámetros
+
+Aceleración
+
+Tiempo de llenado
+
+Referencias históricas
+
+Conceptos básicos sobre procesadores escalares
+
+Esquema
+
+Estructura de Computadores
+Tema 5. Esquema
+
+3
+
+P R O C E S A D O R E S S E G ME N TA D O S
+
+Ideas clave
+5.1. Introducción y objetivos
+Para estudiar este tema lee las ideas clave que se desarrollan a continuación.
+
+En este tema se presenta el concepto de segmentación de cauce (pipelining), técnica
+de paralelismo aplicable en diferentes fases del diseño hardware de un computador
+y que permite aumentar su rendimiento.
+
+Haremos especial hincapié en la aplicación a los procesadores segmentados, cuya
+microarquitectura se desarrolla aplicando estas técnicas, lo que le permite ejecutar
+varias instrucciones simultáneamente, aunque sea en distintas fases de ejecución.
+
+En estos casos se dice que el procesador aprovecha el paralelismo entre
+instrucciones o a nivel de instrucción (ILP, Instruction Level Parallelism).
+
+La implementación de estos cauces de ejecución simultánea provoca una serie de
+conflictos (dependencias), inherentes a la propia técnica, que limitarán la eficiencia
+de la estructura y cuyos efectos será necesario paliar en el diseño de un procesador
+segmentado.
+
+© Universidad Internacional de La Rioja (UNIR)
+
+5.2. Introducción
+La técnica de segmentación de cauce (pipelining) consiste en dividir el proceso
+(instrucción, operación) que debe realizar el sistema en una serie de fases o pasos, y
+en rediseñar el propio sistema, de modo que pase a estar constituido por una cadena
+
+Estructura de Computadores
+Tema 5. Ideas clave
+
+4
+
+de unidades funcionales donde, cada una de ellas estará encargada de realizar cada
+fase o paso del proceso de forma independiente.
+
+En esas condiciones, idealmente, en el sistema habrá tantos procesos en curso como
+unidades funcionales, aunque cada uno de ellos estará ejecutando una fase
+diferente.
+
+Con esta técnica no tiene porqué mejorar el tiempo de ejecución de un proceso
+aislado pero, mientras se mantengan llenas todas las unidades funcionales, sí se
+obtendrán más procesos finalizados por unidad de tiempo, se juega con el
+solapamiento de los tiempos de ejecución de los distintos procesos.
+
+La idea viene de la cadena de producción en serie implantada en la fabricación de
+automóviles a comienzos del siglo XX.
+
+La conexión en paralelo de cadenas de unidades funcionales (cadenas pipeline)
+constituirá la base de los procesadores superescalares.
+
+La figura 1 esquematiza la técnica considerando instrucciones que se pueden dividir
+en cinco fases [Instruction Fetch (IF), Instruction Decode (ID), Instruction Execution
+
+© Universidad Internacional de La Rioja (UNIR)
+
+(EX), Memory Access (MEM) y WriteBack (WB)] de igual duración (T).
+
+Estructura de Computadores
+Tema 5. Ideas clave
+
+5
+
+Figura 1. Cronogramas de ejecución de un procesador secuencial, segmentado y superescalar.
+Fuente: Ortega et al., 2005.
+
+Breve secuencia histórica
+La segmentación de cauce se propuso inicialmente para acelerar las operaciones en
+coma flotante.
+
+El primer computador que implementó segmentación de cauce (proyecto Stretch)
+fue el IBM 7030 (1961). Tenía por objetivo ser 100 veces más rápido que su
+predecesor, el IBM 704.
+
+En los 70 se aplica de forma habitual en el desarrollo de procesadores vectoriales y
+
+© Universidad Internacional de La Rioja (UNIR)
+
+se extiende al procesamiento de instrucciones.
+
+A principios de los 80, la implantación de las cadenas pipeline en los procesadores
+fue uno de los motivos esenciales de la aparición de las arquitecturas RISC (Reduced,
+Instruction Set Computer), en oposición a las arquitecturas CISC (Complex Instruction
+Set Computer) existentes en el momento, que no aprovechaban adecuadamente las
+mejoras de rendimiento que la segmentación de cauce aportaba al procesador.
+
+Estructura de Computadores
+Tema 5. Ideas clave
+
+6
+
+A partir de mediados de los 80, los microprocesadores incorporan la segmentación
+de cauce, y a partir del comienzo de los 90 la segmentación de cauce se introduce
+también en los micros embebidos o empotrados (microcontroladores), que
+requieren prestaciones elevadas.
+
+5.3. Principios de segmentación y mejora de
+prestaciones
+Supongamos un procesador secuencial que ejecute una instrucción en un tiempo T,
+si su ejecución fuese uniforme, tardaría un tiempo 𝑛 𝑥 𝑇 en ejecutar n instrucciones.
+
+Aplicando la segmentación de cauce, en un caso ideal, se dividiría la instrucción en
+fases de duración t, que se ejecutasen en sendas unidades funcionales
+independientes conectadas en cascada de modo que, tras la primera instrucción
+ejecutada, se obtendría una instrucción finalizada cada tiempo t (figura 2).
+
+La primera instrucción tardaría un tiempo completo de proceso, que coincidiría con
+el tiempo de llenado de la cadena y que se designa como TLI (Tiempo de Latencia de
+
+© Universidad Internacional de La Rioja (UNIR)
+
+inicio).
+
+Estructura de Computadores
+Tema 5. Ideas clave
+
+7
+
+Figura 2. Comparación del ejemplo propuesto. Fuente: Ortega et al., 2005.
+
+La aceleración o ganancia obtenida por el sistema al aplicar esta técnica a la ejecución
+de n instrucciones sería:
+
+S(n) =
+
+Tsin _segmentar
+Tsegmentado
+
+n×T
+
+= TLI+(n−1)×t
+
+[5.1]
+
+Cuyo máximo se obtendría para un número infinito de instrucciones:
+
+Smax = lim S(n) =
+n→∞
+
+T
+t
+
+[5.2]
+
+© Universidad Internacional de La Rioja (UNIR)
+
+Cuanto menor sea t, mayor será la ganancia obtenida, al relacionar t con el número
+de etapas o unidades, k, en principio a mayor número de etapas, mayor ganancia
+(suponiendo etapas más simples que implican t menor).
+
+Se podría expresar 𝑇𝐿𝐼 = 𝑘 𝑥 𝑡, incluso, de forma ideal, TLI = T. En estas condiciones,
+la ganancia obtenida se podría presentar como:
+
+Estructura de Computadores
+Tema 5. Ideas clave
+
+8
+
+S(n) =
+
+Tsin segmentar
+n×k×t
+n×k
+=
+=
+Tsegmentado
+k × t + (n − l) × t k + n − l
+[5.3]
+
+Desviaciones más habituales respecto al caso ideal:
+
+ TLI = k×t > T
+ El tiempo de etapa t no es común en todas ellas, la más lenta es la que marca el
+
+comportamiento del sistema (registro de desacoplo, cuello de botella).
+
+Otras magnitudes a considerar:
+
+ Productividad (W): número de operaciones que se ejecutan por unidad de tiempo.
+
+Para n operaciones ejecutadas:
+
+W(n) =
+
+n
+TLI + (n − l) × t
+[5.4]
+
+ Eficiencia (Ek): relación entre la ganancia o aceleración que proporciona el cauce
+
+y el número de etapas:
+
+Ek (n) =
+
+n×T
+k × [TLI + (n − l) × t
+[5.5]
+
+© Universidad Internacional de La Rioja (UNIR)
+
+5.4. Diseño de un procesador segmentado
+Este apartado busca presentar las complicaciones que aparecen al ejecutar
+instrucciones en un procesador segmentado.
+
+Estructura de Computadores
+Tema 5. Ideas clave
+
+9
+
+En el manual de la asignatura se parte de un caso muy simple de procesador que
+responde a las siguientes premisas:
+
+ Procesador de 32 bits.
+ Instrucción sencilla del tipo Ra op Rb → Rc.
+ Ra, Rb y Rc son registros de un banco de registros con dos puertos de lectura y uno
+
+de escritura.
+
+Estos requisitos llevan a un cauce de cuatro etapas:
+
+ Captación de instrucción (IF).
+ Decodificación/Lectura de operandos (ID/OF).
+ Ejecución de la operación (ALU).
+ Escritura de resultado en el banco de registros (OS).
+
+© Universidad Internacional de La Rioja (UNIR)
+
+Y a una configuración como la que se representa en la figura 3.
+
+Figura 3. Cauce y arquitectura del procesador segmentado básico. Fuente: Ortega et al., 2005.
+
+Estructura de Computadores
+Tema 5. Ideas clave
+
+10
+
+En estas condiciones cada instrucción requeriría cuatro ciclos para procesarse y se
+obtendría una instrucción procesada por ciclo, a partir de la primera.
+
+Suponiendo ahora que se ejecuta la siguiente secuencia de instrucciones:
+
+Teniendo en cuenta el cauce utilizado, se produciría un conflicto en la ejecución de
+las instrucciones (2) y (3) en relación con el operando R3 (figura 4). Se trata de un
+conflicto por dependencia de lectura tras escritura o de tipo RAW (Read After
+Write).
+
+Figura 4. Dependencia de lectura tras escritura (RAW). Fuente: Ortega et al., 2005.
+
+© Universidad Internacional de La Rioja (UNIR)
+
+Riesgo, conflicto o dependencia (hazard) es cualquier condición que puede
+interrumpir el flujo continuo a través de un cauce. Pueden ser:
+
+ Riesgos de Datos: dependencias entre los operandos y resultados de instrucciones
+
+distintas. A su vez pueden ser:
+• RAW (Read After Write) o dependencia de lectura tras escritura.
+
+Estructura de Computadores
+Tema 5. Ideas clave
+
+11
+
+• WAR (Write After Read) o dependencia de escritura tras lectura.
+• WAW (Write After Write) o dependencia de escritura tras escritura.
+ Riesgos de Control: instrucciones de salto condicional que, según su resultado,
+
+determinan si hay que ejecutar una secuencia de instrucciones u otra.
+ Riesgos Estructurales o Colisiones: distintas instrucciones necesitan el mismo
+
+recurso al mismo tiempo.
+
+La dependencia RAW también se conoce como dependencia real y se puede producir
+siempre que se ejecuten acciones simultáneas y coincida esa relación escritura—
+lectura de dos instrucciones sobre un mismo operando.
+
+Las dependencias WAR y WAW son propias de procesadores superescalares en los
+que se permita la ejecución desordenada de instrucciones. También se las conoce
+como pseudodependencias.
+
+Soluciones para las dependencias RAW
+Existen distintos tipos de soluciones para paliar, e incluso evitar, los efectos de las
+dependencias RAW. Hay que tener en cuenta que este tipo de dependencias no solo
+pueden provocar pérdidas de rendimiento sino también errores de ejecución, lo cual
+es mucho más grave. Si se deja pasar la dependencia la instrucción dependiente lee
+el operando antes de que la instrucción de la que depende lo haya actualizado lo que
+producirá un error de ejecución.
+Algunas de las soluciones requieren de elementos hardware añadidos y otras son
+
+© Universidad Internacional de La Rioja (UNIR)
+
+soluciones más software, vinculadas al compilador.
+
+Las opciones más importantes que se deben conocer son:
+
+ Reorganización de código: consiste en separar en el programa las instrucciones
+
+dependientes, de modo que no exista conflicto. Esta técnica depende del
+compilador.
+Estructura de Computadores
+Tema 5. Ideas clave
+
+12
+
+ Interbloqueo
+
+entre etapas: se incluyen elementos HW de detección de
+
+dependencias, que permitirán el bloqueo de la instrucción dependiente hasta que
+la anterior actualice el operando.
+ Atajos (bypass paths o forwarding): se aprovechan los elementos de detección del
+
+anterior para adelantar la actualización del operando dependiente.
+
+Implementación de instrucciones de salto
+El problema que plantean las instrucciones de salto, y en general cualquier
+instrucción de ruptura de secuencia (saltos condicionales o incondicionales, llamadas
+a rutina, retornos, atención a interrupciones), es que modifican el valor que toma por
+defecto el registro contador de programa (PC) del procesador. Representan casos
+típicos de riesgos de control.
+Tras cada ciclo de captación de instrucción, el PC se incrementa automáticamente
+para apuntar a la siguiente posición de código de programa a leer, en base a su
+contenido se realiza la siguiente captación. Trabajando con segmentación de cauce,
+la unidad IF usará como referencia el valor del PC para leer la siguiente instrucción,
+pero es posible que, tras una instrucción de salto, ese valor no sea correcto puesto
+que el objetivo de la instrucción es modificar PC y esto todavía no se habrá llevado a
+cabo. En otras palabras, la unidad IF tarda tantas instrucciones en «darse cuenta» de
+que se ha saltado como unidades haya entre IF y la unidad que ejecute el salto
+(modificación PC).
+La consecuencia de este riesgo de control es que cuando se actualice PC habrá que
+eliminar del cauce (vaciamiento) todas las instrucciones que se hayan leído sin tener
+© Universidad Internacional de La Rioja (UNIR)
+
+en cuenta el salto (su número dependerá de la profundidad del cauce). Esta pérdida
+supondrá una reducción del rendimiento de la cadena de ejecución. La pérdida
+obtenida será menor cuanto menos tiempo tarde en actualizarse PC al valor que
+debería tener tras la lectura de la instrucción.
+
+Estructura de Computadores
+Tema 5. Ideas clave
+
+13
+
+El problema de las rupturas de secuencia se complica si estas no se producen con
+certeza, es decir, si son condicionales. Cuando se trata de saltos condicionales no solo
+hay que tener en cuenta la actualización de PC, sino que esta puede ocurrir o no en
+función de la comprobación de la condición, que dependerá de alguna instrucción
+ejecutada previamente. Estas instrucciones combinan el efecto de un riesgo de
+control (ruptura de secuencia) con un riesgo de dependencia (evaluación de la
+condición).
+
+Ortega, Anguita y Prieto (2005) presentan una situación sencilla de este problema,
+añadiendo al procesador básico, que se toma como ejemplo, una instrucción de salto
+condicional del tipo «bcnd Ra», ante los conflictos que provoca este tipo de
+instrucción, se proponen dos técnicas que se deben conocer:
+
+ Inserción de instrucciones NOP.
+ Salto retardado.
+
+Son dos de las posibles técnicas que se pueden plantear para resolver riesgos de este
+tipo, en cualquier caso, las soluciones planteadas para este tipo de conflictos, y para
+cualquiera, dependerán de la arquitectura concreta sobre la que se pretenda aplicar,
+aunque se mantenga la filosofía de la solución.
+
+Implementación de instrucciones de acceso a memoria
+Los conflictos asociados a instrucciones de acceso a memoria permiten ilustrar los
+
+© Universidad Internacional de La Rioja (UNIR)
+
+llamados riesgos estructurales.
+
+En este caso, Ortega, Anguita y Prieto (2005) emplean como ejemplo la incorporación
+de instrucciones de transferencia de información entre registros y memoria.
+Instrucciones de tipo carga (load), transferencia de memoria a registro, y
+almacenamiento (store), transferencia de registro a memoria. A partir de los
+
+Estructura de Computadores
+Tema 5. Ideas clave
+
+14
+
+problemas asociados a los accesos a memoria, se observa la necesidad de incluir dos
+elementos nuevos:
+
+ La unidad de gestión de memoria (MMU, Memory Management Unit), incluida
+
+en la arquitectura del procesador, que será la encargada del cálculo de la dirección
+física de memoria (memoria virtual, direccionamientos relativos).
+ Una nueva etapa al cauce, que en el ejemplo se designa como MEM, para asumir
+
+el coste en tiempo del acceso (gestión del acceso, disponibilidad de la
+información, estados de espera).
+
+En este apartado se observa además de la posibilidad de que existan riesgos RAW
+que se involucren a operandos en memoria (retardo de uso de carga).
+
+Espacio de diseño de los procesadores segmentados
+Ortega, Anguita y Prieto (2005) presentan los aspectos que definen el espacio de
+
+© Universidad Internacional de La Rioja (UNIR)
+
+diseño de los procesadores segmentados:
+
+Estructura de Computadores
+Tema 5. Ideas clave
+
+15
+
+Aspectos que definen el espacio de diseño de los procesadores
+segmentados
+
+Según la organización
+del cauce
+
+Número de etapas
+Subtarea que
+implementa cada etapa
+Distribución de la
+secuencia de etapas
+
+Según las alternativas de
+resolución de dependencias
+Estática (Compilador)
+Dinámica (elementos
+HW en ejecución)
+Combinada
+
+•Cauce único
+•Cauces dobles
+•Cauces múltiples
+Uso de atajos
+Temporización del cauce
+•Síncrona
+•Asíncrona
+Figura 5. Aspectos que definen el espacio de diseño de los procesadores segmentados.
+
+5.5. Optimización de causes funcionales
+En este apartado se presentan los conceptos de cauce lineal y no lineal y se desarrolla
+un sistema de diseño de unidad de control para optimizar un cauce no lineal (Ortega
+
+© Universidad Internacional de La Rioja (UNIR)
+
+et al., 2005).
+ Cauce Lineal: cada etapa está conectada solo con una etapa anterior y otra
+
+posterior, y las entradas a procesar (instrucciones, operandos) se pueden
+introducir en el cauce al ritmo de una cada ciclo de reloj.
+
+Estructura de Computadores
+Tema 5. Ideas clave
+
+16
+
+ Cauces no lineales:
+
+• Hay etapas que necesitan varios ciclos de reloj.
+• Algunas etapas se vuelven a reutilizar por una misma operación.
+• Una misma operación (instrucción) puede utilizar más de una etapa al mismo
+
+tiempo.
+• El orden en que se visitan las etapas (y las etapas que se visitan) puede cambiar
+
+de una operación a otra (cauces multifuncionales).
+• Pueden existir dependencias entre las operaciones que se introducen en el
+
+cauce, de forma que el orden en que una operación visite las etapas cambie
+dinámicamente (cauces dinámicos multifuncionales).
+Además, la productividad de un cauce depende de que:
+
+ Que exista una fuente continua de operaciones (instrucciones) a realizar.
+ Que exista un procedimiento eficaz de planificación del cauce.
+
+En este punto se presentan además conceptos como la tabla de reservas, la latencia
+prohibida, los ciclos avariciosos y el vector o matriz de colisiones.
+
+5.6. Interrupciones en un procesador segmentado
+Las interrupciones son difíciles de manejar en un procesador segmentado dado que
+el solapamiento entre instrucciones hace más difícil determinar el momento en que
+
+© Universidad Internacional de La Rioja (UNIR)
+
+una instrucción puede cambiar de forma segura el estado de la máquina.
+La tabla 1 expone una clasificación de los diferentes tipos de interrupción. Por otro
+lado conviene tener en cuenta los siguientes conceptos relacionados con
+interrupciones:
+ Excepciones Síncronas/Asíncronas: Si el evento se produce en el mismo lugar
+
+cada vez que se ejecuta el programa es síncrono. Los eventos asíncronos se
+Estructura de Computadores
+Tema 5. Ideas clave
+
+17
+
+originan en los dispositivos externos al procesador y la memoria. Los eventos
+asíncronos son más fáciles de manejar puesto que se pueden atender después de
+que se complete la instrucción en curso.
+
+ Solicitadas por el usuario o sobrevenidas: Si las solicita el usuario no son
+
+realmente excepciones puesto que son predecibles (se tratan como excepciones
+porque utilizan el mismo mecanismo para almacenar y restaurar el estado). Las
+sobrevenidas se deben a un evento que no controla el programa.
+ Enmascarables
+
+o no enmascarables dentro de una instrucción o entre
+
+instrucciones: Según el evento impide que se termine la ejecución de la
+instrucción porque ocurre en mitad de la misma (son siempre excepciones
+síncronas y son difíciles de procesar porque la instrucción debe pararse y empezar
+de nuevo) o bien ocurren entre instrucciones.
+
+ Excepciones
+
+para terminar o con continuación («terminate/resume») que
+
+terminan el programa (catastróficas) o que permiten continuar el programa tras
+ser procesadas (no catastróficas).
+Indican una condición de error
+y dan paso a una rutina de
+recuperación
+
+Interrupciones críticas
+para comunicarse con el
+S.O.
+Memoria virtual
+
+Fuente interna a la
+CPU
+Fuente externa
+
+instrucciones no
+Excepciones (A)
+
+implementadas (B)
+
+Fallo hardware (C)
+
+Temporización E/S (D)
+
+© Universidad Internacional de La Rioja (UNIR)
+
+Tabla 1. Clasificación de los distintos tipos de interrupción. Fuente: Ortega et al., 2005.
+
+Según se atiendan las interrupciones respetando o no el orden de ejecución de las
+instrucciones, se habla de interrupciones precisas o imprecisas.
+
+Estructura de Computadores
+Tema 5. Ideas clave
+
+18
+
+Interrupciones precisas
+Permiten garantizar que después de una interrupción no catastrófica, el proceso
+interrumpido continúe correctamente.
+
+El estado de la máquina en el momento de la interrupción es idéntico al que existiría
+si la ejecución fuese secuencial. Ese estado se llama estado preciso y cumple las
+siguientes condiciones:
+ Todas las instrucciones que se emitieron antes de la instrucción indicada por el PC
+
+almacenado (para continuar el proceso interrumpido) se han completado.
+ Las instrucciones posteriores al valor indicado por el PC almacenado no se
+
+ejecutan y no han cambiado el estado del procesador.
+ Si la interrupción fue ocasionada por una instrucción, el contador de programa
+
+apunta a esa instrucción, que puede ejecutarse completamente o no.
+
+5.7. Referencias bibliográficas
+Ortega, J., Anguita, M. y Prieto, A. (2005). Arquitectura de computadores. Madrid:
+
+© Universidad Internacional de La Rioja (UNIR)
+
+Thomson.
+
+Estructura de Computadores
+Tema 5. Ideas clave
+
+19
+
+A fondo
+Procesadores ARM
+
+Ortega, J., Anguita, M. y Prieto, A. (2005). Arquitectura de computadores. Madrid:
+Thomson.
+La descripción de la arquitectura ARM realizada en las páginas 92 a 97 como
+aplicación práctica de la segmentación de cauce.
+
+Otra visión de los procesadores escalares
+
+Para tener otra visión sobre la implementación de la segmentación de cauce en un
+procesador, conviene revisar el tema 12 (páginas 437 a 464) del libro Organización y
+Arquitectura de Computadores, de William Stallings (Pearson, 2006). Si además se
+busca tener una idea clara de las características de las arquitecturas CISC y RISC en
+relación con la segmentación, también se puede leer el tema 13 del mismo libro.
+
+Accede a la página desde el aula virtual o a través de la siguiente dirección web:
+https://pearson.es/espa%C3%B1a/TiendaOnline/organizaci%C3%B3n-yarquitectura-de-computadores
+
+Segmentación (Pipelining)
+
+© Universidad Internacional de La Rioja (UNIR)
+
+Hennessy, J. & Patterson, D. (2002). Arquitectura de computadores. Un enfoque
+cuantitativo. Madrid: McGraw-Hill.
+
+En el capítulo 6 (pp. 269 a 352). puedes encontrar el desarrollo de un procesador
+didáctico clásico para la segmentación de cauce como el DLX, simplificación del MIPS,
+diseño que llevaron a cabo los autores en los años 80.
+
+Estructura de Computadores
+Tema 5. A fondo
+
+20
+
+Assemblers, Linkers, and the SPIM Simulator
+
+Larus, J.R. (1993). Assemblers, Linkers, and the SPIM Simulator. Recuperado de
+http://pages.cs.wisc.edu/~larus/HP_AppA.pdf
+
+Para conocer el ensamblador del procesador con segmentación de cauce MIPS, se
+puede revisar el apéndice A.
+PCI Express
+
+Dubey, P. K. y Flynn, M. J. (1991, octubre). Branch Strategies: Modeling and Optimization.
+IEEE
+
+Transactions
+
+on
+
+Computers,
+
+40(10).
+
+Recuperado
+
+de
+
+http://i.stanford.edu/pub/cstr/reports/csl/tr/90/411/CSL-TR-90-411.pdf
+
+Para profundizar en las técnicas de reducción del efecto de los saltos en cadenas
+
+© Universidad Internacional de La Rioja (UNIR)
+
+segmentadas se puede revisar este artículo.
+
+Estructura de Computadores
+Tema 5. A fondo
+
+21
+
+Actividades
+Laboratorio #1: Simulación y optimización de un
+programa en un procesador escalar segmentado
+Preparación para el laboratorio
+
+Antes de acudir al laboratorio deberás haber instalado en tu máquina el simulador
+WinDLXV. También tendrás que haber leído el manual correspondiente. Si no lo has
+hecho previamente, descarga la herramienta y consulta los manuales de la misma en
+el apartado Recursos Externos.
+
+Descripción del laboratorio
+En esta práctica vamos a trabajar la ejecución segmentada de un programa para el
+procesador DLX, basándonos en los resultados obtenidos en su simulación,
+intentaremos optimizarlo aplicando las técnicas de desenrollado de bucles y de
+reordenación del código comentadas en clase.
+Entrega del laboratorio
+Una vez finalizado el laboratorio deberás entregar un escrito en el que aparezcan los
+
+© Universidad Internacional de La Rioja (UNIR)
+
+siguientes puntos:
+
+ El resultado de la simulación de la práctica propuesta incluyendo la imagen del
+
+cronograma de ejecución y de la pantalla de estadísticas del simulador, indicando
+dónde se producen los parones en la ejecución debidos a los conflictos que surjan.
+ El código mejorado con los criterios propuestos en la práctica.
+ Repetir la simulación del apartado 1 para el código mejorado confirmando con ello
+
+que se obtiene una ejecución más rápida.
+Estructura de Computadores
+Tema 5. Actividades
+
+22
+
+Test
+1. La segmentación de cauce…
+A. Es una técnica que se basa en agrupar varias unidades aritméticas en el
+procesador de modo que se puedan ejecutar un determinado número de
+operaciones simultáneamente.
+B. Consiste en dividir la ejecución de instrucciones en fases y diseñar
+procesadores formados por distintas etapas de modo que cada una de ellas
+pueda desarrollar una fase de forma independiente.
+C. Es una técnica que se aplica en la configuración de la jerarquía de memoria.
+D. Las tres respuestas anteriores son correctas.
+
+2. En un procesador segmentado…
+A. Se pueden ejecutar varias instrucciones al mismo tiempo en diferentes fases
+de ejecución.
+B. El procesador se divide en varios procesadores más reducidos pero de
+funcionalidad similar.
+C. La longitud de la cadena depende del tamaño de los operandos que maneje
+el procesador.
+D. Ninguna de las tres respuestas anteriores es correcta.
+
+3. El TLI de un procesador segmentado…
+A. Representa el tiempo que tardan en ejecutarse n instrucciones similares.
+B. Indica la velocidad de ejecución del cauce.
+
+© Universidad Internacional de La Rioja (UNIR)
+
+C. Representa el tiempo de ejecución de una instrucción aislada o de la primera
+instrucción de una aplicación.
+D. Las tres respuestas anteriores son correctas.
+
+Estructura de Computadores
+Tema 5. Test
+
+23
+
+4. La técnica de segmentación de cauce se implementó por primera vez…
+A. Para acelerar los accesos a memoria.
+B. Para ejecutar mayor número de instrucciones por unidad de tiempo.
+C. Para aumentar el tamaño de los operandos.
+D. Para acelerar las operaciones en coma flotante.
+
+5. Un procesador no segmentado tarda en ejecutar una instrucción un tiempo T, si
+su unidad de ejecución se divide en varias etapas cuyo tiempo de proceso es t y se
+ejecutan n instrucciones…
+A. La máxima ganancia que se obtendría en el segundo caso respecto al primero
+sería T×t.
+B. La máxima ganancia que se obtendría en el segundo caso respecto al primero
+sería T/n.
+C. La máxima ganancia que se obtendría en el segundo caso respecto al primero
+sería T/t.
+D. La máxima ganancia que se obtendría en el segundo caso respecto al primero
+sería t×n.
+
+6. Un procesador no segmentado tarda en ejecutar una instrucción un tiempo T, si
+su unidad de ejecución se divide en varias etapas cuyo tiempo de proceso es t y se
+ejecutan n instrucciones, …
+A. … si T<TLI, la eficiencia máxima obtenible puede ser mayor que 1.
+B. … si T<TLI, la eficiencia máxima obtenible será menor que 1.
+C. … si T<TLI, la eficiencia máxima obtenible será 1.
+
+© Universidad Internacional de La Rioja (UNIR)
+
+D. Ninguna de las respuestas anteriores es cierta.
+
+7. Respecto a los riesgos o conflictos en segmentación de cauce, se puede decir:
+A. Que pueden ser de datos, de control y estructurales.
+B. Que nunca se pueden dar si el número de etapas es par.
+C. Que los conflictos de datos solo existen en procesadores superescalares.
+D. Las tres respuestas anteriores son correctas.
+Estructura de Computadores
+Tema 5. Test
+
+24
+
+8. ¿En qué consiste la técnica del salto retardado?
+A. En que se retrasó el salto tanto como sea posible.
+B. En que siempre se ejecute la instrucción que sigue al salto.
+C. En que el salto se pueda realizar hacia delante y hacia atrás respecto a la
+posición actual.
+D. En que el salto a realizar se sitúe al final del programa.
+
+9. Respecto a la resolución de dependencias de la segmentación de cauce:
+A. Se dice que es estática si depende de la optimización del hardware del
+procesador.
+B. Se dice que es dinámica si cambia su comportamiento según cambie la
+instrucción.
+C. Se dice que es dinámica si depende del último resultado obtenido en la ALU.
+D. Se dice que es estática si el compilador ordena las instrucciones de forma
+adecuada para evitar problemas derivados de las dependencias.
+
+10. En un procesador segmentado:
+A. El cauce es lineal si cada etapa conectada solo tiene una etapa anterior y otra
+posterior, y las instrucciones se pueden introducir en el cauce al ritmo de una
+cada ciclo de reloj.
+B. El cauce es lineal si admite que una misma instrucción reutilice la misma
+etapa varia veces.
+C. Una interrupción es precisa si tras atenderla se vuelve a ejecutar siempre la
+instrucción que se estaba procesando cuando apareció.
+
+© Universidad Internacional de La Rioja (UNIR)
+
+D. Ninguna de las afirmaciones anteriores es correcta.
+
+Estructura de Computadores
+Tema 5. Test
+
+25
+
+

@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 5: Procesadores segmentados</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1><i class="fas fa-microchip"></i> Tema 5: Procesadores segmentados</h1>
+                <p>Explora la arquitectura de procesadores segmentados, pipeline y técnicas de optimización</p>
+            </div>
+            <div class="header-controls">
+                <button id="theme-toggle" class="control-btn" title="Cambiar tema">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button id="fullscreen-toggle" class="control-btn" title="Pantalla completa">
+                    <i class="fas fa-expand"></i>
+                </button>
+                <a href="../index.html" class="control-btn" title="Volver al portal">
+                    <i class="fas fa-home"></i>
+                </a>
+            </div>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="navigation">
+            <button class="nav-btn active" data-section="introduction">
+                <i class="fas fa-info-circle"></i>
+                <span>Introducción</span>
+            </button>
+            <button class="nav-btn" data-section="pipeline">
+                <i class="fas fa-stream"></i>
+                <span>Pipeline</span>
+            </button>
+            <button class="nav-btn" data-section="hazards">
+                <i class="fas fa-exclamation-triangle"></i>
+                <span>Riesgos</span>
+            </button>
+            <button class="nav-btn" data-section="optimization">
+                <i class="fas fa-rocket"></i>
+                <span>Optimización</span>
+            </button>
+            <button class="nav-btn" data-section="superscalar">
+                <i class="fas fa-layer-group"></i>
+                <span>Superscalar</span>
+            </button>
+            <button class="nav-btn" data-section="comparison">
+                <i class="fas fa-balance-scale"></i>
+                <span>Comparación</span>
+            </button>
+            <button class="nav-btn" data-section="simulator">
+                <i class="fas fa-cogs"></i>
+                <span>Simulador</span>
+            </button>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Introduction Section -->
+            <section id="introduction" class="content-section active">
+                <div class="section-header">
+                    <h2><i class="fas fa-info-circle"></i> Introducción a Procesadores Segmentados</h2>
+                </div>
+                <div class="section-content">
+                    <div class="info-grid">
+                        <div class="info-card">
+                            <h3><i class="fas fa-stream"></i> Concepto de Pipeline</h3>
+                            <p>El pipeline es una técnica de diseño de procesadores que permite ejecutar múltiples instrucciones simultáneamente dividiendo la ejecución en etapas secuenciales. Cada etapa procesa una instrucción diferente en cada ciclo de reloj.</p>
+                            <ul>
+                                <li><strong>Paralelismo a nivel de instrucción:</strong> Múltiples instrucciones en ejecución</li>
+                                <li><strong>Mejora del rendimiento:</strong> Mayor throughput de instrucciones</li>
+                                <li><strong>Complejidad aumentada:</strong> Gestión de dependencias y riesgos</li>
+                            </ul>
+                        </div>
+                        <div class="info-card">
+                            <h3><i class="fas fa-microchip"></i> Arquitectura Segmentada</h3>
+                            <p>Los procesadores segmentados dividen la ejecución de instrucciones en etapas bien definidas, donde cada etapa realiza una función específica del procesamiento de la instrucción.</p>
+                            <ul>
+                                <li><strong>Fetch:</strong> Obtención de instrucción de memoria</li>
+                                <li><strong>Decode:</strong> Decodificación y lectura de registros</li>
+                                <li><strong>Execute:</strong> Ejecución de la operación</li>
+                                <li><strong>Memory:</strong> Acceso a memoria (si es necesario)</li>
+                                <li><strong>Writeback:</strong> Escritura de resultados</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="concept-diagram">
+                        <h3>Arquitectura de Pipeline Clásico</h3>
+                        <div class="pipeline-diagram">
+                            <div class="pipeline-stage">
+                                <div class="stage-box fetch">IF</div>
+                                <div class="stage-label">Fetch</div>
+                            </div>
+                            <div class="pipeline-arrow">→</div>
+                            <div class="pipeline-stage">
+                                <div class="stage-box decode">ID</div>
+                                <div class="stage-label">Decode</div>
+                            </div>
+                            <div class="pipeline-arrow">→</div>
+                            <div class="pipeline-stage">
+                                <div class="stage-box execute">EX</div>
+                                <div class="stage-label">Execute</div>
+                            </div>
+                            <div class="pipeline-arrow">→</div>
+                            <div class="pipeline-stage">
+                                <div class="stage-box memory">MEM</div>
+                                <div class="stage-label">Memory</div>
+                            </div>
+                            <div class="pipeline-arrow">→</div>
+                            <div class="pipeline-stage">
+                                <div class="stage-box writeback">WB</div>
+                                <div class="stage-label">Writeback</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Pipeline Section -->
+            <section id="pipeline" class="content-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-stream"></i> Arquitectura de Pipeline</h2>
+                </div>
+                <div class="section-content">
+                    <div class="pipeline-stages">
+                        <h3>Etapas del Pipeline</h3>
+                        <div class="stages-grid">
+                            <div class="stage-card">
+                                <h4><i class="fas fa-download"></i> Fetch (IF)</h4>
+                                <div class="stage-details">
+                                    <p><strong>Función:</strong> Obtener la siguiente instrucción de memoria</p>
+                                    <p><strong>Operaciones:</strong></p>
+                                    <ul>
+                                        <li>Incrementar PC</li>
+                                        <li>Leer instrucción de memoria</li>
+                                        <li>Almacenar en registro IF/ID</li>
+                                    </ul>
+                                    <p><strong>Duración:</strong> 1 ciclo de reloj</p>
+                                </div>
+                            </div>
+                            <div class="stage-card">
+                                <h4><i class="fas fa-code"></i> Decode (ID)</h4>
+                                <div class="stage-details">
+                                    <p><strong>Función:</strong> Decodificar instrucción y leer registros</p>
+                                    <p><strong>Operaciones:</strong></p>
+                                    <ul>
+                                        <li>Decodificar opcode</li>
+                                        <li>Leer registros fuente</li>
+                                        <li>Detectar riesgos de datos</li>
+                                        <li>Generar señales de control</li>
+                                    </ul>
+                                    <p><strong>Duración:</strong> 1 ciclo de reloj</p>
+                                </div>
+                            </div>
+                            <div class="stage-card">
+                                <h4><i class="fas fa-calculator"></i> Execute (EX)</h4>
+                                <div class="stage-details">
+                                    <p><strong>Función:</strong> Ejecutar la operación aritmética/lógica</p>
+                                    <p><strong>Operaciones:</strong></p>
+                                    <ul>
+                                        <li>Operaciones ALU</li>
+                                        <li>Cálculo de dirección de salto</li>
+                                        <li>Comparaciones para saltos</li>
+                                        <li>Generar resultado</li>
+                                    </ul>
+                                    <p><strong>Duración:</strong> 1 ciclo de reloj</p>
+                                </div>
+                            </div>
+                            <div class="stage-card">
+                                <h4><i class="fas fa-memory"></i> Memory (MEM)</h4>
+                                <div class="stage-details">
+                                    <p><strong>Función:</strong> Acceso a memoria (load/store)</p>
+                                    <p><strong>Operaciones:</strong></p>
+                                    <ul>
+                                        <li>Acceso a memoria de datos</li>
+                                        <li>Resolución de saltos</li>
+                                        <li>Detección de excepciones</li>
+                                        <li>Actualización de PC</li>
+                                    </ul>
+                                    <p><strong>Duración:</strong> 1 ciclo de reloj</p>
+                                </div>
+                            </div>
+                            <div class="stage-card">
+                                <h4><i class="fas fa-save"></i> Writeback (WB)</h4>
+                                <div class="stage-details">
+                                    <p><strong>Función:</strong> Escribir resultado en registro</p>
+                                    <p><strong>Operaciones:</strong></p>
+                                    <ul>
+                                        <li>Escribir en banco de registros</li>
+                                        <li>Actualizar flags de estado</li>
+                                        <li>Completar instrucción</li>
+                                    </ul>
+                                    <p><strong>Duración:</strong> 1 ciclo de reloj</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pipeline-timing">
+                        <h3>Timing del Pipeline</h3>
+                        <div class="timing-chart">
+                            <canvas id="pipelineTimingChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Hazards Section -->
+            <section id="hazards" class="content-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-exclamation-triangle"></i> Riesgos del Pipeline</h2>
+                </div>
+                <div class="section-content">
+                    <div class="hazards-overview">
+                        <h3>Tipos de Riesgos</h3>
+                        <div class="hazards-grid">
+                            <div class="hazard-card">
+                                <h4><i class="fas fa-link"></i> Riesgos de Datos</h4>
+                                <p>Ocurren cuando una instrucción depende del resultado de una instrucción anterior que aún está en el pipeline.</p>
+                                <div class="hazard-example">
+                                    <h5>Ejemplo:</h5>
+                                    <pre><code>ADD R1, R2, R3    # R1 = R2 + R3
+SUB R4, R1, R5    # R4 = R1 - R5 (depende de ADD)</code></pre>
+                                </div>
+                                <div class="hazard-solutions">
+                                    <h5>Soluciones:</h5>
+                                    <ul>
+                                        <li><strong>Forwarding:</strong> Bypass de datos</li>
+                                        <li><strong>Stalling:</strong> Pausa del pipeline</li>
+                                        <li><strong>Reordering:</strong> Reordenamiento de instrucciones</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="hazard-card">
+                                <h4><i class="fas fa-random"></i> Riesgos de Control</h4>
+                                <p>Ocurren cuando se ejecuta una instrucción de salto y el pipeline no sabe si debe continuar o cambiar el flujo.</p>
+                                <div class="hazard-example">
+                                    <h5>Ejemplo:</h5>
+                                    <pre><code>BEQ R1, R2, Label  # Salto condicional
+ADD R3, R4, R5     # ¿Ejecutar o no?</code></pre>
+                                </div>
+                                <div class="hazard-solutions">
+                                    <h5>Soluciones:</h5>
+                                    <ul>
+                                        <li><strong>Predicción estática:</strong> Siempre tomar/no tomar</li>
+                                        <li><strong>Predicción dinámica:</strong> Historial de saltos</li>
+                                        <li><strong>Delay slots:</strong> Instrucciones de relleno</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="hazard-card">
+                                <h4><i class="fas fa-exclamation"></i> Riesgos Estructurales</h4>
+                                <p>Ocurren cuando múltiples instrucciones intentan usar el mismo recurso hardware simultáneamente.</p>
+                                <div class="hazard-example">
+                                    <h5>Ejemplo:</h5>
+                                    <pre><code>MUL R1, R2, R3    # Usa unidad multiplicadora
+MUL R4, R5, R6    # ¿Usar la misma unidad?</code></pre>
+                                </div>
+                                <div class="hazard-solutions">
+                                    <h5>Soluciones:</h5>
+                                    <ul>
+                                        <li><strong>Múltiples unidades:</strong> Duplicar recursos</li>
+                                        <li><strong>Pipeline separado:</strong> Unidades especializadas</li>
+                                        <li><strong>Stalling:</strong> Esperar recurso disponible</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hazard-detection">
+                        <h3>Detección y Resolución</h3>
+                        <div class="detection-methods">
+                            <div class="method-card">
+                                <h4><i class="fas fa-forward"></i> Forwarding (Bypass)</h4>
+                                <p>Transferir datos directamente entre etapas del pipeline sin esperar a la etapa de writeback.</p>
+                                <div class="method-diagram">
+                                    <div class="forwarding-path">
+                                        <span>EX → EX</span>
+                                        <span>MEM → EX</span>
+                                        <span>MEM → MEM</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="method-card">
+                                <h4><i class="fas fa-pause"></i> Stalling (Bubble)</h4>
+                                <p>Insertar burbujas (nops) en el pipeline para esperar que se resuelvan las dependencias.</p>
+                                <div class="method-diagram">
+                                    <div class="stalling-example">
+                                        <span>Instrucción</span>
+                                        <span>Bubble</span>
+                                        <span>Bubble</span>
+                                        <span>Instrucción</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="method-card">
+                                <h4><i class="fas fa-sort"></i> Reordering</h4>
+                                <p>Reordenar instrucciones en tiempo de compilación o ejecución para evitar dependencias.</p>
+                                <div class="method-diagram">
+                                    <div class="reordering-example">
+                                        <span>Original: A → B → C</span>
+                                        <span>Reordenado: A → C → B</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Optimization Section -->
+            <section id="optimization" class="content-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-rocket"></i> Técnicas de Optimización</h2>
+                </div>
+                <div class="section-content">
+                    <div class="optimization-techniques">
+                        <h3>Técnicas de Optimización del Pipeline</h3>
+                        <div class="techniques-grid">
+                            <div class="technique-card">
+                                <h4><i class="fas fa-brain"></i> Predicción de Saltos</h4>
+                                <div class="technique-details">
+                                    <p><strong>Objetivo:</strong> Predecir el resultado de saltos condicionales</p>
+                                    <div class="technique-types">
+                                        <div class="type-item">
+                                            <h5>Estática</h5>
+                                            <ul>
+                                                <li>Always Taken</li>
+                                                <li>Always Not Taken</li>
+                                                <li>Backward Taken, Forward Not Taken</li>
+                                            </ul>
+                                        </div>
+                                        <div class="type-item">
+                                            <h5>Dinámica</h5>
+                                            <ul>
+                                                <li>1-bit predictor</li>
+                                                <li>2-bit saturating counter</li>
+                                                <li>Correlated predictor</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="technique-card">
+                                <h4><i class="fas fa-copy"></i> Especulación</h4>
+                                <div class="technique-details">
+                                    <p><strong>Objetivo:</strong> Ejecutar instrucciones antes de saber si son necesarias</p>
+                                    <div class="speculation-types">
+                                        <div class="spec-type">
+                                            <h5>Control Speculation</h5>
+                                            <p>Ejecutar instrucciones después de un salto predicho</p>
+                                        </div>
+                                        <div class="spec-type">
+                                            <h5>Data Speculation</h5>
+                                            <p>Ejecutar con valores predichos de datos</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="technique-card">
+                                <h4><i class="fas fa-expand-arrows-alt"></i> Pipeline Superescalar</h4>
+                                <div class="technique-details">
+                                    <p><strong>Objetivo:</strong> Ejecutar múltiples instrucciones por ciclo</p>
+                                    <div class="superscalar-features">
+                                        <ul>
+                                            <li>Múltiples unidades de ejecución</li>
+                                            <li>Issue múltiple de instrucciones</li>
+                                            <li>Reordenamiento dinámico</li>
+                                            <li>Renombrado de registros</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="technique-card">
+                                <h4><i class="fas fa-clock"></i> Pipeline Profundo</h4>
+                                <div class="technique-details">
+                                    <p><strong>Objetivo:</strong> Aumentar la frecuencia de reloj</p>
+                                    <div class="deep-pipeline-info">
+                                        <ul>
+                                            <li>Más etapas del pipeline</li>
+                                            <li>Mayor frecuencia de reloj</li>
+                                            <li>Mayor latencia de instrucciones</li>
+                                            <li>Más penalización por saltos</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="performance-analysis">
+                        <h3>Análisis de Rendimiento</h3>
+                        <div class="performance-metrics">
+                            <div class="metric-card">
+                                <h4>CPI (Cycles Per Instruction)</h4>
+                                <p>Número promedio de ciclos por instrucción</p>
+                                <div class="metric-formula">CPI = Ciclos totales / Instrucciones</div>
+                            </div>
+                            <div class="metric-card">
+                                <h4>IPC (Instructions Per Cycle)</h4>
+                                <p>Número promedio de instrucciones por ciclo</p>
+                                <div class="metric-formula">IPC = 1 / CPI</div>
+                            </div>
+                            <div class="metric-card">
+                                <h4>Speedup</h4>
+                                <p>Mejora en rendimiento respecto al procesador no segmentado</p>
+                                <div class="metric-formula">Speedup = Tiempo no-pipeline / Tiempo pipeline</div>
+                            </div>
+                            <div class="metric-card">
+                                <h4>Eficiencia</h4>
+                                <p>Porcentaje de utilización del pipeline</p>
+                                <div class="metric-formula">Eficiencia = Speedup / Número de etapas</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Superscalar Section -->
+            <section id="superscalar" class="content-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-layer-group"></i> Arquitectura Superscalar</h2>
+                </div>
+                <div class="section-content">
+                    <div class="superscalar-overview">
+                        <h3>Conceptos Fundamentales</h3>
+                        <div class="superscalar-info">
+                            <div class="info-card">
+                                <h4><i class="fas fa-cogs"></i> Múltiples Unidades de Ejecución</h4>
+                                <p>Los procesadores superscalares tienen múltiples unidades funcionales que pueden ejecutar diferentes tipos de instrucciones simultáneamente.</p>
+                                <ul>
+                                    <li><strong>ALU:</strong> Operaciones aritméticas y lógicas</li>
+                                    <li><strong>FPU:</strong> Operaciones de punto flotante</li>
+                                    <li><strong>Load/Store:</strong> Accesos a memoria</li>
+                                    <li><strong>Branch:</strong> Instrucciones de salto</li>
+                                </ul>
+                            </div>
+                            <div class="info-card">
+                                <h4><i class="fas fa-sort-amount-up"></i> Issue Múltiple</h4>
+                                <p>El procesador puede emitir múltiples instrucciones por ciclo de reloj, siempre que no haya dependencias entre ellas.</p>
+                                <ul>
+                                    <li><strong>Issue en orden:</strong> Mantiene orden original</li>
+                                    <li><strong>Issue fuera de orden:</strong> Reordena dinámicamente</li>
+                                    <li><strong>Retire en orden:</strong> Garantiza consistencia</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="superscalar-techniques">
+                        <h3>Técnicas Superscalares</h3>
+                        <div class="techniques-grid">
+                            <div class="technique-card">
+                                <h4><i class="fas fa-exchange-alt"></i> Renombrado de Registros</h4>
+                                <p>Asignar registros físicos diferentes a registros lógicos para eliminar falsas dependencias.</p>
+                                <div class="technique-example">
+                                    <h5>Ejemplo:</h5>
+                                    <pre><code>ADD R1, R2, R3    # R1 físico = 5
+MUL R1, R4, R5    # R1 físico = 6 (renombrado)
+SUB R6, R1, R7    # Usa R1 físico = 6</code></pre>
+                                </div>
+                            </div>
+                            <div class="technique-card">
+                                <h4><i class="fas fa-list-ol"></i> Reordenamiento Dinámico</h4>
+                                <p>Ejecutar instrucciones en el orden que optimice el uso de recursos, no en el orden del programa.</p>
+                                <div class="technique-example">
+                                    <h5>Ejemplo:</h5>
+                                    <pre><code>Original: A → B → C → D
+Ejecutado: A → C → B → D</code></pre>
+                                </div>
+                            </div>
+                            <div class="technique-card">
+                                <h4><i class="fas fa-buffer"></i> Buffer de Reordenamiento</h4>
+                                <p>Almacenar instrucciones en ejecución y sus resultados hasta que puedan retirarse en orden.</p>
+                                <div class="technique-example">
+                                    <h5>Funciones:</h5>
+                                    <ul>
+                                        <li>Tracking de instrucciones</li>
+                                        <li>Manejo de excepciones</li>
+                                        <li>Recuperación de predicciones</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="technique-card">
+                                <h4><i class="fas fa-project-diagram"></i> Tomasulo Algorithm</h4>
+                                <p>Algoritmo para manejar dependencias de datos y permitir ejecución fuera de orden.</p>
+                                <div class="technique-example">
+                                    <h5>Componentes:</h5>
+                                    <ul>
+                                        <li>Reservation Stations</li>
+                                        <li>Register Alias Table</li>
+                                        <li>Common Data Bus</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="superscalar-performance">
+                        <h3>Rendimiento Superscalar</h3>
+                        <div class="performance-chart">
+                            <canvas id="superscalarPerformanceChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Comparison Section -->
+            <section id="comparison" class="content-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-balance-scale"></i> Comparación Secuencial vs Segmentado</h2>
+                </div>
+                <div class="section-content">
+                    <div class="comparison-intro">
+                        <h3>Análisis Comparativo: Procesador Secuencial vs Procesador Segmentado</h3>
+                        <p>Esta herramienta interactiva permite comparar el rendimiento entre un procesador secuencial y un procesador segmentado usando el ejemplo práctico de lavado de ropa.</p>
+                    </div>
+                    
+                    <div class="comparison-controls">
+                        <h3>Configuración de la Comparación</h3>
+                        <div class="control-grid">
+                            <div class="control-group">
+                                <label for="batch-count">Número de Lotes:</label>
+                                <input type="range" id="batch-count" min="1" max="8" value="4">
+                                <span id="batch-count-value">4</span>
+                            </div>
+                            <div class="control-group">
+                                <label for="task-duration">Duración por Tarea (min):</label>
+                                <input type="range" id="task-duration" min="10" max="60" value="30" step="10">
+                                <span id="task-duration-value">30</span>
+                            </div>
+                            <div class="control-group">
+                                <label for="task-count">Número de Tareas:</label>
+                                <input type="range" id="task-count" min="3" max="6" value="4">
+                                <span id="task-count-value">4</span>
+                            </div>
+                        </div>
+                        <button id="run-comparison" class="simulate-btn">
+                            <i class="fas fa-chart-line"></i> Ejecutar Comparación
+                        </button>
+                    </div>
+
+                    <div class="comparison-results">
+                        <h3>Resultados de la Comparación</h3>
+                        <div class="results-grid">
+                            <div class="result-card">
+                                <h4>Tiempo Secuencial</h4>
+                                <div id="sequential-time" class="result-value">-</div>
+                            </div>
+                            <div class="result-card">
+                                <h4>Tiempo Segmentado</h4>
+                                <div id="pipelined-time" class="result-value">-</div>
+                            </div>
+                            <div class="result-card">
+                                <h4>Speedup</h4>
+                                <div id="comparison-speedup" class="result-value">-</div>
+                            </div>
+                            <div class="result-card">
+                                <h4>Eficiencia</h4>
+                                <div id="efficiency" class="result-value">-</div>
+                            </div>
+                        </div>
+                        
+                        <div class="comparison-visualization">
+                            <h4>Visualización de la Comparación</h4>
+                            <div class="comparison-tabs">
+                                <button class="tab-btn active" data-tab="gantt">Diagrama de Gantt</button>
+                                <button class="tab-btn" data-tab="timeline">Línea de Tiempo</button>
+                                <button class="tab-btn" data-tab="performance">Rendimiento</button>
+                            </div>
+                            <div class="tab-content">
+                                <div id="gantt-tab" class="tab-pane active">
+                                    <div class="gantt-chart">
+                                        <canvas id="ganttChart"></canvas>
+                                    </div>
+                                </div>
+                                <div id="timeline-tab" class="tab-pane">
+                                    <div class="timeline-chart">
+                                        <canvas id="timelineChart"></canvas>
+                                    </div>
+                                </div>
+                                <div id="performance-tab" class="tab-pane">
+                                    <div class="performance-chart">
+                                        <canvas id="performanceChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="comparison-table">
+                            <h4>Tabla de Comparación Detallada</h4>
+                            <div class="table-container">
+                                <table id="comparison-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Tarea</th>
+                                            <th>Duración</th>
+                                            <th colspan="4">Procesador Secuencial</th>
+                                            <th colspan="4">Procesador Segmentado</th>
+                                        </tr>
+                                        <tr>
+                                            <th></th>
+                                            <th></th>
+                                            <th>Lote 1</th>
+                                            <th>Lote 2</th>
+                                            <th>Lote 3</th>
+                                            <th>Lote 4</th>
+                                            <th>Lote 1</th>
+                                            <th>Lote 2</th>
+                                            <th>Lote 3</th>
+                                            <th>Lote 4</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="comparison-table-body">
+                                        <!-- Se llenará dinámicamente -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Simulator Section -->
+            <section id="simulator" class="content-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-cogs"></i> Simulador de Pipeline</h2>
+                </div>
+                <div class="section-content">
+                    <div class="simulator-controls">
+                        <h3>Configuración del Pipeline</h3>
+                        <div class="control-grid">
+                            <div class="control-group">
+                                <label for="pipeline-stages">Número de Etapas:</label>
+                                <select id="pipeline-stages">
+                                    <option value="3">3 etapas</option>
+                                    <option value="5" selected>5 etapas (clásico)</option>
+                                    <option value="7">7 etapas</option>
+                                    <option value="10">10 etapas (profundo)</option>
+                                </select>
+                            </div>
+                            <div class="control-group">
+                                <label for="hazard-type">Tipo de Riesgo:</label>
+                                <select id="hazard-type">
+                                    <option value="none">Sin riesgos</option>
+                                    <option value="data">Riesgos de datos</option>
+                                    <option value="control">Riesgos de control</option>
+                                    <option value="structural">Riesgos estructurales</option>
+                                </select>
+                            </div>
+                            <div class="control-group">
+                                <label for="optimization">Optimización:</label>
+                                <select id="optimization">
+                                    <option value="none">Sin optimización</option>
+                                    <option value="forwarding">Forwarding</option>
+                                    <option value="prediction">Predicción de saltos</option>
+                                    <option value="superscalar">Superscalar</option>
+                                </select>
+                            </div>
+                            <div class="control-group">
+                                <label for="instruction-count">Número de Instrucciones:</label>
+                                <input type="range" id="instruction-count" min="5" max="20" value="10">
+                                <span id="instruction-count-value">10</span>
+                            </div>
+                        </div>
+                        <button id="run-simulation" class="simulate-btn">
+                            <i class="fas fa-play"></i> Ejecutar Simulación
+                        </button>
+                    </div>
+                    <div class="simulation-results">
+                        <h3>Resultados de la Simulación</h3>
+                        <div class="results-grid">
+                            <div class="result-card">
+                                <h4>Ciclos Totales</h4>
+                                <div id="total-cycles" class="result-value">-</div>
+                            </div>
+                            <div class="result-card">
+                                <h4>CPI</h4>
+                                <div id="cpi" class="result-value">-</div>
+                            </div>
+                            <div class="result-card">
+                                <h4>IPC</h4>
+                                <div id="ipc" class="result-value">-</div>
+                            </div>
+                            <div class="result-card">
+                                <h4>Speedup</h4>
+                                <div id="speedup" class="result-value">-</div>
+                            </div>
+                        </div>
+                        <div class="pipeline-visualization">
+                            <h4>Visualización del Pipeline</h4>
+                            <div id="pipeline-visualization" class="pipeline-grid">
+                                <!-- Se llenará dinámicamente -->
+                            </div>
+                        </div>
+                        <div class="performance-chart">
+                            <canvas id="simulationChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

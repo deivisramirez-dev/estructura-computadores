@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Inicialización de la aplicación
 function initializeApp() {
-    console.log('🚀 Tema 3: Arquitectura de Computadores iniciado');
+    console.log('🚀 Tema 1: Fundamentos del Diseño y Evolución iniciado');
     
     // Aplicar animaciones de entrada
     animateElements();
@@ -22,6 +22,15 @@ function initializeApp() {
 
 // Configurar event listeners
 function setupEventListeners() {
+    // Event listeners para navegación
+    const navButtons = document.querySelectorAll('.nav-btn');
+    navButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const targetSection = this.getAttribute('data-section');
+            showSection(targetSection);
+        });
+    });
+    
     // Event listener para tecla ESC
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') {
@@ -42,35 +51,43 @@ function setupEventListeners() {
     }
 }
 
-// Configurar navegación entre secciones
-function setupNavigation() {
-    const navButtons = document.querySelectorAll('.nav-btn');
-    const contentSections = document.querySelectorAll('.content-section');
-    
-    navButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const targetSection = this.getAttribute('data-section');
-            
-            // Remover clase active de todos los botones y secciones
-            navButtons.forEach(btn => btn.classList.remove('active'));
-            contentSections.forEach(section => section.classList.remove('active'));
-            
-            // Agregar clase active al botón clickeado
-            this.classList.add('active');
-            
-            // Mostrar sección correspondiente
-            const targetElement = document.getElementById(targetSection);
-            if (targetElement) {
-                targetElement.classList.add('active');
-                
-                // Scroll suave a la sección
-                targetElement.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
-        });
+// Mostrar sección específica
+function showSection(sectionId) {
+    // Ocultar todas las secciones
+    const sections = document.querySelectorAll('.content-section');
+    sections.forEach(section => {
+        section.classList.remove('active');
     });
+    
+    // Desactivar todos los botones de navegación
+    const navButtons = document.querySelectorAll('.nav-btn');
+    navButtons.forEach(button => {
+        button.classList.remove('active');
+    });
+    
+    // Mostrar la sección seleccionada
+    const targetSection = document.getElementById(sectionId);
+    if (targetSection) {
+        targetSection.classList.add('active');
+    }
+    
+    // Activar el botón correspondiente
+    const activeButton = document.querySelector(`[data-section="${sectionId}"]`);
+    if (activeButton) {
+        activeButton.classList.add('active');
+    }
+    
+    // Animar la entrada de la sección
+    if (targetSection) {
+        targetSection.style.opacity = '0';
+        targetSection.style.transform = 'translateY(20px)';
+        
+        setTimeout(() => {
+            targetSection.style.transition = 'all 0.5s ease-out';
+            targetSection.style.opacity = '1';
+            targetSection.style.transform = 'translateY(0)';
+        }, 50);
+    }
 }
 
 // Gestión del tema oscuro/claro
@@ -104,6 +121,12 @@ function applyTheme() {
     const savedTheme = localStorage.getItem('theme') || 'light';
     currentTheme = savedTheme;
     document.documentElement.setAttribute('data-theme', currentTheme);
+    
+    // Actualizar meta theme-color para móviles
+    const metaThemeColor = document.querySelector('meta[name="theme-color"]');
+    if (metaThemeColor) {
+        metaThemeColor.setAttribute('content', currentTheme === 'dark' ? '#0f172a' : '#2563eb');
+    }
     
     // Actualizar texto del botón
     const themeButton = document.querySelector('.btn-secondary');
@@ -208,8 +231,8 @@ function setupKeyboardShortcuts() {
             toggleFullscreen();
         }
         
-        // Números 1-7 para navegar entre secciones
-        const sectionKeys = ['1', '2', '3', '4', '5', '6', '7'];
+        // Números 1-6 para navegar entre secciones
+        const sectionKeys = ['1', '2', '3', '4', '5', '6'];
         if (sectionKeys.includes(e.key)) {
             const sectionIndex = parseInt(e.key) - 1;
             const navButtons = document.querySelectorAll('.nav-btn');
@@ -342,4 +365,4 @@ function getNotificationIcon(type) {
     return icons[type] || 'info-circle';
 }
 
-console.log('✅ Tema 3 JavaScript cargado correctamente');
+console.log('✅ Tema 1 JavaScript cargado correctamente');

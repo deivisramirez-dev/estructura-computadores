@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arquitectura del Procesador - Tema 3</title>
+    <title>Lienzo Didáctico - Arquitectura de Computadores</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -16,146 +16,121 @@
             <div class="header-content">
                 <h1 class="main-title">
                     <i class="fas fa-microchip"></i>
-                    Arquitectura del Procesador
+                    Tema 3: Arquitectura de Computadores
                 </h1>
-                <p class="subtitle">Cachés y Memoria Virtual - Tema 3</p>
+                <p class="subtitle">Estructura y Organización de Sistemas Computacionales</p>
             </div>
         </header>
 
         <!-- Navigation -->
         <nav class="nav">
-            <div class="nav-buttons">
-                <button class="nav-btn active" onclick="showSection('fundamentos')">
-                    <i class="fas fa-cogs"></i>
-                    <span>Fundamentos</span>
-                </button>
-                <button class="nav-btn" onclick="showSection('tamano-bloque')">
-                    <i class="fas fa-ruler"></i>
-                    <span>Tamaño de Bloque</span>
-                </button>
-                <button class="nav-btn" onclick="showSection('fallos-cache')">
-                    <i class="fas fa-exclamation-triangle"></i>
-                    <span>Fallos de Caché</span>
-                </button>
-                <button class="nav-btn" onclick="showSection('politicas-escritura')">
-                    <i class="fas fa-edit"></i>
-                    <span>Políticas de Escritura</span>
-                </button>
-                <button class="nav-btn" onclick="showSection('diseno-memoria')">
-                    <i class="fas fa-memory"></i>
-                    <span>Diseño de Memoria</span>
-                </button>
-                <button class="nav-btn" onclick="showSection('evaluacion-cache')">
-                    <i class="fas fa-chart-line"></i>
-                    <span>Evaluación</span>
-                </button>
-                <button class="nav-btn" onclick="showSection('memoria-virtual')">
-                    <i class="fas fa-hdd"></i>
-                    <span>Memoria Virtual</span>
-                </button>
-            </div>
-            <div class="nav-controls">
-                <button class="btn btn-back" onclick="goToMainPortal()">
-                    <i class="fas fa-home"></i>
-                    <span>Portal Principal</span>
-                </button>
-                <button class="btn btn-secondary" onclick="toggleTheme()">
-                    <i class="fas fa-moon"></i>
-                    <span>Tema Oscuro</span>
-                </button>
-                <button class="btn btn-primary" onclick="toggleFullscreen()">
-                    <i class="fas fa-expand"></i>
-                    <span>Pantalla Completa</span>
-                </button>
+            <div class="nav-content">
+                <div class="nav-info">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>Programa de Ingeniería Informática</span>
+                </div>
+                <div class="nav-controls">
+                    <button class="btn btn-back" onclick="goToMainPortal()">
+                        <i class="fas fa-home"></i>
+                        <span>Portal Principal</span>
+                    </button>
+                    <button class="btn btn-secondary" onclick="toggleTheme()">
+                        <i class="fas fa-moon"></i>
+                        <span>Tema Oscuro</span>
+                    </button>
+                    <button class="btn btn-primary" onclick="toggleFullscreen()">
+                        <i class="fas fa-expand"></i>
+                        <span>Pantalla Completa</span>
+                    </button>
+                </div>
             </div>
         </nav>
 
         <!-- Main Content -->
         <main class="main">
-            <!-- Fundamentos de Cachés -->
-            <section id="fundamentos" class="content-section active">
-                <div class="section-header">
-                    <h2><i class="fas fa-cogs"></i> Principios Básicos de las Cachés</h2>
-                    <p>Componentes críticos que mejoran el rendimiento del acceso a la memoria</p>
+            <!-- Navigation para secciones del tema -->
+            <nav class="navigation">
+                <div class="nav-buttons">
+                    <button class="nav-btn active" data-section="introduccion">
+                        <i class="fas fa-info-circle"></i>
+                        <span>Introducción</span>
+                    </button>
+                    <button class="nav-btn" data-section="componentes">
+                        <i class="fas fa-cogs"></i>
+                        <span>Componentes Básicos</span>
+                    </button>
+                    <button class="nav-btn" data-section="memoria">
+                        <i class="fas fa-memory"></i>
+                        <span>Jerarquía de Memoria</span>
+                    </button>
+                    <button class="nav-btn" data-section="cpu">
+                        <i class="fas fa-microchip"></i>
+                        <span>Unidad Central de Procesamiento</span>
+                    </button>
+                    <button class="nav-btn" data-section="buses">
+                        <i class="fas fa-route"></i>
+                        <span>Sistema de Buses</span>
+                    </button>
+                    <button class="nav-btn" data-section="entrada-salida">
+                        <i class="fas fa-exchange-alt"></i>
+                        <span>Entrada/Salida</span>
+                    </button>
+                    <button class="nav-btn" data-section="arquitecturas">
+                        <i class="fas fa-sitemap"></i>
+                        <span>Tipos de Arquitecturas</span>
+                    </button>
                 </div>
+            </nav>
 
+            <!-- Introducción Section -->
+            <section id="introduccion" class="content-section active">
+                <div class="section-header">
+                    <h2><i class="fas fa-info-circle"></i> Introducción a la Arquitectura de Computadores</h2>
+                    <p>Fundamentos de la estructura y organización de sistemas computacionales</p>
+                </div>
+                
                 <div class="content-grid">
-                    <div class="content-card">
-                        <h3>Conceptos Clave</h3>
-                        <div class="concept-list">
-                            <div class="concept-item">
+                    <div class="card definition-card">
+                        <h3><i class="fas fa-quote-left"></i> Definición</h3>
+                        <p class="highlight">"La arquitectura de computadores se refiere a la estructura y organización de los componentes hardware de un sistema computacional, incluyendo la forma en que se interconectan y funcionan juntos."</p>
+                        <div class="definition-details">
+                            <div class="detail-item">
+                                <i class="fas fa-cogs"></i>
+                                <span>Organización de componentes hardware</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-network-wired"></i>
+                                <span>Interconexiones entre elementos</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-sync"></i>
+                                <span>Funcionamiento coordinado del sistema</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card importance-card">
+                        <h3><i class="fas fa-star"></i> Importancia</h3>
+                        <div class="importance-list">
+                            <div class="importance-item">
                                 <i class="fas fa-check-circle"></i>
                                 <div>
-                                    <strong>Bit de Validez:</strong> Indica si el bloque contiene datos válidos
+                                    <h4>Diseño de Sistemas</h4>
+                                    <p>Base para el desarrollo de nuevos computadores</p>
                                 </div>
                             </div>
-                            <div class="concept-item">
-                                <i class="fas fa-tag"></i>
+                            <div class="importance-item">
+                                <i class="fas fa-check-circle"></i>
                                 <div>
-                                    <strong>Etiqueta:</strong> Identifica la dirección de memoria del bloque
+                                    <h4>Optimización</h4>
+                                    <p>Permite mejorar el rendimiento del sistema</p>
                                 </div>
                             </div>
-                            <div class="concept-item">
-                                <i class="fas fa-list-ol"></i>
+                            <div class="importance-item">
+                                <i class="fas fa-check-circle"></i>
                                 <div>
-                                    <strong>Índice:</strong> Determina la posición del bloque en la caché
-                                </div>
-                            </div>
-                            <div class="concept-item">
-                                <i class="fas fa-cube"></i>
-                                <div>
-                                    <strong>Bloque de Caché:</strong> Unidad de transferencia entre memoria y caché
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="content-card">
-                        <h3>Ejemplo: Caché de Correspondencia Directa</h3>
-                        <div class="cache-example">
-                            <div class="cache-config">
-                                <div class="config-item">
-                                    <label>Tamaño de Caché:</label>
-                                    <span>4 KB</span>
-                                </div>
-                                <div class="config-item">
-                                    <label>Memoria Principal:</label>
-                                    <span>4 GB</span>
-                                </div>
-                                <div class="config-item">
-                                    <label>Tamaño de Bloque:</label>
-                                    <span>64 bytes</span>
-                                </div>
-                            </div>
-                            <div class="cache-visualization">
-                                <canvas id="cacheVisualization" width="400" height="300"></canvas>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="content-card">
-                        <h3>Calculadora de Tasa de Aciertos</h3>
-                        <div class="calculator">
-                            <div class="input-group">
-                                <label for="hits">Número de Aciertos:</label>
-                                <input type="number" id="hits" value="850" min="0">
-                            </div>
-                            <div class="input-group">
-                                <label for="misses">Número de Fallos:</label>
-                                <input type="number" id="misses" value="150" min="0">
-                            </div>
-                            <button class="btn btn-primary" onclick="calculateHitRate()">
-                                <i class="fas fa-calculator"></i>
-                                Calcular Tasa de Aciertos
-                            </button>
-                            <div class="result" id="hitRateResult">
-                                <div class="result-item">
-                                    <span>Tasa de Aciertos:</span>
-                                    <strong id="hitRate">85.0%</strong>
-                                </div>
-                                <div class="result-item">
-                                    <span>Tasa de Fallos:</span>
-                                    <strong id="missRate">15.0%</strong>
+                                    <h4>Compatibilidad</h4>
+                                    <p>Garantiza la interoperabilidad entre componentes</p>
                                 </div>
                             </div>
                         </div>
@@ -163,792 +138,287 @@
                 </div>
             </section>
 
-            <!-- Tamaño de Bloque -->
-            <section id="tamano-bloque" class="content-section">
+            <!-- Componentes Section -->
+            <section id="componentes" class="content-section">
                 <div class="section-header">
-                    <h2><i class="fas fa-ruler"></i> Consideraciones sobre el Tamaño de Bloque</h2>
-                    <p>Influencia del tamaño del bloque en la tasa de fallos y rendimiento</p>
+                    <h2><i class="fas fa-cogs"></i> Componentes Básicos</h2>
+                    <p>Elementos fundamentales que constituyen un computador</p>
                 </div>
-
+                
                 <div class="content-grid">
-                    <div class="content-card">
-                        <h3>Efectos del Tamaño de Bloque</h3>
-                        <div class="effects-list">
-                            <div class="effect-item positive">
-                                <i class="fas fa-arrow-up"></i>
-                                <div>
-                                    <strong>Ventaja:</strong> Mayor localidad espacial aprovechada
-                                </div>
+                    <div class="card components-overview">
+                        <h3><i class="fas fa-list"></i> Componentes Principales</h3>
+                        <div class="components-grid">
+                            <div class="component-item">
+                                <i class="fas fa-microchip"></i>
+                                <h4>CPU</h4>
+                                <p>Unidad Central de Procesamiento</p>
                             </div>
-                            <div class="effect-item negative">
-                                <i class="fas fa-arrow-down"></i>
-                                <div>
-                                    <strong>Desventaja:</strong> Penalización por fallo aumenta
-                                </div>
+                            <div class="component-item">
+                                <i class="fas fa-memory"></i>
+                                <h4>Memoria</h4>
+                                <p>Almacenamiento de datos e instrucciones</p>
                             </div>
-                            <div class="effect-item warning">
-                                <i class="fas fa-exclamation-triangle"></i>
-                                <div>
-                                    <strong>Punto de Inflexión:</strong> Tasa de fallos puede aumentar
-                                </div>
+                            <div class="component-item">
+                                <i class="fas fa-hdd"></i>
+                                <h4>Almacenamiento</h4>
+                                <p>Dispositivos de almacenamiento masivo</p>
                             </div>
-                        </div>
-                    </div>
-
-                    <div class="content-card">
-                        <h3>Simulador de Tamaño de Bloque</h3>
-                        <div class="simulator">
-                            <div class="input-group">
-                                <label for="blockSize">Tamaño de Bloque (bytes):</label>
-                                <input type="range" id="blockSize" min="16" max="512" value="64" step="16">
-                                <span id="blockSizeValue">64 bytes</span>
-                            </div>
-                            <div class="input-group">
-                                <label for="cacheSize">Tamaño de Caché (KB):</label>
-                                <input type="range" id="cacheSize" min="1" max="16" value="4" step="1">
-                                <span id="cacheSizeValue">4 KB</span>
-                            </div>
-                            <button class="btn btn-primary" onclick="simulateBlockSize()">
-                                <i class="fas fa-play"></i>
-                                Simular Rendimiento
-                            </button>
-                            <div class="simulation-results" id="blockSizeResults">
-                                <canvas id="blockSizeChart" width="400" height="300"></canvas>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="content-card">
-                        <h3>Fórmula de Penalización por Fallo</h3>
-                        <div class="formula-display">
-                            <div class="formula">
-                                <span>Penalización = Tiempo de Acceso a Memoria + Tiempo de Transferencia</span>
-                            </div>
-                            <div class="formula-breakdown">
-                                <div class="formula-part">
-                                    <span>Tiempo de Transferencia =</span>
-                                    <span class="math">Tamaño de Bloque / Ancho de Banda</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="calculator">
-                            <div class="input-group">
-                                <label for="memoryAccess">Tiempo de Acceso a Memoria (ns):</label>
-                                <input type="number" id="memoryAccess" value="100" min="0">
-                            </div>
-                            <div class="input-group">
-                                <label for="bandwidth">Ancho de Banda (GB/s):</label>
-                                <input type="number" id="bandwidth" value="25.6" min="0" step="0.1">
-                            </div>
-                            <button class="btn btn-primary" onclick="calculateMissPenalty()">
-                                <i class="fas fa-calculator"></i>
-                                Calcular Penalización
-                            </button>
-                            <div class="result">
-                                <div class="result-item">
-                                    <span>Penalización por Fallo:</span>
-                                    <strong id="missPenalty">102.5 ns</strong>
-                                </div>
+                            <div class="component-item">
+                                <i class="fas fa-route"></i>
+                                <h4>Buses</h4>
+                                <p>Sistema de interconexión</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- Fallos de Caché -->
-            <section id="fallos-cache" class="content-section">
+            <!-- Memoria Section -->
+            <section id="memoria" class="content-section">
                 <div class="section-header">
-                    <h2><i class="fas fa-exclamation-triangle"></i> Tratamiento de los Fallos de Caché</h2>
-                    <p>Manejo esencial para mantener el rendimiento del procesador</p>
+                    <h2><i class="fas fa-memory"></i> Jerarquía de Memoria</h2>
+                    <p>Organización de los diferentes niveles de memoria</p>
                 </div>
-
+                
                 <div class="content-grid">
-                    <div class="content-card">
-                        <h3>Tipos de Fallos</h3>
-                        <div class="miss-types">
-                            <div class="miss-type">
-                                <div class="miss-header">
-                                    <i class="fas fa-cold"></i>
-                                    <h4>Fallos Fríos (Cold Misses)</h4>
-                                </div>
-                                <p>Primera vez que se accede a un bloque de memoria</p>
-                                <div class="miss-example">
-                                    <strong>Ejemplo:</strong> Carga inicial de un programa
-                                </div>
+                    <div class="card memory-hierarchy">
+                        <h3><i class="fas fa-layer-group"></i> Niveles de Memoria</h3>
+                        <div class="memory-levels">
+                            <div class="memory-level">
+                                <h4><i class="fas fa-bolt"></i> Registros</h4>
+                                <p>Más rápidos, menor capacidad, mayor coste</p>
+                                <ul>
+                                    <li>Velocidad: Muy alta</li>
+                                    <li>Capacidad: 32-64 bytes</li>
+                                    <li>Coste: Muy alto</li>
+                                </ul>
                             </div>
-                            <div class="miss-type">
-                                <div class="miss-header">
-                                    <i class="fas fa-sync"></i>
-                                    <h4>Fallos de Capacidad</h4>
-                                </div>
-                                <p>La caché es demasiado pequeña para contener todos los bloques activos</p>
-                                <div class="miss-example">
-                                    <strong>Ejemplo:</strong> Procesamiento de grandes arrays
-                                </div>
+                            <div class="memory-level">
+                                <h4><i class="fas fa-tachometer-alt"></i> Cache L1</h4>
+                                <p>Memoria cache de primer nivel</p>
+                                <ul>
+                                    <li>Velocidad: Alta</li>
+                                    <li>Capacidad: 32-64 KB</li>
+                                    <li>Coste: Alto</li>
+                                </ul>
                             </div>
-                            <div class="miss-type">
-                                <div class="miss-header">
-                                    <i class="fas fa-exchange-alt"></i>
-                                    <h4>Fallos de Conflicto</h4>
-                                </div>
-                                <p>Múltiples direcciones mapean a la misma línea de caché</p>
-                                <div class="miss-example">
-                                    <strong>Ejemplo:</strong> Acceso a arrays con stride grande
-                                </div>
+                            <div class="memory-level">
+                                <h4><i class="fas fa-tachometer-alt"></i> Cache L2</h4>
+                                <p>Memoria cache de segundo nivel</p>
+                                <ul>
+                                    <li>Velocidad: Media-alta</li>
+                                    <li>Capacidad: 256 KB - 1 MB</li>
+                                    <li>Coste: Medio</li>
+                                </ul>
                             </div>
-                        </div>
-                    </div>
-
-                    <div class="content-card">
-                        <h3>Simulador de Fallos de Caché</h3>
-                        <div class="cache-simulator">
-                            <div class="simulator-controls">
-                                <div class="input-group">
-                                    <label for="cacheLines">Líneas de Caché:</label>
-                                    <input type="range" id="cacheLines" min="4" max="64" value="16" step="4">
-                                    <span id="cacheLinesValue">16</span>
-                                </div>
-                                <div class="input-group">
-                                    <label for="associativity">Asociatividad:</label>
-                                    <select id="associativity">
-                                        <option value="1">Directa (1-way)</option>
-                                        <option value="2">2-way</option>
-                                        <option value="4">4-way</option>
-                                        <option value="8">8-way</option>
-                                    </select>
-                                </div>
-                                <button class="btn btn-primary" onclick="runCacheSimulation()">
-                                    <i class="fas fa-play"></i>
-                                    Ejecutar Simulación
-                                </button>
+                            <div class="memory-level">
+                                <h4><i class="fas fa-memory"></i> RAM</h4>
+                                <p>Memoria principal del sistema</p>
+                                <ul>
+                                    <li>Velocidad: Media</li>
+                                    <li>Capacidad: 8-64 GB</li>
+                                    <li>Coste: Bajo</li>
+                                </ul>
                             </div>
-                            <div class="simulation-display">
-                                <canvas id="cacheSimulationChart" width="400" height="300"></canvas>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="content-card">
-                        <h3>Controlador de Caché</h3>
-                        <div class="controller-flow">
-                            <div class="flow-step">
-                                <div class="step-number">1</div>
-                                <div class="step-content">
-                                    <h4>Acceso a Caché</h4>
-                                    <p>CPU solicita datos a la caché</p>
-                                </div>
-                            </div>
-                            <div class="flow-step">
-                                <div class="step-number">2</div>
-                                <div class="step-content">
-                                    <h4>Verificación de Etiqueta</h4>
-                                    <p>Compara la etiqueta de la dirección</p>
-                                </div>
-                            </div>
-                            <div class="flow-step">
-                                <div class="step-number">3</div>
-                                <div class="step-content">
-                                    <h4>Resultado</h4>
-                                    <p>Acierto: datos devueltos<br>Fallo: solicitud a memoria</p>
-                                </div>
+                            <div class="memory-level">
+                                <h4><i class="fas fa-hdd"></i> Disco Duro</h4>
+                                <p>Almacenamiento masivo</p>
+                                <ul>
+                                    <li>Velocidad: Baja</li>
+                                    <li>Capacidad: 1-10 TB</li>
+                                    <li>Coste: Muy bajo</li>
+                                </ul>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- Políticas de Escritura -->
-            <section id="politicas-escritura" class="content-section">
+            <!-- CPU Section -->
+            <section id="cpu" class="content-section">
                 <div class="section-header">
-                    <h2><i class="fas fa-edit"></i> Manejo de Accesos de Escritura en Caché</h2>
-                    <p>Políticas cruciales para mantener la coherencia entre caché y memoria principal</p>
+                    <h2><i class="fas fa-microchip"></i> Unidad Central de Procesamiento</h2>
+                    <p>Componente principal que ejecuta las instrucciones del programa</p>
                 </div>
-
+                
                 <div class="content-grid">
-                    <div class="content-card">
-                        <h3>Políticas de Escritura</h3>
-                        <div class="write-policies">
-                            <div class="policy-item">
-                                <div class="policy-header">
-                                    <i class="fas fa-bolt"></i>
-                                    <h4>Escritura Directa (Write-Through)</h4>
-                                </div>
-                                <div class="policy-content">
-                                    <p><strong>Funcionamiento:</strong> Escribe simultáneamente en caché y memoria</p>
-                                    <div class="policy-pros-cons">
-                                        <div class="pros">
-                                            <strong>Ventajas:</strong>
-                                            <ul>
-                                                <li>Simplicidad de implementación</li>
-                                                <li>Coherencia garantizada</li>
-                                            </ul>
-                                        </div>
-                                        <div class="cons">
-                                            <strong>Desventajas:</strong>
-                                            <ul>
-                                                <li>Alto tráfico de memoria</li>
-                                                <li>Rendimiento limitado</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
+                    <div class="card cpu-structure">
+                        <h3><i class="fas fa-sitemap"></i> Estructura de la CPU</h3>
+                        <div class="cpu-components">
+                            <div class="cpu-component">
+                                <h4><i class="fas fa-calculator"></i> Unidad Aritmético-Lógica (ALU)</h4>
+                                <p>Realiza operaciones matemáticas y lógicas</p>
+                                <ul>
+                                    <li>Operaciones aritméticas (suma, resta, multiplicación, división)</li>
+                                    <li>Operaciones lógicas (AND, OR, NOT, XOR)</li>
+                                    <li>Comparaciones y desplazamientos</li>
+                                </ul>
                             </div>
-
-                            <div class="policy-item">
-                                <div class="policy-header">
-                                    <i class="fas fa-clock"></i>
-                                    <h4>Escritura Diferida (Write-Back)</h4>
-                                </div>
-                                <div class="policy-content">
-                                    <p><strong>Funcionamiento:</strong> Escribe solo en caché, memoria cuando sea necesario</p>
-                                    <div class="policy-pros-cons">
-                                        <div class="pros">
-                                            <strong>Ventajas:</strong>
-                                            <ul>
-                                                <li>Menor tráfico de memoria</li>
-                                                <li>Mejor rendimiento</li>
-                                            </ul>
-                                        </div>
-                                        <div class="cons">
-                                            <strong>Desventajas:</strong>
-                                            <ul>
-                                                <li>Complejidad de implementación</li>
-                                                <li>Riesgo de pérdida de datos</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="cpu-component">
+                                <h4><i class="fas fa-brain"></i> Unidad de Control</h4>
+                                <p>Coordina y controla todas las operaciones</p>
+                                <ul>
+                                    <li>Decodificación de instrucciones</li>
+                                    <li>Control de flujo de datos</li>
+                                    <li>Sincronización de operaciones</li>
+                                </ul>
                             </div>
-
-                            <div class="policy-item">
-                                <div class="policy-header">
-                                    <i class="fas fa-buffer"></i>
-                                    <h4>Escritura Retardada (Write-Buffer)</h4>
-                                </div>
-                                <div class="policy-content">
-                                    <p><strong>Funcionamiento:</strong> Buffer intermedio para optimizar escrituras</p>
-                                    <div class="policy-pros-cons">
-                                        <div class="pros">
-                                            <strong>Ventajas:</strong>
-                                            <ul>
-                                                <li>Reduce latencia de escritura</li>
-                                                <li>Permite coalescing</li>
-                                            </ul>
-                                        </div>
-                                        <div class="cons">
-                                            <strong>Desventajas:</strong>
-                                            <ul>
-                                                <li>Complejidad adicional</li>
-                                                <li>Overhead de gestión</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="content-card">
-                        <h3>Comparador de Políticas</h3>
-                        <div class="policy-comparison">
-                            <div class="comparison-chart">
-                                <canvas id="policyComparisonChart" width="400" height="300"></canvas>
-                            </div>
-                            <div class="comparison-controls">
-                                <button class="btn btn-secondary" onclick="comparePolicies('throughput')">
-                                    <i class="fas fa-tachometer-alt"></i>
-                                    Rendimiento
-                                </button>
-                                <button class="btn btn-secondary" onclick="comparePolicies('complexity')">
-                                    <i class="fas fa-cogs"></i>
-                                    Complejidad
-                                </button>
-                                <button class="btn btn-secondary" onclick="comparePolicies('coherence')">
-                                    <i class="fas fa-link"></i>
-                                    Coherencia
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="content-card">
-                        <h3>Simulador de Políticas de Escritura</h3>
-                        <div class="write-simulator">
-                            <div class="simulator-inputs">
-                                <div class="input-group">
-                                    <label for="writePattern">Patrón de Escritura:</label>
-                                    <select id="writePattern">
-                                        <option value="random">Aleatorio</option>
-                                        <option value="sequential">Secuencial</option>
-                                        <option value="burst">Ráfaga</option>
-                                    </select>
-                                </div>
-                                <div class="input-group">
-                                    <label for="writeCount">Número de Escrituras:</label>
-                                    <input type="number" id="writeCount" value="1000" min="100" max="10000" step="100">
-                                </div>
-                                <button class="btn btn-primary" onclick="simulateWritePolicies()">
-                                    <i class="fas fa-play"></i>
-                                    Simular
-                                </button>
-                            </div>
-                            <div class="simulation-results" id="writePolicyResults">
-                                <div class="result-table">
-                                    <table>
-                                        <thead>
-                                            <tr>
-                                                <th>Política</th>
-                                                <th>Tiempo Total</th>
-                                                <th>Accesos a Memoria</th>
-                                                <th>Eficiencia</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="writePolicyTable">
-                                            <!-- Resultados dinámicos -->
-                                        </tbody>
-                                    </table>
-                                </div>
+                            <div class="cpu-component">
+                                <h4><i class="fas fa-database"></i> Registros</h4>
+                                <p>Almacenamiento temporal de alta velocidad</p>
+                                <ul>
+                                    <li>Registros de propósito general</li>
+                                    <li>Registros de instrucción</li>
+                                    <li>Registros de estado</li>
+                                </ul>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- Diseño de Memoria -->
-            <section id="diseno-memoria" class="content-section">
+            <!-- Buses Section -->
+            <section id="buses" class="content-section">
                 <div class="section-header">
-                    <h2><i class="fas fa-memory"></i> Diseño del Sistema de Memoria</h2>
-                    <p>Optimización del acceso a la caché y técnicas de mejora del ancho de banda</p>
+                    <h2><i class="fas fa-route"></i> Sistema de Buses</h2>
+                    <p>Canales de comunicación entre componentes del sistema</p>
                 </div>
-
+                
                 <div class="content-grid">
-                    <div class="content-card">
-                        <h3>Organizaciones de Memoria</h3>
-                        <div class="memory-organizations">
-                            <div class="org-item">
-                                <div class="org-header">
-                                    <i class="fas fa-columns"></i>
-                                    <h4>Memoria Interleaved</h4>
-                                </div>
-                                <p>División de memoria en bancos para acceso paralelo</p>
-                                <div class="org-benefits">
-                                    <strong>Beneficios:</strong>
-                                    <ul>
-                                        <li>Mayor ancho de banda</li>
-                                        <li>Reducción de latencia</li>
-                                        <li>Mejor utilización del bus</li>
-                                    </ul>
-                                </div>
+                    <div class="card bus-system">
+                        <h3><i class="fas fa-network-wired"></i> Tipos de Buses</h3>
+                        <div class="bus-types">
+                            <div class="bus-type">
+                                <h4><i class="fas fa-microchip"></i> Bus de Datos</h4>
+                                <p>Transfiere datos entre componentes</p>
+                                <ul>
+                                    <li>Ancho: 32, 64, 128 bits</li>
+                                    <li>Velocidad: Alta</li>
+                                    <li>Bidireccional</li>
+                                </ul>
                             </div>
-
-                            <div class="org-item">
-                                <div class="org-header">
-                                    <i class="fas fa-double-angle-right"></i>
-                                    <h4>DDR DRAM</h4>
-                                </div>
-                                <p>Double Data Rate - transferencia en ambos flancos del reloj</p>
-                                <div class="org-benefits">
-                                    <strong>Beneficios:</strong>
-                                    <ul>
-                                        <li>Doble ancho de banda</li>
-                                        <li>Eficiencia energética</li>
-                                        <li>Compatibilidad</li>
-                                    </ul>
-                                </div>
+                            <div class="bus-type">
+                                <h4><i class="fas fa-map-marker-alt"></i> Bus de Direcciones</h4>
+                                <p>Especifica ubicaciones de memoria</p>
+                                <ul>
+                                    <li>Ancho: 32, 64 bits</li>
+                                    <li>Unidireccional</li>
+                                    <li>Desde CPU hacia memoria</li>
+                                </ul>
                             </div>
-
-                            <div class="org-item">
-                                <div class="org-header">
-                                    <i class="fas fa-quadruple-angle-right"></i>
-                                    <h4>QDR DRAM</h4>
-                                </div>
-                                <p>Quad Data Rate - cuatro transferencias por ciclo</p>
-                                <div class="org-benefits">
-                                    <strong>Beneficios:</strong>
-                                    <ul>
-                                        <li>Cuádruple ancho de banda</li>
-                                        <li>Baja latencia</li>
-                                        <li>Alto rendimiento</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="content-card">
-                        <h3>Calculadora de Ancho de Banda</h3>
-                        <div class="bandwidth-calculator">
-                            <div class="input-group">
-                                <label for="memoryType">Tipo de Memoria:</label>
-                                <select id="memoryType">
-                                    <option value="ddr4">DDR4</option>
-                                    <option value="ddr5">DDR5</option>
-                                    <option value="qdr">QDR</option>
-                                </select>
-                            </div>
-                            <div class="input-group">
-                                <label for="memorySpeed">Velocidad (MHz):</label>
-                                <input type="number" id="memorySpeed" value="3200" min="800" max="6400" step="100">
-                            </div>
-                            <div class="input-group">
-                                <label for="busWidth">Ancho de Bus (bits):</label>
-                                <input type="number" id="busWidth" value="64" min="32" max="128" step="32">
-                            </div>
-                            <button class="btn btn-primary" onclick="calculateBandwidth()">
-                                <i class="fas fa-calculator"></i>
-                                Calcular Ancho de Banda
-                            </button>
-                            <div class="result">
-                                <div class="result-item">
-                                    <span>Ancho de Banda Teórico:</span>
-                                    <strong id="theoreticalBandwidth">25.6 GB/s</strong>
-                                </div>
-                                <div class="result-item">
-                                    <span>Ancho de Banda Efectivo:</span>
-                                    <strong id="effectiveBandwidth">20.5 GB/s</strong>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="content-card">
-                        <h3>Visualizador de Organización de Memoria</h3>
-                        <div class="memory-visualizer">
-                            <div class="visualizer-controls">
-                                <div class="input-group">
-                                    <label for="bankCount">Número de Bancos:</label>
-                                    <input type="range" id="bankCount" min="2" max="16" value="8" step="2">
-                                    <span id="bankCountValue">8</span>
-                                </div>
-                                <div class="input-group">
-                                    <label for="accessPattern">Patrón de Acceso:</label>
-                                    <select id="accessPattern">
-                                        <option value="sequential">Secuencial</option>
-                                        <option value="random">Aleatorio</option>
-                                        <option value="strided">Con Stride</option>
-                                    </select>
-                                </div>
-                                <button class="btn btn-primary" onclick="visualizeMemoryAccess()">
-                                    <i class="fas fa-eye"></i>
-                                    Visualizar
-                                </button>
-                            </div>
-                            <div class="visualization-area">
-                                <canvas id="memoryVisualization" width="400" height="300"></canvas>
+                            <div class="bus-type">
+                                <h4><i class="fas fa-cogs"></i> Bus de Control</h4>
+                                <p>Señales de control y sincronización</p>
+                                <ul>
+                                    <li>Señales de lectura/escritura</li>
+                                    <li>Interrupciones</li>
+                                    <li>Reloj del sistema</li>
+                                </ul>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- Evaluación de Caché -->
-            <section id="evaluacion-cache" class="content-section">
+            <!-- Entrada/Salida Section -->
+            <section id="entrada-salida" class="content-section">
                 <div class="section-header">
-                    <h2><i class="fas fa-chart-line"></i> Evaluación y Mejoras de la Caché</h2>
-                    <p>Fundamental para optimizar el tiempo de ejecución de la CPU</p>
+                    <h2><i class="fas fa-exchange-alt"></i> Sistema de Entrada/Salida</h2>
+                    <p>Dispositivos y mecanismos para comunicación externa</p>
                 </div>
-
+                
                 <div class="content-grid">
-                    <div class="content-card">
-                        <h3>Tiempo Medio de Acceso a Memoria (AMAT)</h3>
-                        <div class="amat-calculator">
-                            <div class="formula-display">
-                                <div class="formula">
-                                    <span>AMAT = Tiempo de Acierto + (Tasa de Fallos × Penalización por Fallo)</span>
-                                </div>
+                    <div class="card io-system">
+                        <h3><i class="fas fa-plug"></i> Dispositivos de E/S</h3>
+                        <div class="io-devices">
+                            <div class="io-device">
+                                <h4><i class="fas fa-keyboard"></i> Dispositivos de Entrada</h4>
+                                <p>Permiten introducir datos al sistema</p>
+                                <ul>
+                                    <li>Teclado</li>
+                                    <li>Ratón</li>
+                                    <li>Escáner</li>
+                                    <li>Micrófono</li>
+                                </ul>
                             </div>
-                            <div class="calculator">
-                                <div class="input-group">
-                                    <label for="hitTime">Tiempo de Acierto (ns):</label>
-                                    <input type="number" id="hitTime" value="2" min="0" step="0.1">
-                                </div>
-                                <div class="input-group">
-                                    <label for="missRateInput">Tasa de Fallos (%):</label>
-                                    <input type="number" id="missRateInput" value="5" min="0" max="100" step="0.1">
-                                </div>
-                                <div class="input-group">
-                                    <label for="missPenaltyInput">Penalización por Fallo (ns):</label>
-                                    <input type="number" id="missPenaltyInput" value="100" min="0">
-                                </div>
-                                <button class="btn btn-primary" onclick="calculateAMAT()">
-                                    <i class="fas fa-calculator"></i>
-                                    Calcular AMAT
-                                </button>
-                                <div class="result">
-                                    <div class="result-item">
-                                        <span>AMAT:</span>
-                                        <strong id="amatResult">7.0 ns</strong>
-                                    </div>
-                                </div>
+                            <div class="io-device">
+                                <h4><i class="fas fa-desktop"></i> Dispositivos de Salida</h4>
+                                <p>Muestran información del sistema</p>
+                                <ul>
+                                    <li>Monitor</li>
+                                    <li>Impresora</li>
+                                    <li>Altavoces</li>
+                                    <li>Proyector</li>
+                                </ul>
                             </div>
-                        </div>
-                    </div>
-
-                    <div class="content-card">
-                        <h3>Optimizaciones de Caché</h3>
-                        <div class="cache-optimizations">
-                            <div class="optimization-item">
-                                <div class="opt-header">
-                                    <i class="fas fa-expand-arrows-alt"></i>
-                                    <h4>Aumentar Capacidad</h4>
-                                </div>
-                                <div class="opt-content">
-                                    <p><strong>Efecto:</strong> Reduce tasa de fallos de capacidad</p>
-                                    <div class="opt-tradeoff">
-                                        <span class="pro">↓ Tasa de fallos</span>
-                                        <span class="con">↑ Tiempo de acceso</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="optimization-item">
-                                <div class="opt-header">
-                                    <i class="fas fa-network-wired"></i>
-                                    <h4>Aumentar Asociatividad</h4>
-                                </div>
-                                <div class="opt-content">
-                                    <p><strong>Efecto:</strong> Reduce tasa de fallos de conflicto</p>
-                                    <div class="opt-tradeoff">
-                                        <span class="pro">↓ Tasa de fallos</span>
-                                        <span class="con">↑ Complejidad y costo</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="optimization-item">
-                                <div class="opt-header">
-                                    <i class="fas fa-compress-arrows-alt"></i>
-                                    <h4>Reducir Tamaño de Bloque</h4>
-                                </div>
-                                <div class="opt-content">
-                                    <p><strong>Efecto:</strong> Reduce penalización por fallo</p>
-                                    <div class="opt-tradeoff">
-                                        <span class="pro">↓ Penalización</span>
-                                        <span class="con">↑ Tasa de fallos</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="content-card">
-                        <h3>Análisis de Rendimiento</h3>
-                        <div class="performance-analysis">
-                            <div class="analysis-chart">
-                                <canvas id="performanceChart" width="400" height="300"></canvas>
-                            </div>
-                            <div class="analysis-controls">
-                                <button class="btn btn-secondary" onclick="analyzePerformance('capacity')">
-                                    <i class="fas fa-expand"></i>
-                                    Capacidad
-                                </button>
-                                <button class="btn btn-secondary" onclick="analyzePerformance('associativity')">
-                                    <i class="fas fa-network-wired"></i>
-                                    Asociatividad
-                                </button>
-                                <button class="btn btn-secondary" onclick="analyzePerformance('blockSize')">
-                                    <i class="fas fa-cube"></i>
-                                    Tamaño de Bloque
-                                </button>
+                            <div class="io-device">
+                                <h4><i class="fas fa-hdd"></i> Dispositivos de Almacenamiento</h4>
+                                <p>Almacenan datos de forma permanente</p>
+                                <ul>
+                                    <li>Disco duro</li>
+                                    <li>SSD</li>
+                                    <li>USB</li>
+                                    <li>CD/DVD</li>
+                                </ul>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- Memoria Virtual -->
-            <section id="memoria-virtual" class="content-section">
+            <!-- Arquitecturas Section -->
+            <section id="arquitecturas" class="content-section">
                 <div class="section-header">
-                    <h2><i class="fas fa-hdd"></i> Memoria Virtual</h2>
-                    <p>Sistema que permite ejecución eficiente independientemente de la memoria física disponible</p>
+                    <h2><i class="fas fa-sitemap"></i> Tipos de Arquitecturas</h2>
+                    <p>Diferentes enfoques en el diseño de sistemas computacionales</p>
                 </div>
-
+                
                 <div class="content-grid">
-                    <div class="content-card">
-                        <h3>Conceptos Clave de Memoria Virtual</h3>
-                        <div class="virtual-memory-concepts">
-                            <div class="concept-item">
-                                <div class="concept-icon">
-                                    <i class="fas fa-file-alt"></i>
-                                </div>
-                                <div class="concept-content">
-                                    <h4>Paginación</h4>
-                                    <p>División de memoria en páginas de tamaño fijo para gestión eficiente</p>
-                                    <div class="concept-details">
-                                        <strong>Ventajas:</strong>
-                                        <ul>
-                                            <li>Fragmentación externa eliminada</li>
-                                            <li>Transferencia eficiente</li>
-                                            <li>Protección por página</li>
-                                        </ul>
-                                    </div>
-                                </div>
+                    <div class="card architecture-types">
+                        <h3><i class="fas fa-list"></i> Clasificación de Arquitecturas</h3>
+                        <div class="architecture-grid">
+                            <div class="architecture-item">
+                                <h4><i class="fas fa-microchip"></i> Arquitectura von Neumann</h4>
+                                <p>Arquitectura clásica con memoria compartida</p>
+                                <ul>
+                                    <li>Memoria unificada para datos e instrucciones</li>
+                                    <li>Ejecución secuencial de instrucciones</li>
+                                    <li>Cuello de botella en el bus de memoria</li>
+                                </ul>
                             </div>
-
-                            <div class="concept-item">
-                                <div class="concept-icon">
-                                    <i class="fas fa-search"></i>
-                                </div>
-                                <div class="concept-content">
-                                    <h4>TLB (Translation Lookaside Buffer)</h4>
-                                    <p>Caché para traducciones de direcciones virtuales a físicas</p>
-                                    <div class="concept-details">
-                                        <strong>Beneficios:</strong>
-                                        <ul>
-                                            <li>Acceso rápido a traducciones</li>
-                                            <li>Reducción de accesos a tablas</li>
-                                            <li>Mejora del rendimiento</li>
-                                        </ul>
-                                    </div>
-                                </div>
+                            <div class="architecture-item">
+                                <h4><i class="fas fa-sitemap"></i> Arquitectura Harvard</h4>
+                                <p>Memorias separadas para datos e instrucciones</p>
+                                <ul>
+                                    <li>Buses independientes</li>
+                                    <li>Mayor paralelismo</li>
+                                    <li>Mejor rendimiento</li>
+                                </ul>
                             </div>
-
-                            <div class="concept-item">
-                                <div class="concept-icon">
-                                    <i class="fas fa-shield-alt"></i>
-                                </div>
-                                <div class="concept-content">
-                                    <h4>Protección</h4>
-                                    <p>Mecanismos para aislar procesos y proteger la memoria</p>
-                                    <div class="concept-details">
-                                        <strong>Características:</strong>
-                                        <ul>
-                                            <li>Separación usuario/supervisor</li>
-                                            <li>Permisos por página</li>
-                                            <li>Cambio de contexto seguro</li>
-                                        </ul>
-                                    </div>
-                                </div>
+                            <div class="architecture-item">
+                                <h4><i class="fas fa-network-wired"></i> Arquitectura RISC</h4>
+                                <p>Conjunto de instrucciones reducido</p>
+                                <ul>
+                                    <li>Instrucciones simples y rápidas</li>
+                                    <li>Pipeline eficiente</li>
+                                    <li>Menor consumo energético</li>
+                                </ul>
                             </div>
-                        </div>
-                    </div>
-
-                    <div class="content-card">
-                        <h3>Simulador de Memoria Virtual</h3>
-                        <div class="virtual-memory-simulator">
-                            <div class="simulator-config">
-                                <div class="config-group">
-                                    <h4>Configuración del Sistema</h4>
-                                    <div class="input-group">
-                                        <label for="pageSize">Tamaño de Página (KB):</label>
-                                        <select id="pageSize">
-                                            <option value="4">4 KB</option>
-                                            <option value="8">8 KB</option>
-                                            <option value="16">16 KB</option>
-                                        </select>
-                                    </div>
-                                    <div class="input-group">
-                                        <label for="tlbEntries">Entradas TLB:</label>
-                                        <input type="range" id="tlbEntries" min="16" max="256" value="64" step="16">
-                                        <span id="tlbEntriesValue">64</span>
-                                    </div>
-                                    <div class="input-group">
-                                        <label for="physicalMemory">Memoria Física (MB):</label>
-                                        <input type="number" id="physicalMemory" value="1024" min="256" max="8192" step="256">
-                                    </div>
-                                </div>
-                                <button class="btn btn-primary" onclick="runVirtualMemorySimulation()">
-                                    <i class="fas fa-play"></i>
-                                    Ejecutar Simulación
-                                </button>
-                            </div>
-                            <div class="simulation-results" id="virtualMemoryResults">
-                                <canvas id="virtualMemoryChart" width="400" height="300"></canvas>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="content-card">
-                        <h3>Integración: Caché, TLB y Memoria Virtual</h3>
-                        <div class="integration-diagram">
-                            <div class="integration-flow">
-                                <div class="flow-step">
-                                    <div class="step-icon">
-                                        <i class="fas fa-microchip"></i>
-                                    </div>
-                                    <div class="step-content">
-                                        <h4>CPU</h4>
-                                        <p>Genera dirección virtual</p>
-                                    </div>
-                                </div>
-                                <div class="flow-arrow">→</div>
-                                <div class="flow-step">
-                                    <div class="step-icon">
-                                        <i class="fas fa-search"></i>
-                                    </div>
-                                    <div class="step-content">
-                                        <h4>TLB</h4>
-                                        <p>Traducción rápida</p>
-                                    </div>
-                                </div>
-                                <div class="flow-arrow">→</div>
-                                <div class="flow-step">
-                                    <div class="step-icon">
-                                        <i class="fas fa-memory"></i>
-                                    </div>
-                                    <div class="step-content">
-                                        <h4>Caché</h4>
-                                        <p>Acceso a datos</p>
-                                    </div>
-                                </div>
-                                <div class="flow-arrow">→</div>
-                                <div class="flow-step">
-                                    <div class="step-icon">
-                                        <i class="fas fa-hdd"></i>
-                                    </div>
-                                    <div class="step-content">
-                                        <h4>Memoria</h4>
-                                        <p>Almacenamiento físico</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="integration-notes">
-                                <div class="note">
-                                    <strong>Nota:</strong> No puede haber datos en caché si la página no está en memoria principal
-                                </div>
-                                <div class="note">
-                                    <strong>TLB:</strong> Actúa como caché para traducciones de direcciones
-                                </div>
+                            <div class="architecture-item">
+                                <h4><i class="fas fa-cogs"></i> Arquitectura CISC</h4>
+                                <p>Conjunto de instrucciones complejo</p>
+                                <ul>
+                                    <li>Instrucciones potentes</li>
+                                    <li>Menor número de instrucciones</li>
+                                    <li>Mayor complejidad del hardware</li>
+                                </ul>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
         </main>
-
-        <!-- Footer -->
-        <footer class="footer">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h4>Arquitectura del Procesador</h4>
-                    <p>Tema 3: Cachés y Memoria Virtual - Recursos interactivos para el aprendizaje.</p>
-                </div>
-                <div class="footer-section">
-                    <h4>Navegación</h4>
-                    <ul>
-                        <li><a href="../index.html">Portal Principal</a></li>
-                        <li><a href="../Tema1/index.html">Tema 1: Fundamentos</a></li>
-                        <li><a href="../Tema2/index.html">Tema 2: Evaluación de Prestaciones</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Controles</h4>
-                    <div class="footer-controls">
-                        <button class="btn btn-sm btn-secondary" onclick="toggleTheme()">
-                            <i class="fas fa-moon"></i>
-                            Tema
-                        </button>
-                        <button class="btn btn-sm btn-primary" onclick="toggleFullscreen()">
-                            <i class="fas fa-expand"></i>
-                            Pantalla Completa
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2024 Estructura de Computadores. Tema 3: Arquitectura del Procesador.</p>
-            </div>
-        </footer>
     </div>
 
     <script src="script.js"></script>

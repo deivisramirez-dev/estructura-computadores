@@ -16,6 +16,7 @@
     --text-secondary: #64748b;
     --text-muted: #94a3b8;
     --border-color: #e2e8f0;
+    --border-light: #f1f5f9;
     --shadow-color: rgba(0, 0, 0, 0.1);
     
     /* Espaciado */
@@ -53,6 +54,7 @@
     --text-secondary: #cbd5e1;
     --text-muted: #94a3b8;
     --border-color: #475569;
+    --border-light: #64748b;
     --shadow-color: rgba(0, 0, 0, 0.3);
 }
 
@@ -388,6 +390,283 @@ body {
     position: absolute;
     left: 0;
     font-weight: bold;
+}
+
+/* Definition Card */
+.definition-card .highlight {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    padding: var(--spacing-lg);
+    border-radius: var(--border-radius);
+    margin-bottom: var(--spacing-lg);
+    font-style: italic;
+    text-align: center;
+    font-size: 1.125rem;
+}
+
+.definition-details {
+    display: grid;
+    gap: var(--spacing-md);
+}
+
+.detail-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+    background-color: var(--bg-tertiary);
+    border-radius: var(--border-radius);
+}
+
+.detail-item i {
+    color: var(--accent-color);
+    font-size: 1.25rem;
+}
+
+/* Importance Card */
+.importance-list {
+    display: grid;
+    gap: var(--spacing-lg);
+}
+
+.importance-item {
+    display: flex;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md);
+    background-color: var(--bg-tertiary);
+    border-radius: var(--border-radius);
+}
+
+.importance-item i {
+    color: var(--success-color);
+    font-size: 1.5rem;
+    margin-top: var(--spacing-xs);
+}
+
+.importance-item h4 {
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-xs);
+}
+
+.importance-item p {
+    color: var(--text-secondary);
+    margin-bottom: 0;
+}
+
+/* VLIW Characteristics */
+.vliw-characteristics {
+    margin-top: var(--spacing-lg);
+}
+
+.vliw-characteristics h4 {
+    margin-bottom: var(--spacing-md);
+}
+
+/* VLIW Advantages */
+.advantages-grid {
+    display: grid;
+    gap: var(--spacing-lg);
+}
+
+.advantage-item {
+    padding: var(--spacing-lg);
+    background-color: var(--bg-tertiary);
+    border-radius: var(--border-radius);
+    border-left: 4px solid var(--success-color);
+}
+
+.advantage-item h4 {
+    margin-bottom: var(--spacing-sm);
+}
+
+.advantage-item p {
+    margin-bottom: 0;
+    font-weight: 500;
+}
+
+/* Multicore Grid */
+.multicore-grid {
+    display: grid;
+    gap: var(--spacing-lg);
+}
+
+.multicore-item {
+    padding: var(--spacing-lg);
+    background-color: var(--bg-tertiary);
+    border-radius: var(--border-radius);
+    border-left: 4px solid var(--primary-color);
+}
+
+.multicore-item h4 {
+    margin-bottom: var(--spacing-sm);
+}
+
+.multicore-item p {
+    margin-bottom: var(--spacing-md);
+    font-weight: 500;
+}
+
+/* Multicore Challenges */
+.challenges-grid {
+    display: grid;
+    gap: var(--spacing-lg);
+}
+
+.challenge-item {
+    padding: var(--spacing-lg);
+    background-color: var(--bg-tertiary);
+    border-radius: var(--border-radius);
+    border-left: 4px solid var(--warning-color);
+}
+
+.challenge-item h4 {
+    margin-bottom: var(--spacing-sm);
+}
+
+.challenge-item p {
+    margin-bottom: var(--spacing-md);
+    font-weight: 500;
+}
+
+/* SIMD Examples */
+.simd-examples {
+    margin-top: var(--spacing-lg);
+}
+
+.simd-examples h4 {
+    margin-bottom: var(--spacing-md);
+}
+
+/* SIMD Grid */
+.simd-grid {
+    display: grid;
+    gap: var(--spacing-lg);
+}
+
+.simd-item {
+    padding: var(--spacing-lg);
+    background-color: var(--bg-tertiary);
+    border-radius: var(--border-radius);
+    border-left: 4px solid var(--accent-color);
+}
+
+.simd-item h4 {
+    margin-bottom: var(--spacing-sm);
+}
+
+.simd-item p {
+    margin-bottom: var(--spacing-md);
+    font-weight: 500;
+}
+
+/* GPU Characteristics */
+.gpu-characteristics {
+    display: grid;
+    gap: var(--spacing-lg);
+}
+
+.gpu-characteristic {
+    padding: var(--spacing-lg);
+    background-color: var(--bg-tertiary);
+    border-radius: var(--border-radius);
+    border-left: 4px solid var(--secondary-color);
+}
+
+.gpu-characteristic h4 {
+    margin-bottom: var(--spacing-sm);
+}
+
+.gpu-characteristic p {
+    margin-bottom: var(--spacing-md);
+    font-weight: 500;
+}
+
+/* Applications Grid */
+.applications-grid {
+    display: grid;
+    gap: var(--spacing-lg);
+}
+
+.application-item {
+    padding: var(--spacing-lg);
+    background-color: var(--bg-tertiary);
+    border-radius: var(--border-radius);
+    border-left: 4px solid var(--error-color);
+}
+
+.application-item h4 {
+    margin-bottom: var(--spacing-sm);
+}
+
+.application-item p {
+    margin-bottom: var(--spacing-md);
+    font-weight: 500;
+}
+
+/* Specialized Grid */
+.specialized-grid {
+    display: grid;
+    gap: var(--spacing-lg);
+}
+
+.specialized-item {
+    padding: var(--spacing-lg);
+    background-color: var(--bg-tertiary);
+    border-radius: var(--border-radius);
+    border-left: 4px solid var(--warning-color);
+}
+
+.specialized-item h4 {
+    margin-bottom: var(--spacing-sm);
+}
+
+.specialized-item p {
+    margin-bottom: var(--spacing-md);
+    font-weight: 500;
+}
+
+/* Trends Grid */
+.trends-grid {
+    display: grid;
+    gap: var(--spacing-lg);
+}
+
+.trend-item {
+    padding: var(--spacing-lg);
+    background-color: var(--bg-tertiary);
+    border-radius: var(--border-radius);
+    border-left: 4px solid var(--accent-color);
+}
+
+.trend-item h4 {
+    margin-bottom: var(--spacing-sm);
+}
+
+.trend-item p {
+    margin-bottom: var(--spacing-md);
+    font-weight: 500;
+}
+
+/* Challenges List */
+.challenges-list {
+    display: grid;
+    gap: var(--spacing-lg);
+}
+
+.challenge-item {
+    padding: var(--spacing-lg);
+    background-color: var(--bg-tertiary);
+    border-radius: var(--border-radius);
+    border-left: 4px solid var(--error-color);
+}
+
+.challenge-item h4 {
+    margin-bottom: var(--spacing-sm);
+}
+
+.challenge-item p {
+    margin-bottom: var(--spacing-md);
+    font-weight: 500;
 }
 
 /* Responsive Design */

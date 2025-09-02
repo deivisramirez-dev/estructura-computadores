@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lienzo Didáctico - Fundamentos y Evolución</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1 class="main-title">
+                    <i class="fas fa-cogs"></i>
+                    Tema 1: Fundamentos del Diseño y Evolución
+                </h1>
+                <p class="subtitle">Evolución de los computadores, paralelismo y taxonomía Flynn</p>
+            </div>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="nav">
+            <div class="nav-content">
+                <div class="nav-info">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>Programa de Ingeniería Informática</span>
+                </div>
+                <div class="nav-controls">
+                    <button class="btn btn-back" onclick="goToMainPortal()">
+                        <i class="fas fa-home"></i>
+                        <span>Portal Principal</span>
+                    </button>
+                    <button class="btn btn-secondary" onclick="toggleTheme()">
+                        <i class="fas fa-moon"></i>
+                        <span>Tema Oscuro</span>
+                    </button>
+                    <button class="btn btn-primary" onclick="toggleFullscreen()">
+                        <i class="fas fa-expand"></i>
+                        <span>Pantalla Completa</span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main">
+            <!-- Navigation -->
+            <nav class="navigation">
+                <div class="nav-buttons">
+                    <button class="nav-btn active" data-section="fundamentos">
+                        <i class="fas fa-cogs"></i>
+                        <span>Fundamentos</span>
+                    </button>
+                    <button class="nav-btn" data-section="evolucion">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Evolución</span>
+                    </button>
+                    <button class="nav-btn" data-section="paralelismo">
+                        <i class="fas fa-sitemap"></i>
+                        <span>Paralelismo</span>
+                    </button>
+                    <button class="nav-btn" data-section="taxonomia">
+                        <i class="fas fa-project-diagram"></i>
+                        <span>Taxonomía Flynn</span>
+                    </button>
+                    <button class="nav-btn" data-section="prestaciones">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Prestaciones</span>
+                    </button>
+                    <button class="nav-btn" data-section="ley-moore">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Ley de Moore</span>
+                    </button>
+                </div>
+            </nav>
+
+            <!-- Fundamentos Section -->
+            <section id="fundamentos" class="content-section active">
+                <div class="section-header">
+                    <h2><i class="fas fa-cogs"></i> Fundamentos de la Arquitectura de Computadores</h2>
+                    <p>Conceptos básicos y definiciones fundamentales</p>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="card definition-card">
+                        <h3><i class="fas fa-quote-left"></i> Definición</h3>
+                        <p class="highlight">"La arquitectura de computadores es la estructura y organización de los componentes de un sistema informático."</p>
+                        <div class="definition-details">
+                            <div class="detail-item">
+                                <i class="fas fa-microchip"></i>
+                                <span>Organización del hardware</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-cogs"></i>
+                                <span>Funcionamiento del sistema</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-tachometer-alt"></i>
+                                <span>Rendimiento y eficiencia</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card concepts-card">
+                        <h3><i class="fas fa-lightbulb"></i> Conceptos Clave</h3>
+                        <div class="concept-list">
+                            <div class="concept-item">
+                                <i class="fas fa-check-circle"></i>
+                                <div>
+                                    <strong>Arquitectura:</strong> Conjunto de atributos visibles al programador
+                                </div>
+                            </div>
+                            <div class="concept-item">
+                                <i class="fas fa-check-circle"></i>
+                                <div>
+                                    <strong>Organización:</strong> Implementación específica de la arquitectura
+                                </div>
+                            </div>
+                            <div class="concept-item">
+                                <i class="fas fa-check-circle"></i>
+                                <div>
+                                    <strong>Microarquitectura:</strong> Diseño interno del procesador
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Evolución Section -->
+            <section id="evolucion" class="content-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-chart-line"></i> Evolución Histórica</h2>
+                    <p>Desarrollo y avances en la arquitectura de computadores</p>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="card timeline-card">
+                        <h3><i class="fas fa-history"></i> Línea de Tiempo</h3>
+                        <div class="timeline">
+                            <div class="timeline-item">
+                                <div class="timeline-date">1940s</div>
+                                <div class="timeline-content">
+                                    <h4>Primera Generación</h4>
+                                    <p>Válvulas de vacío, programación en lenguaje máquina</p>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-date">1950s</div>
+                                <div class="timeline-content">
+                                    <h4>Segunda Generación</h4>
+                                    <p>Transistores, lenguajes de alto nivel</p>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-date">1960s</div>
+                                <div class="timeline-content">
+                                    <h4>Tercera Generación</h4>
+                                    <p>Circuitos integrados, multiprogramación</p>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-date">1970s</div>
+                                <div class="timeline-content">
+                                    <h4>Cuarta Generación</h4>
+                                    <p>Microprocesadores, computadoras personales</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Paralelismo Section -->
+            <section id="paralelismo" class="content-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-sitemap"></i> Paralelismo</h2>
+                    <p>Ejecución simultánea de múltiples tareas</p>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="card parallel-card">
+                        <h3><i class="fas fa-layer-group"></i> Niveles de Paralelismo</h3>
+                        <div class="parallel-levels">
+                            <div class="level-item">
+                                <h4>Nivel de Bit</h4>
+                                <p>Procesamiento de múltiples bits simultáneamente</p>
+                            </div>
+                            <div class="level-item">
+                                <h4>Nivel de Instrucción</h4>
+                                <p>Ejecución de múltiples instrucciones en paralelo</p>
+                            </div>
+                            <div class="level-item">
+                                <h4>Nivel de Proceso</h4>
+                                <p>Ejecución de múltiples procesos simultáneamente</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Taxonomía Flynn Section -->
+            <section id="taxonomia" class="content-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-project-diagram"></i> Taxonomía Flynn</h2>
+                    <p>Clasificación de arquitecturas según el flujo de datos e instrucciones</p>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="card taxonomy-card">
+                        <h3><i class="fas fa-sitemap"></i> Clasificación Flynn</h3>
+                        <div class="taxonomy-grid">
+                            <div class="taxonomy-item">
+                                <h4>SISD</h4>
+                                <p>Single Instruction, Single Data</p>
+                                <p>Procesador tradicional secuencial</p>
+                            </div>
+                            <div class="taxonomy-item">
+                                <h4>SIMD</h4>
+                                <p>Single Instruction, Multiple Data</p>
+                                <p>Procesamiento vectorial</p>
+                            </div>
+                            <div class="taxonomy-item">
+                                <h4>MISD</h4>
+                                <p>Multiple Instruction, Single Data</p>
+                                <p>Múltiples procesadores sobre mismos datos</p>
+                            </div>
+                            <div class="taxonomy-item">
+                                <h4>MIMD</h4>
+                                <p>Multiple Instruction, Multiple Data</p>
+                                <p>Procesadores independientes</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Prestaciones Section -->
+            <section id="prestaciones" class="content-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-tachometer-alt"></i> Prestaciones</h2>
+                    <p>Factores que influyen en el rendimiento del sistema</p>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="card performance-card">
+                        <h3><i class="fas fa-chart-bar"></i> Factores de Rendimiento</h3>
+                        <div class="performance-factors">
+                            <div class="factor-item">
+                                <i class="fas fa-microchip"></i>
+                                <h4>Frecuencia del Reloj</h4>
+                                <p>Velocidad de procesamiento básica</p>
+                            </div>
+                            <div class="factor-item">
+                                <i class="fas fa-memory"></i>
+                                <h4>Memoria</h4>
+                                <p>Capacidad y velocidad de acceso</p>
+                            </div>
+                            <div class="factor-item">
+                                <i class="fas fa-hdd"></i>
+                                <h4>Almacenamiento</h4>
+                                <p>Velocidad de lectura/escritura</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Ley de Moore Section -->
+            <section id="ley-moore" class="content-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-chart-line"></i> Ley de Moore</h2>
+                    <p>Predicción sobre la evolución de la tecnología de semiconductores</p>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="card moore-card">
+                        <h3><i class="fas fa-lightbulb"></i> Enunciado de la Ley</h3>
+                        <p class="highlight">"El número de transistores en un circuito integrado se duplica aproximadamente cada dos años."</p>
+                        
+                        <div class="moore-details">
+                            <div class="detail-item">
+                                <i class="fas fa-calendar"></i>
+                                <span>Formulada en 1965 por Gordon Moore</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-chart-line"></i>
+                                <span>Se ha mantenido válida durante décadas</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <span>Actualmente enfrenta limitaciones físicas</span>
+                            </div>
+                        </div>
+                        
+                        <div class="moore-actions">
+                            <a href="Moore/index.html" class="btn btn-primary">
+                                <i class="fas fa-chart-line"></i>
+                                <span>Ver Dashboard Interactivo</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

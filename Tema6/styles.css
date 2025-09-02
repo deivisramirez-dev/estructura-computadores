@@ -16,6 +16,7 @@
     --text-secondary: #64748b;
     --text-muted: #94a3b8;
     --border-color: #e2e8f0;
+    --border-light: #f1f5f9;
     --shadow-color: rgba(0, 0, 0, 0.1);
     
     /* Espaciado */
@@ -53,6 +54,7 @@
     --text-secondary: #cbd5e1;
     --text-muted: #94a3b8;
     --border-color: #475569;
+    --border-light: #64748b;
     --shadow-color: rgba(0, 0, 0, 0.3);
 }
 
@@ -390,6 +392,248 @@ body {
     font-weight: bold;
 }
 
+/* Definition Card */
+.definition-card .highlight {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    padding: var(--spacing-lg);
+    border-radius: var(--border-radius);
+    margin-bottom: var(--spacing-lg);
+    font-style: italic;
+    text-align: center;
+    font-size: 1.125rem;
+}
+
+.definition-details {
+    display: grid;
+    gap: var(--spacing-md);
+}
+
+.detail-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+    background-color: var(--bg-tertiary);
+    border-radius: var(--border-radius);
+}
+
+.detail-item i {
+    color: var(--accent-color);
+    font-size: 1.25rem;
+}
+
+/* Importance Card */
+.importance-list {
+    display: grid;
+    gap: var(--spacing-lg);
+}
+
+.importance-item {
+    display: flex;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md);
+    background-color: var(--bg-tertiary);
+    border-radius: var(--border-radius);
+}
+
+.importance-item i {
+    color: var(--success-color);
+    font-size: 1.5rem;
+    margin-top: var(--spacing-xs);
+}
+
+.importance-item h4 {
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-xs);
+}
+
+.importance-item p {
+    color: var(--text-secondary);
+    margin-bottom: 0;
+}
+
+/* Bus Architecture */
+.bus-types {
+    display: grid;
+    gap: var(--spacing-lg);
+}
+
+.bus-type {
+    padding: var(--spacing-lg);
+    background-color: var(--bg-tertiary);
+    border-radius: var(--border-radius);
+    border-left: 4px solid var(--primary-color);
+}
+
+.bus-type h4 {
+    margin-bottom: var(--spacing-sm);
+}
+
+.bus-type p {
+    margin-bottom: var(--spacing-md);
+    font-weight: 500;
+}
+
+/* Bus Characteristics */
+.characteristics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-lg);
+}
+
+.characteristic-item {
+    padding: var(--spacing-lg);
+    background-color: var(--bg-tertiary);
+    border-radius: var(--border-radius);
+    border-left: 4px solid var(--accent-color);
+}
+
+.characteristic-item h4 {
+    margin-bottom: var(--spacing-md);
+}
+
+/* Device Grid */
+.device-grid {
+    display: grid;
+    gap: var(--spacing-lg);
+}
+
+.device-item {
+    padding: var(--spacing-lg);
+    background-color: var(--bg-tertiary);
+    border-radius: var(--border-radius);
+    border-left: 4px solid var(--success-color);
+}
+
+.device-item h4 {
+    margin-bottom: var(--spacing-sm);
+}
+
+.device-item p {
+    margin-bottom: var(--spacing-md);
+    font-weight: 500;
+}
+
+/* Controller Grid */
+.controller-grid {
+    display: grid;
+    gap: var(--spacing-lg);
+}
+
+.controller-item {
+    padding: var(--spacing-lg);
+    background-color: var(--bg-tertiary);
+    border-radius: var(--border-radius);
+    border-left: 4px solid var(--warning-color);
+}
+
+.controller-item h4 {
+    margin-bottom: var(--spacing-sm);
+}
+
+.controller-item p {
+    margin-bottom: var(--spacing-md);
+    font-weight: 500;
+}
+
+/* Interrupt Types */
+.interrupt-types {
+    display: grid;
+    gap: var(--spacing-lg);
+}
+
+.interrupt-type {
+    padding: var(--spacing-lg);
+    background-color: var(--bg-tertiary);
+    border-radius: var(--border-radius);
+    border-left: 4px solid var(--secondary-color);
+}
+
+.interrupt-type h4 {
+    margin-bottom: var(--spacing-sm);
+}
+
+.interrupt-type p {
+    margin-bottom: var(--spacing-md);
+    font-weight: 500;
+}
+
+/* Handling Steps */
+.handling-steps {
+    display: grid;
+    gap: var(--spacing-lg);
+}
+
+.step-item {
+    padding: var(--spacing-lg);
+    background-color: var(--bg-tertiary);
+    border-radius: var(--border-radius);
+    border-left: 4px solid var(--error-color);
+}
+
+.step-item h4 {
+    margin-bottom: var(--spacing-sm);
+}
+
+.step-item p {
+    margin-bottom: 0;
+    font-weight: 500;
+}
+
+/* DMA Advantages */
+.dma-advantages {
+    margin-top: var(--spacing-lg);
+}
+
+.dma-advantages h4 {
+    margin-bottom: var(--spacing-md);
+}
+
+/* DMA Steps */
+.dma-steps {
+    display: grid;
+    gap: var(--spacing-lg);
+}
+
+.dma-step {
+    padding: var(--spacing-lg);
+    background-color: var(--bg-tertiary);
+    border-radius: var(--border-radius);
+    border-left: 4px solid var(--accent-color);
+}
+
+.dma-step h4 {
+    margin-bottom: var(--spacing-sm);
+}
+
+.dma-step p {
+    margin-bottom: 0;
+    font-weight: 500;
+}
+
+/* Protocol Grid */
+.protocol-grid {
+    display: grid;
+    gap: var(--spacing-lg);
+}
+
+.protocol-item {
+    padding: var(--spacing-lg);
+    background-color: var(--bg-tertiary);
+    border-radius: var(--border-radius);
+    border-left: 4px solid var(--warning-color);
+}
+
+.protocol-item h4 {
+    margin-bottom: var(--spacing-sm);
+}
+
+.protocol-item p {
+    margin-bottom: var(--spacing-md);
+    font-weight: 500;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .main-title {
@@ -427,6 +671,10 @@ body {
     .nav-btn {
         white-space: nowrap;
         flex-shrink: 0;
+    }
+    
+    .characteristics-grid {
+        grid-template-columns: 1fr;
     }
 }
 

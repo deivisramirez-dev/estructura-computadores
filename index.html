@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -167,20 +167,41 @@
                         </div>
                     </div>
 
-                    <!-- Tema 6 (Futuro) -->
-                    <div class="topic-card topic-disabled">
+                    <!-- Tema 6 -->
+                    <div class="topic-card" onclick="navigateToTopic('Tema6')">
                         <div class="topic-icon">
-                            <i class="fas fa-clock"></i>
+                            <i class="fas fa-microchip"></i>
                         </div>
                         <div class="topic-content">
-                            <h3>Tema 6: Paralelismo</h3>
-                            <p>Arquitecturas paralelas y computación distribuida</p>
+                            <h3>Tema 6: Procesadores Superescalares</h3>
+                            <p>Arquitecturas superescalares y paralelismo a nivel de instrucción</p>
                             <div class="topic-features">
-                                <span class="feature-tag">Próximamente</span>
+                                <span class="feature-tag">Superescalar</span>
+                                <span class="feature-tag">ILP</span>
+                                <span class="feature-tag">Ejecución Desordenada</span>
                             </div>
                         </div>
                         <div class="topic-arrow">
-                            <i class="fas fa-lock"></i>
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </div>
+
+                    <!-- Tema 7 -->
+                    <div class="topic-card" onclick="navigateToTopic('Tema7')">
+                        <div class="topic-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <div class="topic-content">
+                            <h3>Tema 7: Procesadores VLIW</h3>
+                            <p>Arquitecturas con palabras de instrucción muy largas</p>
+                            <div class="topic-features">
+                                <span class="feature-tag">VLIW</span>
+                                <span class="feature-tag">Paralelismo Explícito</span>
+                                <span class="feature-tag">Compilador</span>
+                            </div>
+                        </div>
+                        <div class="topic-arrow">
+                            <i class="fas fa-arrow-right"></i>
                         </div>
                     </div>
                 </div>
@@ -329,6 +350,46 @@
                             <div class="progress-fill" style="width: 100%"></div>
                         </div>
                         <p>Completado - Cachés, Memoria Virtual, Políticas de Escritura</p>
+                    </div>
+                    <div class="progress-item">
+                        <div class="progress-header">
+                            <h4>Tema 4: Almacenamiento e I/O</h4>
+                            <span class="progress-percentage">100%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 100%"></div>
+                        </div>
+                        <p>Completado - Sistemas de almacenamiento y dispositivos I/O</p>
+                    </div>
+                    <div class="progress-item">
+                        <div class="progress-header">
+                            <h4>Tema 5: Procesadores Segmentados</h4>
+                            <span class="progress-percentage">100%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 100%"></div>
+                        </div>
+                        <p>Completado - Arquitectura de pipeline y técnicas de optimización</p>
+                    </div>
+                    <div class="progress-item">
+                        <div class="progress-header">
+                            <h4>Tema 6: Procesadores Superescalares</h4>
+                            <span class="progress-percentage">100%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 100%"></div>
+                        </div>
+                        <p>Completado - Arquitecturas superescalares y paralelismo ILP</p>
+                    </div>
+                    <div class="progress-item">
+                        <div class="progress-header">
+                            <h4>Tema 7: Procesadores VLIW</h4>
+                            <span class="progress-percentage">100%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 100%"></div>
+                        </div>
+                        <p>Completado - Arquitecturas VLIW y paralelismo explícito</p>
                     </div>
                 </div>
             </div>

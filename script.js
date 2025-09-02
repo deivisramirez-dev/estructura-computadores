@@ -84,7 +84,9 @@ function topicExists(topicPath) {
         'Tema2',
         'Tema3',
         'Tema4',
-        'Tema5'
+        'Tema5',
+        'Tema6',
+        'Tema7'
     ];
     
     return availableTopics.includes(topicPath);
@@ -132,12 +134,29 @@ function toggleTheme() {
 
 // Aplicar tema
 function applyTheme() {
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    currentTheme = savedTheme;
     document.documentElement.setAttribute('data-theme', currentTheme);
     
     // Actualizar meta theme-color para móviles
     const metaThemeColor = document.querySelector('meta[name="theme-color"]');
     if (metaThemeColor) {
         metaThemeColor.setAttribute('content', currentTheme === 'dark' ? '#0f172a' : '#2563eb');
+    }
+    
+    // Actualizar texto del botón
+    const themeButton = document.querySelector('.btn-secondary');
+    if (themeButton) {
+        const icon = themeButton.querySelector('i');
+        const text = themeButton.querySelector('span');
+        
+        if (currentTheme === 'dark') {
+            icon.className = 'fas fa-sun';
+            text.textContent = 'Tema Claro';
+        } else {
+            icon.className = 'fas fa-moon';
+            text.textContent = 'Tema Oscuro';
+        }
     }
 }
 

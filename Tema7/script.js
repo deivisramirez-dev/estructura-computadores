@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Inicialización de la aplicación
 function initializeApp() {
-    console.log('🚀 Tema 3: Arquitectura de Computadores iniciado');
+    console.log('🚀 Tema 7: Procesadores VLIW iniciado');
     
     // Aplicar animaciones de entrada
     animateElements();
@@ -342,4 +342,4 @@ function getNotificationIcon(type) {
     return icons[type] || 'info-circle';
 }
 
-console.log('✅ Tema 3 JavaScript cargado correctamente');
+console.log('✅ Tema 7 JavaScript cargado correctamente');

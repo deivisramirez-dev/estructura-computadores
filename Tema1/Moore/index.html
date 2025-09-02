@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lienzo Didáctico - Ley de Moore</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1 class="main-title">
+                    <i class="fas fa-chart-line"></i>
+                    Dashboard Ley de Moore
+                </h1>
+                <p class="subtitle">Visualización interactiva de la evolución de transistores</p>
+            </div>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="nav">
+            <div class="nav-content">
+                <div class="nav-info">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>Programa de Ingeniería Informática</span>
+                </div>
+                <div class="nav-controls">
+                    <button class="btn btn-back" onclick="goToTema1()">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Volver al Tema 1</span>
+                    </button>
+                    <button class="btn btn-back" onclick="goToMainPortal()">
+                        <i class="fas fa-home"></i>
+                        <span>Portal Principal</span>
+                    </button>
+                    <button class="btn btn-secondary" onclick="toggleTheme()">
+                        <i class="fas fa-moon"></i>
+                        <span>Tema Oscuro</span>
+                    </button>
+                    <button class="btn btn-primary" onclick="toggleFullscreen()">
+                        <i class="fas fa-expand"></i>
+                        <span>Pantalla Completa</span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main">
+            <!-- Stats Overview -->
+            <section class="stats-section">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-microchip"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>Transistores Actuales</h3>
+                            <div class="stat-number" id="transistorCount">0</div>
+                            <p>Billones de transistores</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-calendar"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>Año de Referencia</h3>
+                            <div class="stat-number" id="currentYear">2024</div>
+                            <p>Año actual</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>Factor de Crecimiento</h3>
+                            <div class="stat-number" id="growthFactor">2x</div>
+                            <p>Cada 2 años</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Chart Section -->
+            <section class="chart-section">
+                <div class="chart-container">
+                    <h2><i class="fas fa-chart-area"></i> Evolución Histórica de Transistores</h2>
+                    <div class="chart-controls">
+                        <button class="btn btn-secondary" onclick="toggleDataset('intel')">Intel</button>
+                        <button class="btn btn-secondary" onclick="toggleDataset('amd')">AMD</button>
+                        <button class="btn btn-secondary" onclick="toggleDataset('apple')">Apple</button>
+                        <button class="btn btn-secondary" onclick="toggleDataset('samsung')">Samsung</button>
+                    </div>
+                    <canvas id="mooreChart" width="800" height="400"></canvas>
+                </div>
+            </section>
+
+            <!-- Timeline Section -->
+            <section class="timeline-section">
+                <h2><i class="fas fa-history"></i> Hitos Históricos</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-date">1965</div>
+                        <div class="timeline-content">
+                            <h4>Formulación de la Ley</h4>
+                            <p>Gordon Moore publica su observación en Electronics Magazine</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">1971</div>
+                        <div class="timeline-content">
+                            <h4>Intel 4004</h4>
+                            <p>Primer microprocesador comercial con 2,300 transistores</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">1989</div>
+                        <div class="timeline-content">
+                            <h4>Intel 80486</h4>
+                            <p>1.2 millones de transistores</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">2000</div>
+                        <div class="timeline-content">
+                            <h4>Intel Pentium 4</h4>
+                            <p>42 millones de transistores</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">2010</div>
+                        <div class="timeline-content">
+                            <h4>Intel Core i7</h4>
+                            <p>1.17 mil millones de transistores</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">2020</div>
+                        <div class="timeline-content">
+                            <h4>Apple M1</h4>
+                            <p>16 mil millones de transistores</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Predictions Section -->
+            <section class="predictions-section">
+                <h2><i class="fas fa-crystal-ball"></i> Predicciones Futuras</h2>
+                <div class="predictions-grid">
+                    <div class="prediction-card">
+                        <h3>Escenario Optimista</h3>
+                        <p>La ley continúa hasta 2030</p>
+                        <div class="prediction-number">100+ mil millones</div>
+                        <p>Transistores en 2030</p>
+                    </div>
+                    <div class="prediction-card">
+                        <h3>Escenario Realista</h3>
+                        <p>Ralentización gradual</p>
+                        <div class="prediction-number">50-80 mil millones</div>
+                        <p>Transistores en 2030</p>
+                    </div>
+                    <div class="prediction-card">
+                        <h3>Escenario Pesimista</h3>
+                        <p>Límites físicos alcanzados</p>
+                        <div class="prediction-number">20-30 mil millones</div>
+                        <p>Transistores en 2030</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

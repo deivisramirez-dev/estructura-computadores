@@ -1,0 +1,1062 @@
+﻿
+
+Cap´ıtulo 1
+Procesadores  vectoriales
+
+   En el camino hacia los multiprocesadores y multicomputadores nos encontramos con los procesadores vectoriales que son una forma tambi´en de procesamiento paralelo.
+   Normalmente el c´alculo cient´ıfico y matem´atico precisa de la realizaci´on de un nu´mero elevado de operaciones en muy poco tiempo. La mayor´ıa de los problemas f´ısicos y matem´aticos se pueden expresar f´acilmente mediante la utilizaci´on de matrices y vectores. Aparte de que esto supone una posible claridad en el lenguaje, va a permitir explotar al m´aximo un tipo de arquitectura espec´ıfica para este tipo de tipos de datos, y es la de los procesadores vectoriales.
+   El paralelismo viene de que al operar con matrices, normalmente, los elementos de las matrices son independientes entre s´ı, es decir, no existen dependencias de datos dentro de las propias matrices, en general. Esto permite que todas las operaciones entre elementos de unas matrices con otras puedan realizarse en paralelo, o al menos en el mismo cauce de instrucciones sin que haya un conflicto entre los datos.
+   Otra ventaja del c´alculo matricial es que va a permitir replicar las unidades de c´alculo sin necesidad de replicar las unidades de control. Se tendr´ıa en este caso una especie de multiprocesador sin necesidad de tener que replicar tanto la unidad de control como la de c´alculo, eso s´ı, el nu´mero de tareas que un sistema de este tipo podr´ıa abordar son limitadas.
+   Los procesadores vectoriales se caracterizan porque van a ofrecer una serie de ope- raciones de alto nivel que operan sobre vectores, es decir, matrices lineales de nu´meros. Una operaci´on t´ıpica de un procesador vectorial ser´ıa la suma de dos vectores de coma flotante de 64 elementos para obtener el vector de 64 elementos resultante. La instruc- ci´on en este caso es equivalente a un lazo software que a cada iteraci´on opera sobre uno de los 64 elementos. Un procesador vectorial realiza este lazo por hardware apro- vechando un cauce m´as profundo, la localidad de los datos, y una eventual repetici´on de las unidades de c´alculo.
+   Las instrucciones vectoriales tienen unas propiedades importantes que se resumen a continuacio´n aunque previamente ya se han dado unas pinceladas:
+El c´alculo de cada resultado es independiente de los resultados anteriores en el mismo vector, lo que permite un cauce muy profundo sin generar riesgos por las dependencias de datos. La ausencia de estos riesgos viene decidida por el compilador o el programador cuando se decidi´o que la instrucci´on pod´ıa ser utilizada.
+• Una sola instrucci´on vectorial especifica una gran cantidad de trabajo, ya que equi-
+
+
+vale a ejecutar un bucle completo. Por lo tanto, el requisito de anchura de banda de las instrucciones se reduce considerablemente. En los procesadores no vectoriales, donde se precisan muchas m´as instrucciones, la bu´squeda y decodificaci´on de las instrucciones puede representar un cuello de botella, que fue detectado por Flynn en 1966 y por eso se le llama cuello de botella de Flynn.
+Las instrucciones vectoriales que acceden a memoria tienen un patr´on de acceso conocido. Si los elementos de la matriz son todos adyacentes, entonces extraer el vector de un conjunto de bancos de memoria entrelazada funciona muy bien. La alta latencia de iniciar un acceso a memoria principal, en comparaci´on con acceder a una cache, se amortiza porque se inicia un acceso para el vector completo en lugar de para un u´nico elemento. Por ello, el coste de la latencia a memoria principal se paga una sola vez para el vector completo, en lugar de una vez por cada elemento del vector.
+Como se sustituye un bucle completo por una instrucci´on vectorial cuyo compor- tamiento est´a predeterminado, los riesgos de control en el cauce, que normalmente podr´ıan surgir del salto del bucle, son inexistentes.
+   Por estas razones, las operaciones vectoriales pueden hacerse m´as r´apidas que una secuencia de operaciones escalares sobre el mismo nu´mero de elementos de datos, y los disen˜adores est´an motivados para incluir unidades vectoriales si el conjunto de las aplicaciones las puede usar frecuentemente.
+   El presente cap´ıtulo ha sido elaborado a partir de [HP96], [HP93] y [Hwa93]. Como lecturas adicionales se puede ampliar la informaci´on con [Sto93] y [HB87].
+
+
+1.1 Procesador vectorial b´asico
+1.1.1 Arquitectura vectorial b´asica
+Un procesador vectorial est´a compuesto t´ıpicamente por una unidad escalar y una uni- dad vectorial. La parte vectorial permite que los vectores sean tratados como nu´meros en coma flotante, como enteros o como datos l´ogicos. La unidad escalar es un procesador segmentado normal y corriente.
+Hay dos tipos de arquitecturas vectoriales:
+M´aquina vectorial con registros: en una m´aquina de este tipo, todas las opera- ciones vectoriales, excepto las de carga y almacenamiento, operan con vectores almacenados en registros. Estas m´aquinas son el equivalente vectorial de una ar- quitectura escalar de carga/almacenamiento. La mayor´ıa de m´aquinas vectoriales modernas utilizan este tipo de arquitectura. Ejemplos: Cray Research (CRAY-1, CRAY-2, X-MP, Y-MP y C-90), los supercomputadores japoneses (NEC SX/2 y SX/3, las Fujitsu VP200 y VP400 y la Hitachi S820)
+M´aquina vectorial memoria-memoria: en estas m´aquinas, todas las operaciones vectoriales son de memoria a memoria. Como la complejidad interna, as´ı como el coste, son menores, es la primera arquitectura vectorial que se emple´o. Ejemplo: el CDC.
+   El resto del cap´ıtulo trata sobre las m´aquinas vectoriales con registros, ya que las de memoria han ca´ıdo en desuso por su menor rendimiento.
+
+
+   La figura 1.1 muestra la arquitectura t´ıpica de una m´aquina vectorial con registros. Los registros se utilizan para almacenar los operandos. Los cauces vectoriales fun- cionales cogen los operandos, y dejan los resultados, en los registros vectoriales. Cada registro vectorial est´a equipado con un contador de componente que lleva el seguimiento del componente de los registros en ciclos sucesivos del cauce.
+
+Figura 1.1: La arquitectura de un supercomputador vectorial.
+   La longitud de cada registro es habitualmente fija, como por ejemplo 64 componentes de 64 bits cada uno como en un Cray. Otras m´aquinas, como algunas de Fujitsu, utilizan registros vectoriales reconfigurables para encajar din´amicamente la longitud del registro con la longitud de los operandos.
+   Por lo general, el nu´mero de registros vectoriales y el de unidades funcionales es fijo en un procesador vectorial. Por lo tanto, ambos recursos deben reservarse con antelacio´n para evitar conflictos entre diferentes operaciones vectoriales.
+   Los supercomputadores vectoriales empezaron con modelos uniprocesadores como el Cray 1 en 1976. Los supercomputadores vectoriales recientes ofrecen ambos modelos, el monoprocesador y el multiprocesador. La mayor´ıa de supercomputadores de altas prestaciones modernos ofrecen multiprocesadores con hardware vectorial como una ca- racter´ıstica m´as de los equipos.
+   Resulta interesante definirse una arquitectura vectorial sobre la que explicar las nociones de arquitecturas vectoriales. Esta arquitectura tendr´ıa como parte entera la propia del DLX, y su parte vectorial ser´ıa la extensi´on vectorial l´ogica de DLX. Los componentes b´asicos de esta arquitectura, parecida a la de Cray 1, se muestra en la figura 1.2.
+   Los componentes principales del conjunto de instrucciones de la m´aquina DLXV son:
+Registros vectoriales. Cada registro vectorial es un banco de longitud fija que contie- ne un solo vector. DLXV tiene ocho registros vectoriales, y cada registro vectorial contiene 64 dobles palabras. Cada registro vectorial debe tener como m´ınimo dos puertos de lectura y uno de escritura en DLXV. Esto permite un alto grado de solapamiento entre las operaciones vectoriales que usan diferentes registros vec- toriales.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Registros vectoriales
+
+
+
+
+
+Figura 1.2: Estructura b´asica de una arquitectura vectorial con registros, DLXV.
+
+Unidades funcionales vectoriales. Cada unidad se encuentra completamente seg- mentada y puede comenzar una nueva operaci´on a cada ciclo de reloj. Se necesita una unidad de control para detectar conflictos en las unidades funcionales (riesgos estructurales) y conflictos en los accesos a registros (riesgos por dependencias de datos).
+Unidad de carga/almacenamiento de vectores. Es una unidad que carga o alma- cena un vector en o desde la memoria. Las cargas y almacenamientos en DLXV est´an completamente segmentadas, para que las palabras puedan ser transferidas entre los registros vectoriales y memoria, con un ancho de banda de una palabra por ciclo de reloj tras una latencia inicial.
+Conjunto de registros escalares. Estos tambi´en pueden proporcionar datos como entradas a las unidades funcionales vectoriales, as´ı como calcular direcciones para pasar a la unidad de carga/almacenamiento de vectores. Estos ser´ıan los 32 registros normales de prop´osito general y los 32 registros de punto flotante del DLX.
+   La figura 1.3 muestra las caracter´ısticas de algunos procesadores vectoriales, inclu- yendo el taman˜o y el nu´mero de registros, el nu´mero y tipo de unidades funcionales, y el nu´mero de unidades de carga/almacenamiento.
+
+
+1.1.2 Instrucciones vectoriales b´asicas
+Principalmente las instrucciones vectoriales se pueden dividir en seis tipos diferentes. El criterio de divisi´on viene dado por el tipo de operandos y resultados de las diferentes instrucciones vectoriales:
+1. Vector-vector: Las instrucciones vector-vector son aquellas cuyos operandos son vectores y el resultado tambi´en es un vector. Suponiendo que Vi, Vj y Vk son registros vectoriales, este tipo de instrucciones implementan el siguiente tipo de funciones:
+f1 : Vi → Vj
+
+
+
+
+
+Processor
+  Year announcedClock rate (MHz)
+
+RegistersElements per register (64-bit elements)
+
+Functional units
+Load-store unitsCRAY-11976808646: add, multiply, reciprocal, integer add, logical, shift1CRAY X-MP19831208648: FP add, FP multiply, FP re-2 loadsCRAY Y-MP1988166ciprocal, integer add, 2 logical,1 storeshift, population count/parityCRAY-219851668645: FP add, FP multiply, FP re-1ciprocal/sqrt, integer (add shift,population count), logicalFujitsu VP100/20019821338-25632-10243: FP or integer add/logical, multiply, divide2Hitachi198371322564: 2 integer add/logical,4S810/8201 multiply-add, and 1 multiply/divide-add unitConvex C-119851081284: multiply, add, divide, integer/ logical1NEC SX/219841608 + 8192256 variable16: 4 integer add/logical, 4 FP8multiply/divide, 4 FP add,4 shiftDLXV19902008645: multiply, divide, add, integer add, logical1Cray C-90199124081288: FP add, FP multiply, FP re-4ciprocal, integer add, 2 logical,shift, population count/parityConvex C-41994135161283: each is full integer, logical, and FP (including multiply-add)NEC SX/419954008 + 8192256 variable16: 4 integer add/logical, 4 FP8multiply/divide, 4 FP add,4 shiftCray J-9019951008644: FP add, FP multiply, FP re- ciprocal, integer/logicalCray T-901996~50081288: FP add, FP multiply, FP re-4ciprocal, integer add, 2 logical,shift, population count/parityFigura 1.3: Caracter´ısticas de varias arquitecturas vectoriales.
+
+f2 : Vj × Vk → Vi
+Algunos ejemplos son: V1 = sin(V2) o V3 = V1 + V2.
+2. Vector-escalar: Son instrucciones en cuyos operandos interviene algu´n escalar y el resultado es un vector. Si s es un escalar son las instrucciones que siguen el siguiente tipo de funci´on:
+f3 : d × Vi → Vj
+Un ejemplo es el producto escalar, que el resultado es un vector tras multiplicar el vector origen por el escalar elemento a elemento.
+3. Vector-memoria: Suponiendo que M es el comienzo de un vector en memoria, se tienen las instrucciones de carga y almacenamiento de un vector:
+f4 : M → V	Carga del vector
+f5 : V → M	Almacenamiento del vector
+4. Reducci´on de vectores: Son instrucciones cuyos operandos son vectores y el resultado es un escalar, por eso se llaman de reducci´on. Los tipos de funciones que describen estas instrucciones son los siguientes:
+f6 : Vi → sj
+
+
+f7 : Vi × Vj → sk
+El m´aximo, la suma, la media, etc., son ejemplos de f6, mientras que el producto
+punto (s = ¿n	ai × bi) es un ejemplo de f7.
+5. Reunir y Esparcir: Estas funciones sirven para almacenar/cargar vectores dis- persos en memoria. Se necesitan dos vectores para reunir o esparcir el vector de/a la memoria. Estas son las funciones para reunir y esparcir:
+f8 : M → V1 × V0	Reunir
+f9 : V1 × V0 → M	Esparcir
+La operaci´on reunir toma de la memoria los elementos no nulos de un vector disperso usando unos ´ındices. La operaci´on esparcir hace lo contrario, almacena en la memoria un vector en un vector disperso cuyas entradas no nulas est´an indexadas. El registro vectorial V1 contiene los datos y el V0 los ´ındices de los elementos no nulos.
+6. Enmascaramiento: En estas instrucciones se utiliza un vector de m´ascara para comprimir o expandir un vector a un vector ´ındice. La aplicaci´on que tiene lugar es la siguiente:
+f10 : V0 × Vm → V1
+
+1.1.3 Ensamblador vectorial DLXV
+En DLXV las operaciones vectoriales usan los mismos mnemot´ecnicos que las opera- ciones DLX, pero an˜adiendo la letra V (ADDV). Si una de las entradas es un escalar se indicar´a an˜adiendo el sufijo “SV” (ADDSV). La figura 1.4 muestra las instrucciones vectoriales del DLXV.
+
+Ejemplo: el bucle DAXPY
+Existe un bucle t´ıpico para evaluar sistemas vectoriales y multiprocesadores que consiste en realizar la operaci´on:
+Y = a · X + Y
+donde X e Y son vectores que residen inicialmente en memoria, mientras que a es un escalar. A este bucle, que es bastante conocido, se le llama SAXPY o DAXPY dependiendo de si la operaci´on se realiza en simple o doble precisi´on. A esta operaci´on nos referiremos a la hora de hacer c´alculos de rendimiento y poner ejemplos. Estos bucles forman el bucle interno del benchmark Linpack. (SAXPY viene de single-precision a X plus Y; DAXPY viene de double-precision a X plus Y.) Linpack es un conjunto de rutinas de ´algebra lineal, y rutinas para realizar el m´etodo de eliminaci´on de Gauss.
+   Para los ejemplos que siguen vamos a suponer que el nu´mero de elementos, o lon- gitud, de un registro vectorial coincide con la longitud de la operaci´on vectorial en la que estamos interesados. M´as adelante se estudiar´a el caso en que esto no sea as´ı.
+   Resulta interesante, para las explicaciones que siguen, dar los programas en ensam- blador para realizar el c´alculo del bucle DAXPY. El siguiente programa ser´ıa el c´odigo escalar utilizando el juego de instrucciones DLX:
+
+
+InstructionOperandsFunctionADDV ADDSVV1,V2,V3 V1,F0,V2Add elements of V2 and V3, then put each result in V1. Add F0 to each element of V2, then put each result in V1.SUBV SUBVS SUBSVV1,V2,V3 V1,V2,F0 V1,F0,V2Subtract elements of V3 from V2, then put each result in V1. Subtract F0 from elements of V2, then put each result in V1. Subtract elements of V2 from F0, then put each result in V1.MULTV MULTSVV1,V2,V3 V1,F0,V2Multiply elements of V2 and V3, then put each result in V1. Multiply F0 by each element of V2, then put each result in V1.DIVV DIVVS DIVSVV1,V2,V3 V1,V2,F0 V1,F0,V2Divide elements of V2 by V3, then put each result in V1. Divide elements of V2 by F0, then put each result in V1. Divide F0 by elements of V2, then put each result in V1.LVV1,R1Load vector register V1 from memory starting at address R1.SVR1,V1Store vector register V1 into memory starting at address R1.LVWSV1,(R1,R2)Load V1 from address at R1 with stride in R2, i.e., R1+i   R2.SVWS(R1,R2),V1Store V1 from address at R1 with stride in R2, i.e., R1+i   R2.LVIV1,(R1+V2)Load V1 with vector whose elements are at R1+V2(i), i.e., V2 is an index.SVI(R1+V2),V1Store V1 to vector whose elements are at R1+V2(i), i.e., V2 is an index.CVIV1,R1Create an index vector by storing the values 0, 1   R1, 2   R1,...,63   R1
+into V1.S--V
+S--SVV1,V2 F0,V1Compare the elements (EQ, NE, GT, LT, GE, LE) in V1 and V2. If condition is true, put a 1 in the corresponding bit vector; otherwise put 0. Put resulting bit vector in vector-mask register (VM). The instruction S--SV performs the same compare but using a scalar value as one operand.POPR1,VMCount the 1s in the vector-mask register and store count in R1.CVMSet the vector-mask register to all 1s.MOVI2S MOVS2IVLR,R1 R1,VLRMove contents of R1 to the vector-length register. Move the contents of the vector-length register to R1.MOVF2S MOVS2FVM,F0 F0,VMMove contents of F0 to the vector-mask register. Move contents of vector-mask register to F0.Figura 1.4: Instrucciones vectoriales del DLXV.
+
+LD	F0,a
+     ADDI	R4,Rx,#512	; ´ultima direcci´on a cargar loop:
+LD	F2,0(Rx)	; carga X(i) en un registro MULTD F2,F0,F2	; a.X(i)
+LD	F4,0(Ry)	; carga Y(i) en un registro ADDD	F4,F2,F4	; a.X(i)+Y(i)
+SD	0(Ry),F4	; almacena resultado en Y(i) ADDI	Rx,Rx,#8	; incrementa el ´ındice de X ADDI	Ry,Ry,#8	; incrementa el ´ındice de Y SUB	R20,R4,Rx	; calcula l´ımite
+BNZ	R20,loop	; comprueba si fin.
+
+   El programa correspondiente en una arquitectura vectorial, como la DLXV, ser´ıa de la siguiente forma:
+
+LD	F0,a	; carga escalar a
+LV	V1,Rx	; carga vector X MULTSV V2,F0,V1	; a*X(i)
+LV	V3,Ry	; carga vector Y ADDV	V4,V2,V3	; suma
+SV	Ry,V4	; almacena el resultado
+
+   De los c´odigos anteriores se desprenden dos cosas. Por un lado la m´aquina vectorial reduce considerablemente el nu´mero de instrucciones a ejecutar, ya que se requieren
+
+
+s´olo 6 frente a casi las 600 del bucle escalar. Por otro lado, en la ejecuci´on escalar, debe bloquearse la suma, ya que comparte datos con la multiplicaci´on previa; en la ejecuci´on vectorial, tanto la multiplicacio´n como la suma son independientes y, por tanto, no se bloquea el cauce durante la ejecuci´on de cada instrucci´on sino entre una instrucci´on y la otra, es decir, una sola vez. Estos bloqueos se pueden eliminar utilizando segmentaci´on software o desarrollando el bucle, sin embargo, el ancho de banda de las instrucciones ser´a mucho m´as alto sin posibilidad de reducirlo.
+
+1.1.4 Tiempo de ejecuci´on vectorial
+Tres son los factores que influyen en el tiempo de ejecuci´on de una secuencia de opera- ciones vectoriales:
+• La longitud de los vectores sobre los que se opera.
+• Los riesgos estructurales entre las operaciones.
+• Las dependencias de datos.
+   Dada la longitud del vector y la velocidad de inicializaci´on, que es la velocidad a la cual una unidad vectorial consume nuevos operandos y produce nuevos resultados, podemos calcular el tiempo para una instrucci´on vectorial. Lo normal es que esta velocidad sea de uno por ciclo del reloj. Sin embargo, algunos supercomputadores producen 2 o m´as resultados por ciclo de reloj, y otros, tienen unidades que pueden no estar completamente segmentadas. Por simplicidad se supondr´a que esta velocidad es efectivamente la unidad.
+   Para simplificar la discusi´on del tiempo de ejecuci´on se introduce la noci´on de convoy, que es el conjunto de instrucciones vectoriales que podr´ıan potencialmente iniciar su ejecuci´on en el mismo ciclo de reloj. Las instrucciones en un convoy no deben incluir ni riesgos estructurales ni de datos (aunque esto se puede relajar m´as adelante); si estos riesgos estuvieran presentes, las instrucciones potenciales en el convoy habr´ıa que serializarlas e inicializarlas en convoyes diferentes. Para simplificar diremos que las instrucciones de un convoy deben terminar de ejecutarse antes que cualquier otra instrucci´on, vectorial o escalar, pueda empezar a ejecutarse. Esto se puede relajar utilizando un m´etodo m´as complejo de lanzar instrucciones.
+   Junto con la noci´on de convoy est´a la de toque o campanada (chime) que puede ser usado para evaluar el rendimiento de una secuencia de vectores formada por convoyes. Un toque o campanada es una medida aproximada del tiempo de ejecuci´on para una secuencia de vectores; la medida de la campanada es independiente de la longitud del vector. Por tanto, para una secuencia de vectores que consiste en m convoyes se ejecuta en m campanadas, y para una longitud de vector de n, ser´a aproximadamente n m ciclos de reloj. Esta aproximacio´n ignora algunas sobrecargas sobre el procesador que adem´as dependen de la longitud del vector. Por consiguiente, la medida del tiempo en campanadas es una mejor aproximaci´on para vectores largos. Se usar´a esta medida, en vez de los periodos de reloj, para indicar expl´ıcitamente que ciertas sobrecargas est´an siendo ignoradas.
+   Para poner las cosas un poco m´as claras, analicemos el siguiente c´odigo y extraiga- mos de ´el los convoyes:
+
+LD	F0,a	; carga el escalar en F0 LV	V1,Rx	; carga vector X
+MULTSV V2,F0,V1	; multiplicaci´on vector-escalar
+
+
+LVV3,Ry; carga vector YADDVV4,V2,V3; suma vectorialSVRy,V4; almacena el resultado.
+   Dejando de lado la primera instrucci´on, que es puramente escalar, el primer convoy lo ocupa la primera instrucci´on vectorial que es LV. La MULTSV depende de la primera por eso no puede ir en el primer convoy, en cambio, la siguiente LV s´ı que puede. ADDV depende de esta LV por tanto tendr´a que ir en otro convoy, y SV depende de esta, as´ı que tendr´a que ir en otro convoy aparte. Los convoyes ser´an por tanto:
+1. LV
+2. MULTSV	LV
+3. ADDV
+4. SV
+   Como esta secuencia est´a formada por 4 convoyes requerir´a 4 campanadas para su ejecuci´on.
+   Esta aproximacio´n es buena para vectores largos. Por ejemplo, para vectores de 64 elementos, el tiempo en campanadas ser´ıa de 4, de manera que la secuencia tomar´ıa unos 256 ciclos de reloj. La sobrecarga de eventualmente lanzar el convoy 2 en dos ciclos diferentes ser´ıa pequen˜a en comparaci´on a 256.
+
+Tiempo de arranque vectorial y tasa de inicializaci´on
+La fuente de sobrecarga m´as importante, no considerada en el modelo de campanadas, es el tiempo de arranque vectorial. El tiempo de arranque viene de la latencia del cauce de la operaci´on vectorial y est´a determinada principalmente por la profundidad del cauce en relaci´on con la unidad funcional empleada. El tiempo de arranque incrementa el tiempo efectivo en ejecutar un convoy en m´as de una campanada. Adem´as, este tiempo de arranque retrasa la ejecuci´on de convoyes sucesivos. Por lo tanto, el tiempo necesario para la ejecuci´on de un convoy viene dado por el tiempo de arranque y la longitud del vector. Si la longitud del vector tendiera a infinito, entonces el tiempo de arranque ser´ıa despreciable, pero lo normal es que el tiempo de arranque sea de 6 a 12 ciclos, lo que significa un porcentaje alto en vectores t´ıpicos que como mucho rondar´an los 64 elementos o ciclos.
+
+OperationStart-up penaltyVector add6Vector multiply7Vector divide20Vector load12
+Figura 1.5: Penalizacio´n por el tiempo de arranque en el DLXV.
+
+   Siguiendo con el ejemplo mostrado anteriormente, supongamos que cargar y salvar tienen un tiempo de arranque de 12 ciclos, la multiplicacio´n 7 y la suma 6 tal y como se desprende de la figura 1.5. Las sumas de los arranques de cada convoy para este ejemplo ser´ıa 12+12+6+12=42, como estamos calculando el nu´mero de campanadas reales para
+
+
+vectores de 64 elementos, la divisi´on 42/64=0.65 da el nu´mero de campanadas totales, que ser´a entonces 4.65, es decir, el tiempo de ejecuci´on teniendo en cuenta la sobrecarga de arranque es 1.16 veces mayor. En la figura 1.6 se muestra el tiempo en que se inicia cada instrucci´on as´ı como el tiempo total para su ejecuci´on en funci´on de n que es el nu´mero de elementos del vector.
+
+ConvoyStarting timeFirst-result timeLast-result time1. LV01211 + n2. MULTSV LV12 + n12 + n + 1223 + 2n3. ADDV24 + 2n24 + 2n + 629 + 3n4. SV30 + 3n30 + 3n + 1241 + 4n
+
+Figura 1.6: Tiempos de arranque y del primer y u´ltimo resultados para los convoys 1-4.
+
+   El tiempo de arranque de una instrucci´on es t´ıpicamente la profundidad del cauce de la unidad funcional que realiza dicha instrucci´on. Si lo que se quiere es poder lanzar una instrucci´on por ciclo de reloj (tasa de inicializaci´on igual a uno), entonces
+Profundidad del cauce =	Tiempo total de ejecuci´on de la unidad	(1.1)
+Periodo de reloj
+   Por ejemplo, si una operaci´on necesita 10 ciclos de reloj para completarse, entonces hace falta un cauce con una profundidad de 10 para que se pueda inicializar una ins- trucci´on por cada ciclo de reloj. Las profundidades de las unidades funcionales var´ıan ampliamente (no es raro ver cauces de profundidad 20) aunque lo normal es que tengan profundidades entre 4 y 8 ciclos.
+
+1.1.5 Unidades de carga/almacenamiento vectorial
+El comportamiento de la unidad de carga/almacenamiento es m´as complicado que el de las unidades aritm´eticas. El tiempo de arranque para una carga es el tiempo para coger la primera palabra de la memoria y guardarla en un registro. Si el resto del vector se puede coger sin paradas, la tasa de inicializaci´on es la misma que la velocidad a la que las nuevas palabras son tra´ıdas y almacenadas. Al contrario que en las unidades funcionales, la tasa de inicializaci´on puede no ser necesariamente una instrucci´on por ciclo.
+   Normalmente, el tiempo de arranque para las unidades de carga/almacenamiento es algo mayor que para las unidades funcionales, pudiendo llegar hasta los 50 ciclos. T´ıpicamente, estos valores rondan entre los 9 y los 17 ciclos (Cray 1 y Cray X-MP)
+   Para conseguir una tasa (o velocidad) de inicializaci´on de una palabra por ciclo, el sistema de memoria debe ser capaz de producir o aceptar esta cantidad de datos. Esto se puede conseguir mediante la creaci´on de bancos de memoria mu´ltiples como se explica en la secci´on 1.2. Teniendo un nu´mero significativo de bancos se puede conseguir acceder a la memoria por filas o por columnas de datos.
+   El nu´mero de bancos en la memoria del sistema para las unidades de carga y alma- cenamiento, as´ı como la profundidad del cauce en unidades funcionales son de alguna
+
+
+manera equivalentes, ya que ambas determinan las tasas de inicializaci´on de las ope- raciones utilizando estas unidades. El procesador no puede acceder a un banco de memoria m´as deprisa que en un ciclo de reloj. Para los sistemas de memoria que sopor- tan mu´ltiples accesos vectoriales simulta´neos o que permiten accesos no secuenciales en la carga o almacenamiento de vectores, el nu´mero de bancos de memoria deber´ıa ser m´as grande que el m´ınimo, de otra manera existir´ıan conflictos en los bancos.
+
+
+1.2 Memoria entrelazada o intercalada
+La mayor parte de esta secci´on se encuentra en el [Hwa93], aunque se puede encontrar una pequen˜a parte en el [HP96] en el cap´ıtulo dedicado a los procesadores vectoriales.
+   Para poder salvar el salto de velocidad entre la CPU/cach´e y la memoria principal realizada con m´odulos de RAM, se presenta una t´ecnica de entrelazado que permite el acceso segmentado a los diferentes m´odulos de memoria paralelos.
+   Vamos a suponer que la memoria principal se encuentra construida a partir de varios m´odulos. Estos m´odulos de memoria se encuentran normalmente conectados a un bus del sistema, o a una red de conmutadores, a la cual se conectan otros dispositivos del sistema como procesadores o subsistemas de entrada/salida.
+   Cuando se presenta una direcci´on en un m´odulo de memoria esta devuelve la palabra correspondiente. Es posible presentar diferentes direcciones a diferentes m´odulos de memoria de manera que se puede realizar un acceso paralelo a diferentes palabras de memoria. Ambos tipos de acceso, el paralelo y el segmentado, son formas paralelas practicadas en una organizaci´on de memoria paralela.
+   Consideremos una memoria principal formada por m = 2a m´odulos, cada uno con w = 2b palabras o celdas de memoria. La capacidad total de la memoria es m w = 2a+b palabras. A estas palabras se les asignan direcciones de forma lineal. Las diferentes formas en las que se asignan linealmente las direcciones producen diferentes formas de organizar la memoria.
+   Aparte de los accesos aleatorios, la memoria principal es accedida habitualmente mediante bloques de direcciones consecutivas. Los accesos en bloque son necesarios para traerse una secuencia de instrucciones o para acceder a una estructura lineal de datos, etc. En un sistema basado en cache la longitud del bloque suele corresponderse con la longitud de una l´ınea en la cach´e, o con varias l´ıneas de cach´e. Tambi´en en los procesadores vectoriales el acceso a la memoria tiene habitualmente una estructura lineal, ya que los elementos de los vectores se encuentran consecutivos. Por todo es- to, resulta preferible disen˜ar la memoria principal para facilitar el acceso en bloque a palabras contiguas.
+   La figura 1.7 muestra dos formatos de direcciones para realizar una memoria entre- lazada. El entrelazado de orden bajo (figura 1.7(a)) reparte las localizaciones contiguas de memoria entre los m m´odulos de forma horizontal. Esto implica que los a bits de orden bajo de la direcci´on se utilizan para identificar el m´odulo de memoria. Los b bits de orden m´as alto forman la direcci´on de la palabra dentro de cada m´odulo. Hay que hacer notar que la misma direcci´on de palabra est´a siendo aplicada a todos los m´odulos de forma simult´anea. Un decodificador de direcciones se emplea para distribuir la se- lecci´on de los m´odulos. Este esquema no es bueno para tolerancia a fallos, ya que en caso de fallo de un m´odulo toda la memoria queda inutilizable.
+
+
+   El entrelazado de orden alto (figura 1.7(b)) utiliza los a bits de orden alto como selector de m´odulo, y los b bits de orden bajo como la direcci´on de la palabra dentro de cada m´odulo. Localizaciones contiguas en la memoria est´an asignadas por tanto a un mismo m´odulo de memoria. En un ciclo de memoria, s´olo se accede a una palabra del m´odulo. Por lo tanto, el entrelazado de orden alto no permite el acceso en bloque a posiciones contiguas de memoria. Este esquema viene muy bien para tolerancia a fallos.
+   Por otro lado, el entrelazado de orden bajo soporta el acceso de bloque de forma segmentada. A no ser que se diga otra cosa, se supondr´a para el resto del cap´ıtulo que la memoria es del tipo entrelazado de orden bajo.
+
+
+
+
+
+Decodificador
+
+
+
+BDM	BDM
+
+
+
+BDM
+
+Buffer de las direcciones de módulo
+
+Direcciones
+0 
+M 0
+
+
+1 M 1	M m-1
+
+ Dirección	a de memoria
+Palabra
+
+b
+
+
+
+
+
+m(w-1)
+
+
+
+
+m(w-1)+1
+
+Buffer de dirección de palabra
+
+BDM	BDM
+  
+Buffer de datos de memoria
+
+
+Bus de datos
+
+(a) Memoria de m v´ıas entrelazada de orden bajo (esquema C de acceso a memoria).
+
+
+
+
+
+Decodificador
+
+
+
+BDM	BDM
+
+
+
+BDM
+
+Buffer de las direcciones de módulo
+
+Direcciones
+
+0	M 0
+
+
+w	M 1	M m-1
+
+a		Dirección de memoria
+
+
+b
+Buffer de
+
+w-1
+
+2w-1
+
+
+
+Buffer de
+
+dirección de palabra
+
+BDM	BDM
+
+datos de memoria
+
+
+Bus de datos
+
+(b) Memoria de m v´ıas entrelazada de orden alto.
+
+Figura 1.7: Dos organizaciones de memoria entrelazada con m = 2a m´odulos y w = 2a palabras por m´odulo.
+
+
+Ejemplo de memoria modular en un procesador vectorial
+Supongamos que queremos captar un vector de 64 elementos que empieza en la direcci´on 136, y que un acceso a memoria supone 6 ciclos de reloj. ¿Cu´antos bancos de memoria
+debemos tener para acceder a cada elemento en un u´nico ciclo de reloj? ¿Con qu´e
+direcci´on se accede a estos bancos? ¿Cu´ando llegar´an los elementos a la CPU?.
+
+
+   Respuesta Con seis ciclos por acceso, necesitamos al menos seis bancos de memoria, pero como queremos que el nu´mero de bancos sea potencia de dos, elegiremos ocho bancos. La figura 1.1 muestra las direcciones a las que se accede en cada banco en cada periodo de tiempo.
+
+
+
+Beginning at clock no.Bank01234567019213614415216016817618462562002082162242322402481432026427228028829630431222384328336344352360368376
+Tabla 1.1: Direcciones de memoria (en bytes) y momento en el cual comienza el acceso a cada banco.
+   La figura 1.8 muestra la temporizaci´on de los primeros accesos a un sistema de ocho bancos con una latencia de acceso de seis ciclos de reloj. Existen dos observaciones importantes con respecto a la tabla 1.1 y la figura 1.8: La primera es que la direcci´on exacta proporcionada por un banco est´a muy determinada por los bits de menor orden; sin embargo, el acceso inicial a un banco est´a siempre entre las ocho primeras dobles palabras de la direcci´on inicial. La segunda es que una vez se ha producido la latencia inicial (seis ciclos en este caso), el patr´on es acceder a un banco cada n ciclos, donde n es el nu´mero total de bancos (n = 8 en este caso).
+
+
+Next access#
+
+Next access#
+
+Deliver #
+
+Action  Memory# + deliver last# + deliver last#
+
+last#
+
+access
+
+8 words
+
+8 words
+
+8 words
+
+
+Time
+0	6	14	22	62	70
+Figura 1.8: Tiempo de acceso para las primeras 64 palabras de doble precisi´on en una lectura.
+
+
+1.2.1 Acceso concurrente a memoria (acceso C)
+Los accesos a los m m´odulos de una memoria se pueden solapar de forma segmentada. Para esto, el ciclo de memoria (llamado ciclo mayor de memoria se subdivide en m ciclos menores.
+   Sea θ el tiempo para la ejecuci´on del ciclo mayor y τ para el menor. Estos dos tiempos se relacionan de la siguiente manera:
+θ
+τ =	(1.2)
+m
+donde m es el grado de entrelazado. La temporizaci´on del acceso segmentado de 8 pala- bras contiguas en memoria se muestra en la figura 1.9. A este tipo de acceso concurrente a palabras contiguas se le llama acceso C a memoria. El ciclo mayor θ es el tiempo total necesario para completar el acceso a una palabra simple de un m´odulo. El ciclo
+
+
+menor τ es el tiempo necesario para producir una palabra asumiendo la superposici´on de accesos de m´odulos de memoria sucesivos separados un ciclo menor τ .
+   Hay que hacer notar que el acceso segmentado al bloque de 8 palabras contiguas est´a emparedado entre otros accesos de bloque segmentados antes y despu´es del bloque actual. Incluso a pesar de que el tiempo total de acceso del bloque es 2θ, el tiempo efectivo de acceso de cada palabra es solamente τ al ser la memoria contiguamente accedida de forma segmentada.
+
+
+
+W 7
+W 6
+W 5		
+W 4
+
+
+
+
+Ciclo mayor
+
+W 3					m
+W 2
+
+Ciclo menor
+
+W 1	m
+W 0
+
+Grado de entrelazado
+
+
+
+
+			Tiempo
+TT
+Figura 1.9: Acceso segmentado a 8 palabras contiguas en una memoria de acceso C.
+
+
+
+1.2.2 Acceso simult´aneo a memoria (acceso S)
+La memoria entrelazada de orden bajo puede ser dispuesta de manera que permita
+accesos simult´aneos, o accesos S, tal y como se muestra en la figura 1.10.
+
+
+
+
+
+Lectura Escritura
+
+
+
+
+
+
+(n-a) bits
+de orden alto
+
+Ciclo de búsqueda  Ciclo de acceso Latch
+
+
+
+
+Multiplexor
+
+	
+Módulo m-1
+
+a bits de orden bajo
+
+
+
+
+
+
+
+Acceso a palabra
+
+Figura 1.10: Organizaci´on de acceso S para una memoria entrelazada de m v´ıas.
+
+   Al final de cada ciclo de memoria, m = 2a palabras consecutivas son capturadas en los buffers de datos de forma simulta´nea. Los a bits de orden bajo se emplean entonces para multiplexar las m palabras hacia fuera, una por cada ciclo menor. Si se elige el ciclo menor para que valga un 1/m de la duraci´on del ciclo mayor (Ec. 1.2), entonces se necesitan dos ciclos de memoria para acceder a m palabras consecutivas.
+
+
+Sin embargo, si la fase de acceso del u´ltimo acceso, se superpone con la fase de
+bu´squeda del acceso actual, entonces son m palabras las que pueden ser accedidas en un u´nico ciclo de memoria.
+
+1.2.3 Memoria de acceso C/S
+Una organizaci´on de memoria que permite los accesos de tipo C y tambi´en los de tipo S se denomina memoria de acceso C/S. Este esquema de funcionamiento se muestra en la figura 1.11, donde n buses de acceso se utilizan junto a m m´odulos de memoria entrelazada conectados a cada bus. Los m m´odulos en cada bus son entrelazados de m v´ıas para permitir accesos C. Los n buses operan en paralelo para permitir los accesos
+S. En cada ciclo de memoria, al menos m n palabras son capturadas si se emplean completamente los n buses con accesos a memoria segmentados.
+
+Procesadores	Memorias
+
+Figura 1.11: Organizaci´on de acceso C/S.
+
+   La memoria C/S est´a especialmente indicada para ser usada en configuraciones de multiprocesadores vectoriales, ya que provee acceso segmentado en paralelo de un con- junto vectorial de datos con un alto ancho de banda. Una cache vectorial especialmente disen˜ada es necesaria en el interior de cada m´odulo de proceso para poder garantizar el movimiento suave entre la memoria y varios procesadores vectoriales.
+
+1.2.4 Rendimiento de la memoria entrelazada y tolerancia a fallos
+Con la memoria pasa algo parecido que con los procesadores: no por poner m m´odulos paralelos en el sistema de memoria se puede acceder m veces m´as r´apido. Existe un modelo m´as o menos emp´ırico que da el aumento del ancho de banda por el hecho de aumentar el nu´mero de bancos de la memoria. Este modelo fue introducido por Hellerman y da el ancho de banda B en funci´on del nu´mero de bancos m:
+B = m0.56 ≈ √m
+
+   Esta ra´ız cuadrada da una estimaci´on pesimista del aumento de las prestaciones de la memoria. Si por ejemplo se ponen 16 m´odulos en la memoria entrelazada, s´olo se obtiene un aumento de 4 veces el ancho de banda. Este resultado lejano a lo esperado viene de que en la memoria principal de los multiprocesadores los accesos entrelazados se mezclan con los accesos simples o con los accesos de bloque de longitudes dispares.
+
+
+   Para los procesadores vectoriales esta estimaci´on no es realista, ya que las tran- sacciones con la memoria suelen ser casi siempre vectoriales y, por tanto, pueden ser f´acilmente entrelazadas.
+   En 1992 Cragon estim´o el tiempo de acceso a una memoria entrelazada vectorial de la siguiente manera: Primero se supone que los n elementos de un vector se encuen- tran consecutivos en una memoria de m m´odulos. A continuacio´n, y con ayuda de la figura 1.9, no es dif´ıcil inferir que el tiempo que tarda en accederse a un vector de n elementos es la suma de lo que tarda el primer elemento (θ), que tendr´a que recorrer todo el cauce, y lo que tardan los (n 1) elementos restantes (θ(n 1)/m) que estar´an completamente encauzados. El tiempo que tarda un elemento (t1) se obtiene entonces dividiendo lo que tarda el vector completo entre n:
+
+
+θ + θ(n − 1)
+t = 	m	 = θ + θ(n − 1) = θ
+
+(m + n − 1) = θ
+
+(1 + m − 1)
+
+1	n	n	n m
+
+m	n	n	m	n
+
+Por lo tanto el tiempo medio t1 requerido para acceder a un elemento en la memoria ha resultado ser:
+
+ θ
+t1 =
+m
+
+(1 + m − 1)
+
+Cuando n	(vector muy grande), t1 θ/m = τ tal y como se deriv´o en la ecuaci´on (1.2). Adem´as si m = 1, no hay memoria entrelazada y t1 = θ. La ecuaci´on que se acaba de obtener anuncia que la memoria entrelazada se aprovecha del acceso segmentado de los vectores, por lo tanto, cuanto mayor es el vector m´as rendimiento se obtiene.
+
+Tolerancia a fallos
+La divisi´on de la memoria en bancos puede tener dos objetivos: por un lado permite un acceso concurrente lo que disminuye el acceso a la memoria (memoria entrelazada), por otro lado se pueden configurar los m´odulos de manera que el sistema de memoria pueda seguir funcionando en el caso de que algu´n m´odulo deje de funcionar. Si los m´odulos forman una memoria entrelazada el tiempo de acceso ser´a menor pero el sistema no ser´a tolerante a fallos, ya que al perder un m´odulo se pierden palabras en posiciones salteadas en toda la memoria, con lo que resulta dif´ıcil seguir trabajando. Si por el contrario los bancos se han elegido por bloques de memoria (entrelazado de orden alto) en vez de palabras sueltas, en el caso en que falle un bloque lo programas podr´an seguir trabajando con los bancos restantes aisl´andose ese bloque de memoria err´oneo del resto.
+   En muchas ocasiones interesa tener ambas caracter´ısticas a un tiempo, es decir, por un lado interesa tener memoria entrelazada de orden bajo para acelerar el acceso a la memoria, pero por otro interesa tambi´en una memoria entrelazada de orden alto para tener la memoria dividida en bloques y poder seguir trabajando en caso de fallo de un m´odulo o banco. Para estos casos en que se requiere alto rendimiento y tolerancia a fallos se puede disen˜ar una memoria mixta que contenga m´odulos de acceso entrelazado, y bancos para tolerancia a fallos.
+   La figura 1.12 muestra dos alternativas que combinan el entrelazado de orden alto con el de orden bajo. Ambas alternativas ofrecen una mejora del rendimiento de la me- moria junto con la posibilidad de tolerancia a fallos. En el primer ejemplo (figura 1.12a)
+
+
+se muestra una memoria de cuatro m´odulos de orden bajo y dos bancos de memoria. En el segundo ejemplo (figura 1.12b) se cuenta con el mismo nu´mero de m´odulos pero dispuestos de manera que hay un entrelazado de dos m´odulos y cuatro bancos de me- moria. El primer ejemplo presenta un mayor entrelazado por lo que tendr´a un mayor rendimiento que el segundo, pero tambi´en presenta menos bancos por lo que en caso de fallo se pierde una mayor cantidad de memoria, aparte de que el dan˜o que se puede causar al sistema es mayor.
+
+
+
+
+Figura 1.12: Dos organizaciones de memoria entrelazada usando 8 m´odulos: (a) 2 bancos y 4 m´odulos entrelazados, (b) 4 bancos y 2 m´odulos entrelazados.
+
+
+
+   Si la tolerancia a fallos es fundamental para un sistema, entonces hay que establecer un compromiso entre el grado de entrelazado para aumentar la velocidad y el nu´mero de bancos para aumentar la tolerancia a fallos. Cada banco de memoria es independiente de las condiciones de otros bancos y por tanto ofrece un mejor aislamiento en caso de aver´ıa.
+
+1.3 Longitud del vector y separaci´on de elementos
+Esta secci´on pretende dar respuesta a dos problemas que surgen en la vida real, uno es qu´e hacer cuando la longitud del vector es diferente a la longitud de los registros vectoriales (por ejemplo 64 elementos), y la otra es c´omo acceder a la memoria si los elementos del vector no est´an contiguos o se encuentran dispersos.
+
+1.3.1 Control de la longitud del vector
+La longitud natural de un vector viene determinada por el nu´mero de elementos en los registros vectoriales. Esta longitud, casi siempre 64, no suele coincidir muchas veces con la longitud de los vectores reales del programa. Aun m´as, en un programa real se desconoce incluso la longitud de cierto vector u operaci´on incluso en tiempo de compilaci´on. De hecho, un mismo trozo de c´odigo puede requerir diferentes longitudes en funci´on de par´ametros que cambien durante la ejecuci´on de un programa. El siguiente ejemplo en Fortran muestra justo este caso:
+do 10 i=1,n
+10	Y(i)=a*X(i)+Y(i)
+
+   La soluci´on de estos problemas es la creaci´on de un registro de longitud vectorial VLR (Vector-Length register). El VLR controla la longitud de cualquier operaci´on vectorial incluyendo las de carga y almacenamiento. De todas formas, el vector en el VLR no puede ser mayor que la longitud de los registros vectoriales. Por lo tanto, esto resuelve el problema siempre que la longitud real sea menor que la longitud vectorial m´axima MVL (Maximum Vector Length) definida por el procesador.
+   Para el caso en el que la longitud del vector real sea mayor que el MVL se utiliza una t´ecnica denominada seccionamiento (strip mining). El seccionamiento consiste en la generaci´on de c´odigo de manera que cada operaci´on vectorial se realiza con un taman˜o inferior o igual que el del MVL. Esta t´ecnica es similar a la de desenrollamiento de bucles, es decir, se crea un bucle que consiste en varias iteraciones con un taman˜o como el del MVL, y luego otra iteraci´on m´as que ser´a siempre menor que el MVL. La versi´on seccionada del bucle DAXPY escrita en Fortran se da a continuaci´on:
+
+low=1VL=(n mod MVL)/*Para encontrar el pedazo aparte*/do 1 j=0,(n/MVL)/*Bucle externo*/do 10 i=low,low+VL-1/*Ejecuta VL veces*/Y(i)=a*X(i)+Y(i)/*Operaci´on principal*/10continuelow=low+VL/*Comienzo del vector siguiente*/VL=MVL/*Pone la longitud al m´aximo	*/1continue
+   En este bucle primero se calcula la parte que sobra del vector (que se calcula con el modulo de n y MVL) y luego ejecuta ya las veces que sea necesario con una longitud de vector m´axima. O sea, el primer vector tiene una longitud de (n mod MVL) y el resto tiene una longitud de MVL tal y como se muestra en la figura 1.13. Normalmente los compiladores hacen estas cosas de forma autom´atica.
+   Junto con la sobrecarga por el tiempo de arranque, hay que considerar la sobrecarga por la introducci´on del bucle del seccionamiento. Esta sobrecarga por seccionamiento,
+
+
+
+Value of j	0
+
+12	3	. . .
+
+. . .
+
+n/MVL
+
+
+
+Range of i	1..m  (m+1)..
+m+MVL(m+
+MVL+1)(m+2 *	. . .	. . .
+MVL+1)(n-MVL
++1).. n.. m+2 *..m+3 *MVLMVLFigura 1.13: Un vector de longitud arbitraria procesado mediante seccionamiento. To- dos los bloques menos el primero son de longitud MVL. En esta figura, la variable m se usa en lugar de la expresi´on (n mod MV L).
+
+que aparece de la necesidad de reiniciar la secuencia vectorial y asignar el VLR, efec- tivamente se suma al tiempo de arranque del vector, asumiendo que el convoy no se solapa con otras instrucciones. Si la sobrecarga de un convoy es de 10 ciclos, entonces la sobrecarga efectiva por cada 64 elementos se incrementa en 10, o lo que es lo mismo
+0.15 ciclos por elemento del vector real.
+
+1.3.2 C´alculo del tiempo de ejecuci´on vectorial
+Con todo lo visto hasta ahora se puede dar un modelo sencillo para el c´alculo del tiempo de ejecuci´on de las instrucciones en un procesador vectorial. Repasemos estos costes:
+1. Por un lado tenemos el nu´mero de convoyes en el bucle que nos determina el nu´mero de campanadas. Usaremos la notaci´on Tcampanada para indicar el tiempo en campanadas.
+2. La sobrecarga para cada secuencia seccionada de convoyes. Esta sobrecarga con- siste en el coste de ejecutar el c´odigo escalar para seccionar cada bloque, Tbucle, m´as el coste de arranque para cada convoy, Tarranque.
+3. Tambi´en podr´ıa haber una sobrecarga fija asociada con la preparaci´on de la se- cuencia vectorial la primera vez, pero en procesadores vectoriales modernos esta sobrecarga se ha convertido en algo muy pequen˜o por lo que no se considerar´a en la expresi´on de carga total. En algunos libros donde todav´ıa aparece este tiempo se le llama Tbase.
+   Con todo esto se puede dar una expresi´on para calcular el tiempo de ejecuci´on para una secuencia vectorial de operaciones de longitud n, que llamaremos Tn:
+
+T =	 n 	(T
+n	MVL
+
+
+
+bucle
+
+
++ Tarranque
+
+
+) + n × Tcampanada
+
+
+(1.3)
+
+Los valores para Tarranque, Tbucle y Tcampanada dependen del procesador y del compilador que se utilice. Un valor t´ıpico para Tbucle es 15 (Cray 1). Podr´ıa parecer que este tiempo deber´ıa ser mayor, pero lo cierto es que muchas de las operaciones de esta sobrecarga se solapan con las instrucciones vectoriales.
+   Para aclarar todo esto veamos un ejemplo. Se trata de averiguar el tiempo que tarda un procesador vectorial en realizar la operaci´on A = B s, donde s es un escalar, A y B son vectores con una longitud de 200 elementos. Lo que se hace primero es ver el c´odigo en ensamblador que realiza esta operaci´on. Para ello supondremos que las direcciones de A y B son inicialmente Ra y Rb, y que s se encuentra en Fs. Supondremos que R0 siempre contiene 0 (DLX). Como 200 mod 64=8, la primera iteraci´on del bucle seccionado se realizar´a sobre un vector de longitud 8, y el resto con una longitud de
+
+
+64 elementos. La direcci´on del byte de comienzo del segmento siguiente de cada vector es ocho veces la longitud del vector. Como la longitud del vector es u ocho o 64, se incrementa el registro de direcci´on por 8  8 = 64 despu´es del primer segmento, y por
+8 64 = 512 para el resto. El nu´mero total de bytes en el vector es 8 200 = 1600, y se comprueba que ha terminado comparando la direcci´on del segmento vectorial siguiente con la direcci´on inicial m´as 1600. A continuacio´n se da el c´odigo:
+
+ADDIR2,R0,#1600;Bytes en el vectorADDR2,R2,Ra;Final del vector AADDIR1,R0,#8;Longitud del 1er segmentoMOVI2SVLR,R1;Carga longitud del vector en VLRADDIR1,R0,#64;Longitud del 1er segmentoADDIR3,R0,#64;Longitud del resto de segmentosLOOP:	LVV1,Rb;Carga BMULTVSV2,V1,Fs;Vector * escalarSVRa,V2;Guarda AADDRa,Ra,R1;Direcci´on del siguiente segmento de AADDRb,Rb,R1;Direcci´on del siguiente segmento de BADDIR1,R0,#512;Byte offset del siguiente segmentoMOVI2SVLR,R3;Longitud 64 elementosSUBR4,R2,Ra;Final de A?BNZR4,LOOP;sino, repite.
+   Las tres instrucciones vectoriales del bucle dependen unas de otras y deben ir en tres convoyes separados, por lo tanto Tcampanada = 3. El tiempo del bucle ya hab´ıamos dicho que ronda los 15 ciclos. El valor del tiempo de arranque ser´a la suma de tres cosas:
+• El tiempo de arranque de la instrucci´on de carga, que supondremos 12 ciclos.
+• El tiempo de arranque de la multiplicaci´on, 7 ciclos.
+• El tiempo de arranque del almacenamiento, otros 12 ciclos.
+Por lo tanto obtenemos un valor Tarranque = 12 + 7 + 12 = 31 ciclos de reloj. Con todo esto, y aplicando la ecuaci´on (1.3), se obtiene un tiempo total de proceso de T200 = 784 ciclos de reloj. Si dividimos por el nu´mero de elementos obtendremos el tiempo de ejecuci´on por elemento, es decir, 784/200 = 3.9 ciclos de reloj por elemento del vector. Comparado con Tcampanada, que es el tiempo sin considerar las sobrecargas, vemos que efectivamente la sobrecarga puede llegar a tener un valor significativamente alto.
+   Resumiendo las operaciones realizadas se tiene el siguiente proceso hasta llegar al resultado final:
+
+T =	 n		(T
+n	MV L
+
+
+
+loop
+
+
++ Tarranque
+
+) + n × T
+
+
+
+campanada
+
+T200 = 4 × (15 + Tstart) + 200 × 3
+T200 = 60 + (4 × Tstart) + 600 = 660 + (4 × Tstart)
+Tstart=12+7+12=31
+T200 = 660 + 4 × 31 = 784
+   La figura 1.14 muestra la sobrecarga y el tiempo total de ejecuci´on por elemento del ejemplo que estamos considerando. El modelo que s´olo considera las campanadas tendr´ıa un coste de 3 ciclos, mientras que el modelo m´as preciso que incorpora la sobrecarga an˜ade 0.9 a este valor.
+
+
+
+
+8
+
+
+7
+
+
+6
+
+
+5
+
+
+4
+
+
+3
+
+
+2
+
+
+1
+
+
+0
+20	40	60	80	100	120	140	160	180	200
+Elementos en el vector
+Figura 1.14: Tiempo de ejecuci´on por elemento en funci´on de la longitud del vector.
+
+1.3.3 Separaci´on de elementos en el vector
+El otro problema que se presenta en la programaci´on real es que la posici´on en memoria de elementos adyacentes no siempre son contiguas. Por ejemplo, consideremos el c´odigo t´ıpico para multiplicaci´on de matrices:
+do 10 i=1,100
+do 10 j=1,100
+A(i,j)=0.0
+do 10 k=1,100
+10	A(i,j)=A(i,j)+B(i,k)*C(k,j)
+
+   En la sentencia con etiqueta 10, se puede vectorizar la multiplicacio´n de cada fila de B con cada columna de C, y seccionar el bucle interior usando k como variable
+´ındice. Cuando una matriz se ubica en memoria, se lineariza organiz´andola en filas o en columnas. El almacenamiento por filas, utilizado por muchos lenguajes menos el Fortran, consiste en asignar posiciones consecutivas a elementos consecutivos en la fila, haciendo adyacentes los elementos B(i, j) y B(i, j + 1). El almacenamiento por columnas, utilizado en Fortran, hace adyacentes los elementos B(i, j) y B(i + 1, j).
+   Suponiendo que utilizamos el almacenamiento por columnas de Fortran nos encon- tramos con que los accesos a la matriz B no son adyacentes en memoria sino que se encuentran separados por una fila completa de elementos. En este caso, los elemen- tos de B que son accedidos en el lazo interior, est´an separados por el taman˜o de fila multiplicado por 8 (nu´mero de bytes por elemento) lo que hace un total de 800 bytes.
+A esta distancia en memoria entre elementos consecutivos se le llama separacio´n
+(stride). Con el ejemplo que estamos viendo podemos decir que los elementos de C
+
+
+tienen una separaci´on de 1, (1 palabra doble, 8 bytes), mientras que la matriz B tiene una separaci´on de 100 (100 palabras dobles, 800 bytes).
+   Una vez cargados estos elementos adyacentes en el registro vectorial, los elementos son l´ogicamente contiguos. Por todo esto, y para aumentar el rendimiento de la carga y almacenamiento de vectores con elementos separados, resulta interesante disponer de instrucciones que tengan en cuenta la separaci´on entre elementos contiguos de un vector. La forma de introducir esto en el lenguaje ensamblador es mediante la incorporaci´on de dos instrucciones nuevas, una de carga y otra de almacenamiento, que tengan en cuenta no s´olo la direcci´on de comienzo del vector, como hasta ahora, sino tambi´en el paso o la separaci´on entre elementos. En DLXV, por ejemplo, existen las instrucciones LVWS para carga con separaci´on, y SVWS para almacenamiento con separaci´on. As´ı, la instrucci´on LVWS V1,(R1,R2) carga en V1 lo que hay a partir de R1 con un paso o separaci´on de elementos de R2, y SVWS (R1,R2),V1 guarda los elementos del vector V1 en la posici´on apuntada por R1 con paso R2.
+   Naturalmente, el que los elementos no est´en separados de forma unitaria crea com- plicaciones en la unidad de memoria. Se hab´ıa comprobado que una operaci´on memoria- registro vectorial pod´ıa proceder a velocidad completa si el nu´mero de bancos en me- moria era al menos tan grande el tiempo de acceso a memoria en ciclos de reloj. Sin embargo, para determinadas separaciones entre elementos, puede ocurrir que accesos consecutivos se realicen al mismo banco, llegando incluso a darse el caso de que todos los elementos del vector se encuentren en el mismo banco. A esta situaci´on se le llama conflicto del banco de memoria y hace que cada carga necesite un mayor tiempo de acceso a memoria. El conflicto del banco de memoria se presenta cuando se le pide al mismo banco que realice un acceso cuando el anterior au´n no se hab´ıa completado. Por consiguiente, la condici´on para que se produzca un conflicto del banco de memoria ser´a:
+
+
+M´ın. comu´n mult.(separacio´n, nu´m. m´odulos) Separaci´on
+
+< Latencia acceso a memoria
+
+
+   Los conflictos en los m´odulos no se presentan si la separaci´on entre los elementos y el nu´mero de bancos son relativamente primos entre s´ı, y adem´as hay suficientes bancos para evitar conflictos en el caso de separaci´on unitaria. El aumento de nu´mero de bancos de memoria a un nu´mero mayor del m´ınimo, para prevenir detenciones con una separaci´on 1, disminuira´ la frecuencia de detenciones para las dem´as separaciones. Por ejemplo, con 64 bancos, una separaci´on de 32 parar´a cada dos accesos en lugar de cada acceso. Si originalmente tuvi´esemos una separaci´on de 8 con 16 bancos, parar´ıa cada dos accesos; mientras que con 64 bancos, una separaci´on de 8 parar´a cada 8 accesos. Si tenemos acceso a varios vectores simult´aneamente, tambi´en se necesitar´an m´as bancos para prevenir conflictos. La mayor´ıa de supercomputadores vectoriales actuales tienen como m´ınimo 64 bancos, y algunos llegan a 512.
+   Veamos un ejemplo. Supongamos que tenemos 16 bancos de memoria con un tiempo de acceso de 12 ciclos de reloj. Calcular el tiempo que se tarda en leer un vector de 64 elementos separados unitariamente. Repetir el c´alculo suponiendo que la separaci´on es de 32. Como el nu´mero de bancos es mayor que la latencia, la velocidad de acceso ser´a de elemento por ciclo, por tanto 64 ciclos, pero a esto hay que an˜adirle el tiempo de arranque que supondremos 12, por tanto la lectura se realizar´a en 12 + 64 = 76 ciclos de reloj. La peor separaci´on es aquella en la que la separaci´on sea un mu´ltiplo del nu´mero de bancos, como en este caso que tenemos una separaci´on de 32 y 16 bancos. En este caso siempre se accede al mismo banco con lo que cada acceso colisiona con el anterior,
+
+
+esto nos lleva a un tiempo de acceso de 12 ciclos por elemento y un tiempo total de 12 × 64 = 768 ciclos de reloj.
+
+1.4 Mejora del rendimiento de los procesadores vec- toriales
+1.4.1 Encadenamiento de operaciones vectoriales
+Hasta ahora, se hab´ıan considerado separadas, y por tanto en convoyes diferentes, instrucciones sobre vectores que utilizaran el mismo o los mismos registros vectoriales. Este es el caso, por ejemplo de dos instrucciones como
+
+MULTV	V1,V2,V3 ADDV	V4,V1,V5
+
+   Si se trata en este caso al vector V1 no como una entidad, sino como una serie de elementos, resulta sencillo entender que la operaci´on de suma pueda iniciarse unos ciclos despu´es de la de multiplicaci´on, y no despu´es de que termine, ya que los elementos que la suma puede ir necesitando ya los ha generado la multiplicacio´n. A esta idea, que permite solapar dos instrucciones, se le llama encadenamiento. El encadenamiento permite que una operaci´on vectorial comience tan pronto como los elementos individuales de su operando vectorial fuente est´en disponibles, es decir, los resultados de la primera unidad funcional de la cadena se adelantan a la segunda unidad funcional. Naturalmente deben ser unidades funcionales diferentes, de lo contrario surge un conflicto temporal.
+   Si las unidades est´an completamente segmentadas, basta retrasar el comienzo de la siguiente instrucci´on durante el tiempo de arranque de la primera unidad. El tiempo total de ejecuci´on para la secuencia anterior ser´ıa:
+Longitud del vector + Tiempo de arranque suma + Tiempo de arranque multiplicaci´on
+
+   La figura 1.15 muestra los tiempos de una versi´on de ejecuci´on no encadenada y de otra encadenada del par de instrucciones anterior suponiendo una longitud de 64 elementos. El tiempo total de la ejecuci´on encadenada es de 77 ciclos de reloj que es sensiblemente inferior a los 145 ciclos de la ejecuci´on sin encadenar. Con 128 operaciones en punto flotante realizadas en ese tiempo, se obtiene 1.7 FLOP por ciclo de reloj, mientras que con la versio´n no encadenada la tasa ser´ıa de 0.9 FLOP por ciclo de reloj.
+
+1.4.2 Sentencias condicionales
+Se puede comprobar mediante programas de test, que los niveles de vectorizaci´on en muchas aplicaciones no son muy altos [HP96]. Debido a la ley de Amdahl el aumento de velocidad en estos programas est´a muy limitado. Dos razones por las que no se obtiene un alto grado de vectorizaci´on son la presencia de condicionales (sentencias if) dentro de los bucles y el uso de matrices dispersas. Los programas que contienen sentencias if en los bucles no se pueden ejecutar en modo vectorial utilizando las t´ecnicas expuestas en este cap´ıtulo porque las sentencias condicionales introducen control de flujo en el bucle. De igual forma, las matrices dispersas no se pueden tratar eficientemente
+
+
+
+
+No encadenada
+
+
+
+
+
+
+Encadenada
+
+7	64
+
+
+
+7	64
+
+6	64
+
+
+
+
+
+
+
+
+Total=77
+
+
+Total=141
+
+
+Figura 1.15: Temporizaci´on para la ejecuci´on no encadenada y encadenada.
+
+utilizando algunas de las capacidades que se han mostrado; esto es por ejemplo un factor importante en la falta de vectorizacio´n de Spice. Se explican a continuaci´on algunas t´ecnicas para poder ejecutar de forma vectorial algunas de estas estructuras.
+Dado el siguiente bucle:
+do 100 i=1,64
+if (A(i) .ne. 0) then
+A(i)=A(i)-B(i)
+endif
+100 continue
+
+   Este bucle no puede vectorizarse a causa de la ejecuci´on condicional del cuerpo. Sin embargo, si el bucle anterior se pudiera ejecutar en las iteraciones para las cuales A(i) = 0 entonces se podr´ıa vectorizar la resta. Para solucionarlo se emplea una m´ascara sobre el vector.
+   El control de m´ascara vectorial es un vector booleano de longitud MVL. Cuando se carga el registro de m´ascara vectorial con el resultado de un test del vector, cualquier instrucci´on vectorial que se vaya a ejecutar solamente opera sobre los elementos del vector cuyas entradas correspondientes en el registro de m´ascara vectorial sean 1. Las entradas del registro vectorial destino que corresponden a un 0 en el registro de m´ascara no se modifican por la operaci´on del vector. Para que no actu´e, el registro de m´ascara vectorial se inicializa todo a 1, haciendo que las instrucciones posteriores al vector operen con todos los elementos del vector. Con esto podemos reescribir el c´odigo anterior para que sea vectorizable:
+
+LVV1,Ra; Carga vector A en V1LVV2,Rb; Carga vector B en V2LDF0,#0; Carga F0 con 0 en punto flotanteSNESVF0,V1; Inicializa VM a 1 si V1(i)!=0SUBVV1,V1,V2; Resta bajo el control de la m´ascaraCVM; Pone la m´ascara todo a unosSVRa,V1; guarda el resultado en A.
+   El uso del vector de m´ascara tiene alguna desventaja. Primero, la operaci´on se realiza para todos los elementos del vector, por lo que da lo mismo que la condici´on se cumpla o no, siempre consume tiempo de ejecuci´on. De todas formas, incluso con una m´ascara repleta de ceros, el tiempo de ejecuci´on del c´odigo en forma vectorial suele ser menor que la versi´on escalar. Segundo, en algunos procesadores lo que hace la m´ascara es deshabilitar el almacenamiento en el registro del resultado de la operaci´on, pero la operaci´on se hace en cualquier caso. Esto tiene el problema de que si por ejemplo
+
+
+estamos dividiendo, y no queremos dividir por cero (para evitar la excepci´on) lo normal es comprobar los elementos que sean cero y no dividir, pero en un procesador cuya m´ascara s´olo deshabilite el almacenamiento y no la operaci´on, realizar´a la divisi´on por cero generando la excepci´on que se pretend´ıa evitar.
+
+1.4.3 Matrices dispersas
+Las matrices dispersas son matrices que tienen una gran cantidad de elementos, siendo la mayor´ıa de ellos cero. Este tipo de matrices, que habitualmente ocupar´ıan mucha memoria de forma innecesaria, se encuentran almacenadas de forma compacta y son accedidas indirectamente. Para una representaci´on t´ıpica de una matriz dispersa nos podemos encontrar con c´odigo como el siguiente:
+do 100 i=1,n
+100	A(K(i))=A(K(i))+C(M(i))
+
+   Este c´odigo realiza la suma de los vectores dispersos A y C, usando como ´ındices los vectores K y M que designan los elementos de A y B que no son cero (ambas matrices deben tener el mismo nu´mero de elementos no nulos). Otra forma comu´n de representar las matrices dispersas utiliza un vector de bits como m´ascara para indicar qu´e elementos existen y otro vector para almacenar sus valores. A menudo ambas representaciones coexisten en el mismo programa. Este tipo de matrices se encuentran en muchos c´odigos, y hay muchas formas de tratar con ellas dependiendo de la estructura de datos utilizada en el programa.
+   Un primer mecanismo consiste en las operaciones de dispersio´n y agrupamiento utilizando vectores ´ındices. El objetivo es moverse de una representaci´on densa a la dispersa normal y viceversa. La operaci´on de agrupamiento coge el vector ´ındice y busca en memoria el vector cuyos elementos se encuentran en las direcciones dadas por la suma de una direcci´on base y los desplazamientos dados por el vector ´ındice. El resultado es un vector no disperso (denso) en un registro vectorial. Una vez se han realizado las operaciones sobre este vector denso, se pueden almacenar de nuevo en memoria de forma expandida mediante la operaci´on de dispersi´on que utilizar´a el mismo vector de ´ındices. El soporte hardware para estas operaciones se denomina dispersar-agrupar (scatter-gather). En el ensamblador vienen dos instrucciones para realizar este tipo de tareas. En el caso del DLXV se tiene LVI (cargar vector indexado), SVI (almacenar vector indexado), y CVI (crear vector ´ındice, por ejemplo CVI V1,R1 introduce en V1 los valores 0,R1,2*R1,3*R1,...,63*R1). Por ejemplo, suponer que Ra, Rc, Rk y Rm contienen las direcciones de comienzo de los vectores de la secuencia anterior, entonces el bucle interno de la secuencia se podr´ıa codificar como:
+LV	Vk,Rk	; Carga K
+LVI	Va,(Ra+Vk)	; Carga A(K(i)) LV	Vm,Rm	; Carga M
+LVI	Vc,(Rc+Vm)	; Carga C(M(i)) ADDV	Va,Va,Vc	; Los suma
+SVI	(Ra+Vk),Va	; Almacena A(K(i))
+
+   De esta manera queda vectorizada la parte de c´alculo con matrices dispersas. El c´odigo en Fortran dado con anterioridad nunca se vectorizar´ıa de forma autom´atica puesto que el compilador no sabr´ıa si existe dependencia de datos, ya que no sabe a priori lo que contiene el vector K.
+
+
+   Algo parecido se puede realizar mediante el uso de la m´ascara que se vio en las sentencias condicionales. El registro de m´ascara se usa en este caso para indicar los elementos no nulos y as´ı poder formar el vector denso a partir de un vector disperso.
+   La capacidad de dispersar/agrupar (scatter-gather ) est´a incluida en muchos de los supercomputadores recientes. Estas operaciones rara vez alcanzan la velocidad de un elemento por ciclo, pero son mucho m´as r´apidas que la alternativa de utilizar un bucle escalar. Si la propiedad de dispersi´on de un matriz cambia, es necesario calcular un nuevo vector ´ındice. Muchos procesadores proporcionan soporte para un c´alculo r´apido de dicho vector. La instrucci´on CVI (Create Vector Index) del DLX crea un vector
+´ındice dado un valor de salto (m), cuyos valores son 0, m, 2 m, ..., 63 m. Algunos procesadores proporcionan una instrucci´on para crear un vector ´ındice comprimido cuyas entradas se corresponden con las posiciones a 1 en el registro m´ascara. En DLX, definimos la instrucci´on CVI para que cree un vector ´ındice usando el vector m´ascara. Cuando el vector m´ascara tiene todas sus entradas a uno, se crea un vector ´ındice est´andar.
+   Las cargas y almacenamientos indexados y la instrucci´on CVI proporcionan un m´etodo alternativo para soportar la ejecuci´on condicional. A continuaci´on se mues- tra la secuencia de instrucciones que implementa el bucle que vimos al estudiar este problema y que corresponde con el bucle mostrado en la p´agina 24:
+
+
+LV LD
+SNESVV1,Ra F0,#0 F0,V1;
+;
+;Carga vector A en V1
+Carga F0 con cero en punto flotante Pone VM(i) a 1 si V1(i)<>F0CVIV2,#8;Genera ´ındices en V2POPR1,VM;Calcula el n´umero de unos en VMMOVI2SVLR,R1;Carga registro de longitud vectorialCVM;Pone a 1 los elementos de la m´ascaraLVIV3,(Ra+V2);Carga los elementos de A distintos de ceroLVIV4,(Rb+V2);Carga los elementos correspondientes de BSUBVV3,V3,V4;Hace la restaSVI(Ra+V2),V3;Almacena A
+   El que la implementacio´n utilizando dispersar/agrupar (scatter-gather ) sea mejor que la versi´on utilizando la ejecuci´on condicional, depende de la frecuencia con la que se cumpla la condici´on y el coste de las operaciones. Ignorando el encadenamiento, el tiempo de ejecuci´on para la primera versio´n es 5n + c1. El tiempo de ejecuci´on de la segunda versio´n, utilizando cargas y almacenamiento indexados con un tiempo de ejecuci´on de un elemento por ciclo, es 4n + 4 f n + c2, donde f es la fracci´on de elementos para la cual la condici´on es cierta (es decir, A = 0. Si suponemos que los valores c1 y c2 son comparables, y que son mucho m´as pequen˜os que n, entonces para que la segunda t´ecnica sea mejor que la primera se tendr´a que cumplir
+
+5n ≥ 4n + 4 × f × n
+
+lo que ocurre cuando 1 ≥ f .
+   Es decir, el segundo m´etodo es m´as r´apido que el primero si menos de la cuarta parte de los elementos son no nulos. En muchos casos la frecuencia de ejecuci´on es mucho menor. Si el mismo vector de ´ındices puede ser usado varias veces, o si crece el nu´mero de sentencias vectoriales con la sentencia if, la ventaja de la aproximacio´n de dispersar/agrupar aumentar´a claramente.
+
+1.5 El rendimiento de los procesadores vectoriales
+1.5.1 Rendimiento relativo entre vectorial y escalar
+A partir de la ley de Amdahl es relativamente sencillo calcular el rendimiento relativo entre la ejecuci´on vectorial y la escalar, es decir, lo que se gana al ejecutar un programa de forma vectorial frente a la escalar tradicional. Supongamos que r es la relaci´on de velocidad entre escalar y vectorial, y que f es la relaci´on de vectorizaci´on. Con esto, se puede definir el siguiente rendimiento relativo:
+
+
+1
+P =
+(1 − f ) + f/r
+
+r
+=
+(1 − f )r + f
+
+(1.4)
+
+
+Este rendimiento relativo mide el aumento de la velocidad de ejecuci´on del procesador vectorial sobre el escalar. La relaci´on hardware de velocidad r es decisi´on del disen˜ador. El factor de vectorizaci´on f refleja el porcentaje de c´odigo en un programa de usuario que se vectoriza. El rendimiento relativo es bastante sensible al valor de f . Este valor se puede incrementar utilizando un buen compilador vectorial o a trav´es de transfor- maciones del programa.
+   Cuanto m´as grande es r tanto mayor es este rendimiento relativo, pero si f es pequen˜o, no importa lo grande que sea r, ya que el rendimiento relativo estar´a cercano a la unidad. Fabricantes como IBM tienen una r que ronda entre 3 y 5, ya que su pol´ıtica es la de tener cierto balance entre las aplicaciones cient´ıficas y las de negocios. Sin embargo, empresas como Cray y algunas japonesas eligen valores mucho m´as altos para r, ya que la principal utilizaci´on de estas m´aquinas es el c´alculo cient´ıfico. En estos casos la r ronda entre los 10 y 25. La figura 1.16 muestra el rendimiento relativo para una m´aquina vectorial en funci´on de r y para varios valores de f .
+
+
+
+
+5.5
+90%
+
+5
+
+
+4.5
+
+
+4
+
+
+
+3.5
+
+80%
+
+
+
+3
+
+70%
+2.5
+
+
+2
+50%
+
+1.5
+30%
+
+1
+1	2	3	4	5	6	7	8	9	10
+relacion de velocidad escalar/vectorial (r)
+Figura 1.16: Rendimiento relativo escalar/vectorial.
+
+1.5.2 Medidas del rendimiento vectorial
+Dado que la longitud del vector es tan importante en el establecimiento del rendimiento de un procesador, veremos las medidas relacionadas con la longitud adem´as del tiempo de ejecuci´on y los MFLOPS obtenidos. Estas medidas relacionadas con la longitud tienden a variar de forma muy importante dependiendo del procesador y que son im- portantes de comparar. (Recordar, sin embargo, que el tiempo es siempre la medida de inter´es cuando se compara la velocidad relativa de dos procesadores.) Las tres medidas m´as importantes relacionadas con la longitud son
+• Rn. Es la velocidad de ejecuci´on, dada en MFLOPS, para un vector de longitud n. R∞. Es la velocidad de ejecuci´on, dada en MFLOPS, para un vector de longitud in- finita. Aunque esta medida puede ser de utilidad para medir el rendimiento m´aximo,
+los problemas reales no manejan vectores ilimitados, y la sobrecarga existente en los problemas reales puede ser mayor.
+N1/2. La longitud de vector necesaria para alcanzar la mitad de R∞. Esta es una buena medida del impacto de la sobrecarga.
+Nv. La longitud de vector a partir de la cual el modo vectorial es m´as r´apido que el modo escalar. Esta medida tiene en cuenta la sobrecarga y la velocidad relativa del modo escalar respecto al vectorial.
+Veamos como se pueden determinar estas medidas en el problema DAXPY ejecutado en el DLXV. Cuando existe el encadenamiento de instrucciones, el bucle interior del c´odigo DAXPY en convoys es el que se muestra en la figura 1.17 (suponiendo que Rx y Ry contienen la direcci´on de inicio).
+
+
+
+
+  Figura 1.17: Formacio´n de convoys en el bucle interior del c´odigo DAXPY. El tiempo de ejecuci´on de un bucle vectorial con n elementos, Tn, es:
+
+
+T =	 n		(T
+n	MV L
+
+
+bucle
+
+
++ Tarranque
+
+
+) + n × Tcampanada
+
+
+   El encadenamiento permite que el bucle se ejecute en tres campanadas y no me- nos, dado que existe un cauce de memoria; as´ı Tcampanada = 3. Si Tcampanada fuera una indicaci´on completa del rendimiento, el bucle podr´ıa ejecutarse a una tasa de 2/3 tasa del reloj MFLOPS (ya que hay 2 FLOPs por iteraci´on). As´ı, utilizando u´nicamente Tcampanada, un DLXV a 200 MHz ejecutar´ıa este bucle a 133 MFLOPS su- poniendo la no existencia de seccionamiento (strip-mining ) y el coste de inicio. Existen varias maneras de aumentar el rendimiento: an˜adir unidades de carga-almacenamiento adicionales, permitir el solapamiento de convoys para reducir el impacto de los costes de inicio, y decrementar el nu´mero de cargas necesarias mediante la utilizaci´on de registros vectoriales.
+
+
+Rendimiento m´aximo del DLXV en el DAXPY
+En primer lugar debemos determinar el significado real del rendimiento m´aximo, R∞. Por ahora, continuaremos suponiendo que un convoy no puede comenzar hasta que todas las instrucciones del convoy anterior hayan finalizado; posteriormente eliminaremos esta restricci´on. Teniendo en cuenta esta restricci´on, la sobrecarga de inicio para la secuencia vectorial es simplemente la suma de los tiempos de inicio de las instrucciones:
+Tarranque = 12 + 7 + 12 + 6 + 12 = 49
+
+   Usando MV L = 64, Tloop = 15, Tstart = 49, y Tchime = 3 en la ecuaci´on del rendimiento, y suponiendo que n no es un mu´ltiplo exacto de 64, el tiempo para una operaci´on de n elementos es
+T = r n m × (15 + 49) + 3n = (n + 64) + 3n = 4n + 64
+
+   La velocidad sostenida est´a por encima de 4 ciclos de reloj por iteraci´on, m´as que la velocidad te´orica de 3 campanadas, que ignora los costes adicionales. La mayor parte de esta diferencia es el coste de inicio para cada bloque de 64 elementos (49 ciclos frente a 15 de la sobrecarga del bucle).
+Podemos calcular R∞ para una frecuencia de reloj de 200 MHz como
+
+
+R∞ = limn→∞
+
+Operaciones por iteracio´n × frecuencia de reloj Ciclos de reloj por iteracio´n
+
+El numerador es independiente de n, por lo que
+R	= Operaciones por iteracio´n × frecuencia de reloj
+∞	lim	(Ciclos de reloj por iteracio´n)
+n→∞
+limn→∞ (Ciclos de reloj por iteracio´n) = limn→∞ (Tn ) = limn→∞ (4n + 64 ) = 4
+
+
+R	= 2 × 200 MHz
+4
+
+= 100 MFLOPS
+
+   El rendimiento sin el coste de inicio, que es el rendimiento m´aximo dada la estructura de la unidad funcional vectorial, es 1.33 veces superior. En realidad, la distancia entre el rendimiento de pico y el sostenido puede ser incluso mayor.
+
+Rendimiento sostenido del DLXV en el Benchmark Linpack
+El benchmark Linpack es una eliminaci´on de Gauss sobre una matriz de 100 100. As´ı, la longitud de los elementos van desde 99 hasta 1. Un vector de longitud k se usa k veces. As´ı, la longitud media del vector viene dada por
+¿99  i2
+99
+i=1
+
+
+   Ahora podemos determinar de forma m´as precisa el rendimiento del DAXPY usando una longitud de vector de 66.
+Tn = 2 × (15 + 49) + 3 × 66 = 128 + 198 = 326
+
+
+R66
+
+= 2 × 66 × 200 MHz = 81 MFLOPS 326
+
+   El rendimiento m´aximo, ignorando los costes de inicio, es 1.64 veces superior que el rendimiento sostenido que hemos calculado. En realidad, el benchmark Linpack contiene una fracci´on no trivial de c´odigo que no puede vectorizarse. Aunque este c´odigo supone menos del 20% del tiempo antes de la vectorizacio´n, se ejecuta a menos de una d´ecima parte del rendimiento cuando se mide en FLOPs. As´ı, la ley de Amdahl nos dice que el rendimiento total ser´a significativamente menor que el rendimiento estimado al analizar el bucle interno.
+   Dado que la longitud del vector tiene un impacto significativo en el rendimiento, las medidas N1/2 y Nv se usan a menudo para comparar m´aquinas vectoriales.
+Ejemplo Calcular N1/2 para el bucle interno de DAXPY para el DLXV con un reloj de 200 MHz.
+Respuesta Usando R∞ como velocidad m´axima, queremos saber para qu´e longitud del vector obtendremos 50 MFLOPS. Empezaremos con la f´ormula para MFLOPS suponiendo que las medidas se realizan para N1/2 elementos:
+MFLOPS = FLOPs ejecutados en N1/2 iteraciones × Ciclos de reloj × 10−6
+
+Ciclos de reloj para N1/2 iteraciones
+50 = 2 × N1/2	200
+TN1/2
+
+Segundos
+
+Simplificando esta expresi´on y suponiendo que N1/2 ≤ 64, tenemos que Tn≤64 = 1 × 64 + 3 × n, lo que da lugar a
+TN1/2 = 8 × N1/2
+1 × 64 + 3 × N1/2 = 8 × N1/2
+5 × N1/2 = 64
+N1/2 = 12.8
+Por lo tanto, N1/2 = 13; es decir, un vector de longitud 13 proporciona aproxima- damente la mitad del rendimiento m´aximo del DLXV en el bucle DAXPY.
+Ejemplo ¿Cu´al es la longitud del vector, Nv, para que la operaci´on vectorial se ejecute m´as r´apidamente que la escalar?
+Respuesta De nuevo, sabemos que Rv < 64. El tiempo de una iteraci´on en modo escalar se puede estimar como 10 + 12 + 12 + 7 + 6 + 12 = 59 ciclos de reloj, donde 10 es el tiempo estimado de la sobrecarga del bucle. En el ejemplo anterior se vio que Tn≤64 = 64 + 3 × n ciclos de reloj. Por lo tanto,
+64 + 3 × Nv = 59 Nv
+N =	64
+v	56
+Nv = 2
+
+
+Rendimiento del DAXPY en un DLXV mejorado
+El rendimiento del DAXPY, como en muchos problemas vectoriales, viene limitado por la memoria. Consecuentemente, ´este se puede mejorar an˜adiendo m´as unidades de acceso a memoria. Esta es la principal diferencia arquitect´onica entre el CRAY X-MP (y los procesadores posteriores) y el CRAY-1. El CRAY X-MP tiene tres cauces de acceso a memoria, en comparaci´on con el u´nico cauce a memoria del CRAY-1, permitiendo adem´as un encadenamiento m´as flexible. ¿C´omo afectan estos factores al rendimiento?
+Ejemplo ¿Cu´al ser´ıa el valor de T66 para el bucle DAXPY en el DLXV si an˜adimos dos cauces m´as de acceso a memoria?.
+Respuesta Con tres canales de acceso a memoria, todas las operaciones caben en un u´nico convoy. Los tiempos de inicio son los mismos, por lo que
+T	= I66 l × (T	+ T	) + 66 × T
+
+T66 = 2 × (15 + 49) + 66 × 1 = 194
+Con tres cauces de acceso a memoria, hemos reducido el tiempo para el rendi- miento sostenido de 326 a 194, un factor de 1.7. Observacio´n del efecto de la ley de Amdahl: Hemos mejorado la velocidad m´axima te´orica, medida en el nu´mero de campanadas, en un factor de 3, pero la mejora total es de 1.7 en el rendimiento sostenido.
+   Otra mejora se puede conseguir del solapamiento de diferentes convoys y del coste del bucle escalar con las instrucciones vectoriales. Esta mejora requiere que una operaci´on vectorial pueda usar una unidad funcional antes de que otra operaci´on haya finalizado, complicando la l´ogica de emisi´on de instrucciones.
+   Para conseguir una m´axima ocultaci´on de la sobrecarga del seccionamiento (strip- mining ), es necesario poder solapar diferentes instancias del bucle, permitiendo la eje- cuci´on simulta´nea de dos instancias de un convoy y del c´odigo escalar. Esta t´ecnica, denominada tailgating, se us´o en el Cray-2. Alternativamente, podemos desenrollar el bucle exterior para crear varias instancias de la secuencia vectorial utilizando diferentes conjuntos de registros (suponiendo la existencia de suficientes registros). Permitiendo el m´aximo solapamiento entre los convoys y la sobrecarga del bucle escalar, el tiempo de inicio y de la ejecuci´on del bucle s´olo ser´ıa observable una u´nica vez en cada convoy. De esta manera, un procesador con registros vectoriales puede conseguir unos costes de arranque bajos para vectores cortos y un alto rendimiento m´aximo para vectores muy grandes.
+Ejemplo ¿Cuales ser´ıan los valores de R∞ y T66 para el bucle DAXPY en el DLXV si an˜adimos dos cauces m´as de acceso a memoria y permitimos que los costes del seccionamiento (strip-mining ) y de arranque se solapen totalmente?.
+Respuesta
+
+
+R∞ = lim
+
+
+n→∞
+
+Operaciones por iteracio´n × frecuencia de reloj Ciclos de reloj por iteracio´n
+
+
+limn→∞
+
+
+(Ciclos de reloj por iteracio´n) = limn→∞
+
+(Tn )
+
+
+
+Dado que la sobrecarga s´olo se observa una vez, Tn = n + 49 + 15 = n + 64. As´ı,
+lim	(Tn ) = lim	(n + 64 ) = 1
+
+R	= 2 × 200 MHz = 400 MFLOPS
+1
+An˜adir unidades adicionales de acceso a memoria y una l´ogica de emisi´on m´as flexible da lugar a una mejora en el rendimiento m´aximo de un factor de 4. Sin embargo, T66 = 130, por lo que para vectores cortos, la mejora en el rendimiento sostenido es de 326 = 2.5 veces.
+
+1.6 Historia y evolucio´n de los procesadores vecto- riales
+Para finalizar, la figura 1.18 muestra una comparaci´on de la diferencia de rendimiento entre los procesadores vectoriales y los procesadores superescalares de u´ltima genera- ci´on. En esta figura podemos comprobar c´omo en los u´ltimos an˜os se ha ido reduciendo la diferencia en rendimiento de ambas arquitecturas.
+
+1.6 Historia y evolucio´n de los procesadores vectoriales	33
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+10000
+
+
+
+
+
+1000
+
+
+
+
+
+100
+Linpack MFLOPS
+
+
+
+
+10
+
+
+
+
+
+1
+1975	1980	1985	1990	1995	2000
+Figura 1.18: Comparaci´on del rendimiento de los procesadores vectoriales y los micro- procesadores escalares para la resoluci´on de un sistema de ecuaciones lineales denso (taman˜o de la matriz=n × n).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

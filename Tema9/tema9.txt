@@ -1,0 +1,666 @@
+﻿
+Tema 9
+
+
+
+
+
+
+Estructura de Computadores
+
+     Introducción a los computadores paralelos
+     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+En este tema se introducen las distintas configuraciones de computadores paralelos o arquitecturas MIMD.
+
+Se presentan los diferentes niveles de paralelismo en la arquitectura y el programa. La justificación del desarrollo de este tipo de aplicaciones y sus líneas de aplicación.
+Posteriormente se desarrolla la clase MIMD en diferentes tipos siguiendo esencialmente criterios relacionados con la organización de la memoria.
+
+Por último, se presentan algunos aspectos específicos de la evaluación de prestaciones en configuraciones con múltiples procesadores.
+
+
+
+9.2. Arquitecturas paralelas y niveles de paralelismo
+Hay dos alternativas para implementar paralelismo en un sistema:
+
+ Segmentación: división del sistema en etapas conectadas en cascada (cauce segmentado o pipeline).
+
+
+
+
+Estructura de Computadores
+Tema 9. Ideas clave
+
+ Replicando  componentes:  unidades  funcionales  iguales  (o  similares)  con
+conexión paralela que presentan alternativas de proceso.
+
+Los computadores paralelos son arquitecturas paralelas, a nivel de sistema computador, implementadas replicando procesadores.
+
+Según la clasificación de Flynn la arquitectura de los computadores paralelos responde a la categoría MIMD.
+
+Desde el punto de vista de la aplicación, el paralelismo se puede clasificar en función del nivel de abstracción de un programa o código secuencial (paralelismo funcional):
+
+ Nivel de programa.
+ Nivel de funciones.
+ Nivel de bucle o bloques.
+ Nivel de operaciones.
+
+
+Asociado a esa clasificación surge el concepto de granularidad (o grano de paralelismo) de la aplicación o tarea paralelizable. La granularidad hace referencia al tamaño (número de operaciones) del código sobre el que se aplica paralelismo (figura 1).
+
+Figura 1. Niveles de paralelismo de aplicación y granularidad. Fuente: Ortega et al., 2005.
+
+Estructura de Computadores
+Tema 9. Ideas clave
+
+También se puede clasificar el paralelismo vinculado a la aplicación en:
+
+
+  Paralelismo de tareas (task parallelism):
+• Se encuentra extrayendo la estructura lógica de funciones de una aplicación.
+• Relacionado con el paralelismo funcional a nivel de función.
+
+ Paralelismo de datos (data parallelism):
+• Implícito en las operaciones con estructuras de datos (procesamiento matricial).
+• Se puede extraer de la representación matemática de la aplicación.
+• Está relacionada con el paralelismo a nivel de bucle.
+
+En cuanto a las unidades de ejecución sobre las que se trabaja:
+
+
+ Hardware (procesador) se encarga de gestionar la ejecución de instrucciones.
+ Software (sistema operativo, SO) gestiona la ejecución de unidades de grano mayor como procesos y hebras o hilos (thread).
+
+El paralelismo que existe en el código de una aplicación se puede hacer explícito a nivel de instrucciones, hebras o procesos (figura 2).
+
+Figura 2. Paralelismo implícito, explícito y arquitecturas paralelas. Fuente: Ortega et al., 2005.
+
+
+Estructura de Computadores
+Tema 9. Ideas clave
+
+La figura 3 presenta quién extrae el paralelismo en los distintos niveles del código de la aplicación y lo relaciona con los niveles en los que se hace explícito y las arquitecturas que lo aprovechan.
+
+Figura 3. Relación dónde está, quién extrae, quién usa y dónde se usa el paralelismo implícito en un código.
+Fuente: Ortega et al., 2005.
+
+
+El grado de paralelismo hace referencia al aprovechamiento de la estructura paralela de un sistema y relaciona la estructura con la aplicación procesada al igual que cuántas unidades funcionales se usan, de las disponibles, en la ejecución de una aplicación en un instante o un intervalo de tiempo.
+
+
+
+9.3. Motivación al estudio de computadores paralelos
+En este apartado se justifica la existencia y necesidad de estudio y desarrollo de las arquitecturas paralelas basándose en tres aspectos:
+
+ La existencia de aplicaciones que requieren arquitecturas paralelas.
+ La accesibilidad del hardware y software necesarios para desarrollar estas arquitecturas.
+
+Estructura de Computadores
+Tema 9. Ideas clave
+
+ El estudio de diferentes facetas de la arquitectura que permite optimizar la elección del hardware y software más adecuados mejorando las prestaciones.
+
+
+
+9.4. Espacio de diseño. Clasificación y estructura general
+El estudio y diseño de los computadores paralelos se suele dividir en cuatro niveles
+de abstracción o facetas:
+
+ Nodos de cómputo.
+ Sistema de memoria.
+ Sistema de comunicación.
+ Sistema de entrada/salida.
+
+
+Clasificación de los computadores paralelos
+
+Atendiendo a la organización de su sistema de memoria:
+
+
+Multiprocesadores o sistemas con memoria compartida (SM, Shared Memory) (figura 4):
+
+ Todos los procesadores comparten el mismo mapa de memoria y, por lo tanto, el
+mismo espacio de direccionamiento.
+ La memoria sirve para intercambiar información entre procesadores.
+ El programador no necesita saber dónde están almacenados los datos.
+ Características:
+• Poco escalable, dado que la cantidad de memoria de un sistema es limitada.
+• Comunicación mediante variables compartidas => Datos no duplicados en memoria principal.
+
+
+Estructura de Computadores
+Tema 9. Ideas clave
+
+• Necesita implementar primitivas de sincronización.
+• No necesita distribuir código y datos.
+• La programación, generalmente, es más sencilla.
+
+
+
+
+
+
+
+
+Red de interconexión
+
+
+
+
+
+
+
+
+Figura 4. Esquema de un multiprocesador. Fuente: Ortega et al., 2005.
+
+
+Multicomputadores o sistemas con memoria distribuida (DM, Distributed Memory) (figura 5):
+
+ Cada procesador tiene su espacio de direccionamiento propio, inaccesible para el resto.
+ Los procesadores deben comunicarse entre sí para intercambiar información.
+ El programador necesita conocer dónde están almacenados los datos.
+ Características:
+• Escalable.
+• Comunicación mediante software para paso de mensajes (send/receive) =>
+Datos duplicados en memoria principal, copia datos.
+• Sincronización mediante los mecanismos de comunicación.
+• Hay que distribuir código y datos (carga de trabajo) entre procesadores =>
+herramientas de programación más sofisticadas.
+• La programación es, generalmente, más difícil.
+
+
+
+
+
+
+
+Estructura de Computadores
+Tema 9. Ideas clave
+
+
+
+Figura 5. Esquema de un multicomputador. Fuente: Ortega et al., 2005.
+
+
+Técnicas para mejorar la escalabilidad en multiprocesadores:
+
+
+ Añadir una memoria caché local a cada procesador.
+ Sustituir la red por defecto, el bus de sistema, por redes de menor latencia y mayor ancho de banda (jerarquía de buses, barras cruzadas, redes multietapa).
+ Distribuir físicamente los módulos de memoria entre los procesadores (manteniendo compartido el espacio de direccionamiento).
+
+Atendiendo a la distribución física de la memoria, los multiprocesadores (MP) se clasifican en:
+
+ MP con acceso uniforme a memoria (UMA, Uniform Memory Access).
+• MP simétricos (SMP, Symmetric MultiProcessor).
+
+ MP con acceso no uniforme a memoria (NUMA, Non-Uniform Memory Access).
+• Arquitecturas con acceso a memoria no uniforme sin coherencia de caché entre nodos (NCC-NUMA, Non-Cache- Coherent Non-Uniform Memory Access) o NUMA.
+• Arquitecturas con acceso a memoria no uniforme y con caché coherente (CC- NUMA, Cache- Coherent Non-Uniform Memory Access).
+
+Estructura de Computadores
+Tema 9. Ideas clave
+
+• Arquitecturas con acceso a memoria de sólo caché (COMA, Cache Only Memory Access).
+
+La tabla 1 resume los diferentes tipos de computadores paralelos presentados y los relaciona con su característica de memoria y escalabilidad (incluyendo algunos ejemplos históricos).
+
+Tabla 1. Clasificación de los sistemas con múltiples procesadores. Fuente: Ortega et al., 2005.
+
+
+Además de las clasificaciones indicadas, existen algunos otros criterios de caracterización que dan lugar a otras denominaciones que se deben conocer:
+
+ Procesadores masivamente paralelos (MPP, Massively Parallel Processors).
+ Clúster.
+ Cluster Beowulf o Beowulf.
+ Constelaciones.
+ Red de computadores (NOW, Network Of Workstations).
+ Grid.
+
+
+
+
+
+
+
+
+
+Estructura de Computadores
+Tema 9. Ideas clave
+
+9.5. Prestaciones en computadores paralelos
+
+Medidas de prestaciones habituales en un computador paralelo:
+
+
+ Tiempo de ejecución o respuesta: el necesario para ejecutar una entrada (aplicación del sistema). Se suele mejorar dividiendo el programa en procesos o hebras.
+ Productividad (Throughput): número de entradas (aplicaciones) que es capaz de procesar por unidad de tiempo. Para mejorarlo se busca asociar cada entrada a un nodo de cómputo diferente.
+
+Medidas de prestaciones adicionales:
+ Funcionalidad.
+ Alta disponibilidad (High Availability).
+ Tolerancia a fallos.
+ RAS (Reliability, Availability, Serviceability).
+• Fiabilidad.
+• Disponibilidad.
+• Utilidad.
+ Expansibilidad.
+ Escalabilidad.
+ Consumo de potencia.
+ Eficiencia.
+
+
+Existen algunos benchmarks típicos de evaluación de computadores paralelos como:
+
+
+ SPEC ACCEL.
+ SPEC OMP2012.
+ SPEC MPI2007.
+ ScaLAPACK (Scalable Linear Algebra PACKage).
+ TPC-C.
+
+
+Estructura de Computadores
+Tema 9. Ideas clave
+
+ TPC-H.
+ HPCC (HPC Challenge).
+
+La ganancia en velocidad, aceleración o speedup es la medida que se emplea para medir el incremento de prestaciones en la ejecución de una aplicación en un sistema con múltiples procesadores frente a un sistema uniprocesador.
+
+La ganancia al procesar una aplicación en un sistema con p procesadores sería:
+
+
+      Prestaciones(p) S(p) = Prestaciones(1)
+
+Empleando el tiempo de respuesta para medir prestaciones:
+
+  Ts 
+S(p) =	con T (p) = T (p) + T (p)
+Tp(p)	p	c	o
+
+Donde:
+
+
+ TS: tiempo de ejecución del programa secuencial.
+ Tp(p): tiempo de ejecución del programa paralelo con p procesadores.
+ TC(p): tiempo de cómputo de las tareas de la aplicación.
+ TO(p): Tiempo de sobrecarga (overhead).
+
+
+La figura 6 muestra la representación de cuatro expresiones de ganancia de velocidad en función del número de procesadores según sea la escalabilidad:
+
+
+
+
+
+
+
+
+
+
+
+
+
+Estructura de Computadores
+Tema 9. Ideas clave
+
+
+Figura 6. Representación ganancia de velocidad frente a número de procesadores para distintas escalabilidades. Fuente: Ortega et al., 2005.
+
+ Escalabilidad lineal (S(p) = p): se distribuye el programa secuencial en partes iguales entre todos los procesadores y el tiempo de sobrecarga es despreciable.
+ Escalabilidad superlineal (S(p) > p): al aumentar el número de procesadores también se incrementan otros recursos que benefician a la aplicación.
+ Escalabilidad sublineal (S(p) < p): Cuando, por ejemplo no todo el programa es paralelizable y, además, puede existir o no sobrecarga.
+
+En la figura 6 se tiene en cuenta además el grado de paralelismo, es decir, cuántos procesadores se aprovechan de todos los que existen (𝑝 ó 𝑛 < 𝑝).
+
+Otras formas de medida de las prestaciones de computadores paralelos las constituyen las leyes de Amdahl y Gustafson.
+
+Por último, se describen las características de eficiencia de un sistema con múltiples procesadores, introduciendo la función de isoeficiencia.
+
+
+
+
+
+
+
+
+
+
+
+Estructura de Computadores
+Tema 9. Ideas clave
+
+9.6. Referencias bibliográficas
+
+Ortega, J., Anguita, M. y Prieto, A. (2005). Arquitectura de computadores. Madrid: Thomson.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Estructura de Computadores
+Tema 9. Ideas clave
+
+
+
+A fondo
+
+
+Programación paralela en sistemas con múltiples procesadores
+
+
+
+Los distintos aspectos relacionados con la programación paralela, vinculada a la ejecución en sistemas con múltiples procesadores que se presentan en el manual de la asignatura (páginas 345 a 376).
+
+Procesamiento paralelo
+
+
+
+Se puede profundizar el esquema del procesamiento paralelo en el capítulo 17 de este libro.
+
+Los secretos del supercomputador MareNostrum 3
+
+
+
+Vídeo divulgativo sobre el supercomputador más potente de España.
+
+
+
+
+
+
+
+Estructura de Computadores
+Tema 9. A fondo
+
+Supercomputador TITAN
+
+
+El computador más potente de EEUU y el segundo del mundo según la lista generada por el TOP500 en junio de 2014 (http://top500.org/lists/2014/06/).
+
+
+
+Accede a la página a través del aula virtual o desde la siguiente dirección web: https://www.olcf.ornl.gov/titan/
+
+
+Supercomputador Blue Gene de IBM
+
+
+Blue Gene es un supercomputador desarrollado por IBM que se convirtió en 2005 en el ordenador más rápido del mundo.
+
+
+
+Accede a la página a través del aula virtual o desde la siguiente dirección web: http://www-03.ibm.com/ibm/history/ibm100/us/en/icons/bluegene/
+
+
+
+
+
+
+
+
+
+
+
+
+
+Estructura de Computadores
+Tema 9. A fondo
+
+Centro Nacional de Supercomputación
+
+
+Centro vinculado al CICYT ubicado en Barcelona, donde se encuentra el MareNostrum que es la máquina de cálculo más potente de España.
+
+Accede a la página a través del aula virtual o desde la siguiente dirección web: http://www.bsc.es/
+
+
+Computadores paralelos
+
+
+
+Este libro es una de las referencias básicas sobre computadores paralelos.
+
+
+Accede a parte del libro a través del aula virtual o desde la siguiente dirección web: https://books.google.es/books?id=MHfHC4Wf3K0C&lpg=PP1&dq=Parallel%20Comp uter%20Architecture.%20A%20Hardware- Software%20Approach&hl=es&pg=PP1#v=onepage&q=Parallel%20Computer%20Ar chitecture.%20A%20Hardware-Software%20Approach&f=false
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Estructura de Computadores
+Tema 9. A fondo
+
+Evaluación de computadores paralelos
+
+
+Para profundizar en los benchmarks utilizados para evaluar computadores paralelos es interesante visitar los siguientes enlaces.
+
+Accede al documento desde el aula virtual o a través de la siguiente dirección web: http://www.spec.org/accel/
+http://www.spec.org/mpi2007/ http://www.spec.org/omp2012/ http://www.netlib.org/scalapack/ http://www.tpc.org/tpcc/default.asp
+
+
+Configuración grid
+
+
+
+En este artículo se desarrollan las características básicas de una configuración grid.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Estructura de Computadores
+Tema 9. A fondo
+
+
+
+Test
+
+1. Un computador paralelo:
+A. En general, basa su arquitectura en la segmentación.
+B. Dispone de una memoria principal en un bloque único.
+C. En general, basa su arquitectura en la conexión en paralelo de procesadores replicados.
+D. Las tres afirmaciones anteriores son correctas.
+
+
+2. La granularidad o grano de paralelismo…
+A. Alude a la eficiencia de la configuración paralela.
+B. Se refiere al número de unidades funcionales en las que se divide el sistema.
+C. Alude al tamaño de los operandos que puede manejar el computador.
+D. Se refiere al tamaño del código sobre el que se aplica paralelismo.
+
+3. Un computador paralelo se considera escalable…
+A. Si al añadir más procesadores incrementa sus prestaciones de forma proporcional al número añadido.
+B. Si puede aumentar su tamaño sin aumentar su consumo.
+C. Si al incorporar más procesadores aumenta el tamaño de operando que puede manejar.
+D. Las tres afirmaciones anteriores son ciertas.
+
+
+4. En un multiprocesador:
+A. El aumento en el número de procesadores mejora proporcionalmente las prestaciones.
+B. La	memoria	principal	sirve	para	intercambiar	información	entre procesadores.
+C. La memoria principal es propia de cada procesador.
+D. No es necesaria una red de interconexión.
+
+
+
+Estructura de Computadores
+Tema 9. Test
+
+5. Respecto a las arquitecturas multiprocesador se puede decir que…
+A. Una NUMA presenta una escalabilidad menor que un SMP.
+B. Un SMP no garantiza la uniformidad de acceso a toda la memoria principal.
+C. Una COMA tiene acceso uniforme a memoria.
+D. Ninguna de las afirmaciones anteriores es cierta.
+
+6. Comparando multiprocesadores y multicomputadores se puede decir:
+A. Que el tiempo de acceso a memoria es mayor en multiprocesadores SMP que en multicomputadores.
+B. Que un multiprocesador es mucho más escalable.
+C. Que un multicomputador puede usar la memoria principal para intercambiar información.
+D. Que en ambos se debe distribuir la carga de trabajo (código y datos) entre procesadores.
+
+7. En un multiprocesador NUMA:
+A. Cada procesador tiene acceso exclusivo a un único módulo de memoria.
+B. Cada procesador tiene acceso a toda la memoria caché del sistema.
+C. Cada procesador tiene acceso más rápido o preferente a un bloque de memoria.
+D. Ninguna de las afirmaciones anteriores es cierta.
+
+8. La sincronización...
+A. Es solo necesaria en multicomputadores.
+B. En multiprocesadores se realiza a nivel software aunque se puede mejorar el rendimiento con soporte hardware.
+C. En multicomputadores se basa en aprovechar las características de la aplicación en proceso.
+D. Solo es necesaria en multiprocesadores dado que comparten el mismo mapa de memoria.
+
+
+
+
+Estructura de Computadores
+Tema 9. Test
+
+9. Respecto a la medida de prestaciones en un sistema con múltiples procesadores, se puede decir que:
+A. La fiabilidad se podría expresar representado la probabilidad de que un sistema funcione, conforme a sus especificaciones, durante un periodo de tiempo.
+B. La alta disponibilidad garantiza que el sistema no detenga su funcionamiento.
+C. La expansibilidad establece la posibilidad de incorporar nuevos procesadores al sistema sin reducir prestaciones.
+D. Ninguna de las afirmaciones anteriores es correcta.
+
+
+10. La función de isoeficiencia …
+A. Si tiene un valor pequeño, indica que el sistema es poco escalable.
+B. Se calcula manteniendo constante la carga de trabajo y el número de procesadores.
+C. Indica cómo debe crecer el tamaño del problema al incrementar el número de procesadores para que la eficiencia se mantenga constante.
+D. No tiene en cuenta el tiempo de sobrecarga.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Estructura de Computadores
+Tema 9. Test

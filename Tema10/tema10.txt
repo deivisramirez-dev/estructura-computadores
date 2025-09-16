@@ -1,0 +1,665 @@
+﻿
+Tema 10
+
+
+
+
+
+
+Estructura de Computadores
+
+          Sistemas de comunicación en computadores paralelos
+          
+
+
+
+
+
+
+
+
+
+
+© Universidad Internacional de La Rioja (UNIR)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Ideas clave
+
+10.1. Introducción y objetivos
+
+
+
+En este tema se pretende:
+  Distinguir entre redes de altas prestaciones y redes estándar.
+ Conocer la estructura general de un sistema de comunicación, la relación entre sus componentes y la función de cada uno dentro de la red.
+ Conocer la estructura general de la interfaz de red, el conmutador y el canal/enlace, la relación entre sus componentes y la función de estos componentes.
+ Conocer las diferentes medidas de prestaciones para evaluar la red.
+
+
+
+10.2. Clasificación de los sistemas de comunicación
+Existen diferentes criterios para clasificar las redes de comunicación en computadores paralelos (número de nodos que interconectan, distancia entre nodos, si responden a un estándar o son específicas, etc.).
+
+La tabla 1 resume algunas redes de comunicación en función de los criterios señalados.
+
+
+
+
+
+
+
+Estructura de Computadores Tema 10. Ideas clave
+
+En la comunicación de altas prestaciones, se observan las siguientes tendencias:
+
+
+ Sustituir los buses por redes basadas en conmutadores y conexiones punto—a— punto, a todos los niveles:
+• Interno al chip.
+• A nivel de tarjeta y placa (acceso a memoria, acceso a E/S).
+• A nivel de chasis o caja.
+• A nivel de sistema (entre cajas).
+• LAN y Router IP.
+
+
+ Usar componentes y sistemas comerciales para conseguir una mejora en la relación prestaciones /coste.
+
+Tabla 1. Relación de distintas redes de comunicación para interconectar sistemas con múltiples procesadores.
+Fuente: Ortega et al., 2005.
+
+
+Las mejoras tecnológicas y de coste además de la necesidad de aumentar las prestaciones de las aplicaciones justifican esas tendencias.
+
+Sistema o red de comunicación: conjunto de componentes hardware o software que se encarga de la comunicación de datos entre computadores, en multicomputadores, y entre procesadores y memorias, en multiprocesadores.
+
+Estructura de Computadores Tema 10. Ideas clave
+
+10.3. Estructura general del sistema de comunicación
+En un sistema de comunicación se distinguen, en general los siguientes componentes:
+
+ Interfaz de red: hardware y software.
+ Conmutadores (switch o router).
+ Enlaces.
+
+La figura 1 muestra el diagrama de bloques genérico de un sistema de comunicación para un computador paralelo.
+
+Figura 1. Diagrama de bloques de un sistema de comunicación genérico para computadores paralelos. Fuente: Ortega et al., 2005.
+
+El sistema de comunicación gestiona e implementa las transferencias de datos entre los núcleos de los nodos terminales de la red.
+
+Estructura de Computadores Tema 10. Ideas clave
+
+Se denomina mensaje a la unidad de información que se transfiere entre nodos a través del sistema de comunicación.
+
+Dependiendo del sistema, el núcleo de un nodo puede contener un procesador, una memoria caché, memoria principal y dispositivos de E/S o alguno de estos elementos.
+
+Por requisitos de la red la transferencia de un mensaje puede dividirse en varias transferencias más pequeñas. Se define el paquete como la unidad de transferencia entre interfaces, que, a su vez, se puede dividir en fragmentos más pequeños en algunas redes (flits).
+
+Los conmutadores y enlaces guían los paquetes a su destino.
+
+
+Camino: secuencia de conmutadores y enlaces que atraviesa un paquete entre el interfaz origen y el destino.
+
+Sistemas de comunicación en multiprocesadores UMA:
+
+
+ El nodo puede estar formado por el procesador y su caché o un módulo de MP o un dispositivo de E/S.
+ El mensaje se genera a consecuencia de un acceso a memoria (carga almacenamiento, load/store) => Sistema de memoria como sistema de comunicación.
+ Los controladores de memoria actúan como interfaz con la red e incluyen
+hardware para implementar sincronización.
+ La comunicación (paso de mensaje) entre dos procesadores (procesos o hebras) se realiza en dos fases (escritura/lectura). Cada fase a petición de un procesador (mensaje unilateral).
+ Este sistema resulta transparente al programador y a la herramienta de programación.
+ Tamaño de paquetes fijado por el hardware de la memoria (línea de caché).
+
+
+
+
+Estructura de Computadores Tema 10. Ideas clave
+
+ Mantenimiento de coherencia de la información => Protocolo de coherencia de caché.
+
+Sistemas de comunicación en multicomputadores:
+
+
+ Nodo: interfaz + procesador (o procesadores) con caché + memoria principal (+ dispositivo E/S) (también puede haber nodos solo para dispositivos E/S).
+
+ La comunicación entre nodos (paso de mensaje) se realiza en una fase (send/receive) en la que llevan la iniciativa el procesador de la fuente (send) y del destino (receive).
+
+ La comunicación la realiza la interfaz entre la memoria del nodo fuente y la memoria del destino.
+
+ El sistema de comunicación visible para el programador como un subsistema de E/S:
+• Red de interconexión = dispositivo de E/S.
+• Hardware interfaz de red = adaptador o controladora de dispositivo.
+• Software de la interfaz = manejador o controlador de dispositivo.
+
+ Tamaño de los paquetes controlado por programador.
+• El sistema, puede dividir paquetes en unidades más pequeñas para su transferencia entre interfaces.
+
+ Control de la interfaz/Gestión transferencia:
+• Asistente de Comunicación (procesador del nodo, procesador E/S).
+
+ Mayor probabilidad de error en transmisión (bits de detección de errores).
+
+
+Los	sistemas	de	comunicación	en	multiprocesadores	NUMA:	presentan características intermedias.
+
+Estructura de Computadores Tema 10. Ideas clave
+
+10.4. La interfaz de red
+
+En multicomputadores:
+ Consta de parte hardware (NI, Network Interface) (figura 2) y parte software.
+
+
+ Incluye dos colas (FIFO) de envío/recepción.
+• Los datos a enviar están en el espacio de memoria de usuario en memoria principal, en variables específicas, desde ahí se deben copiar al NI para enviarlos (send).
+• Para recibir (receive) los datos se deben copiar de la cola del NI y de ahí a memoria de usuario.
+
+ Puede disponer de un asistente que ejecute el software de transferencia y de
+controlador de DMA para liberar al procesador de la comunicación.
+
+
+ La memoria del NI puede almacenar el software del adaptador evitando conflictos.
+
+
+Figura 2. Diagrama de bloques de un interfaz de red hardware (NI) de multicomputadores.
+Fuente: Ortega et al., 2005.
+
+Estructura de Computadores Tema 10. Ideas clave
+
+En multiprocesadores:
+ La implementación es solo hardware.
+ Existen diferencias según se disponga o no de hardware de coherencia de cachés
+que se verán en el tema «Multiprocesadores».
+ El asistente de comunicación está cableado.
+ En NUMA:
+• El controlador de memoria actúa como asistente.
+• La memoria auxiliar del NI puede precaptar datos para reducir la latencia percibida.
+
+Tareas de la interfaz de red:
+
+ Almacenamiento de salida y entrada de paquetes:
+• Pueden ser registros o zonas de memoria del NI.
+• Gestión tipo cola.
+• Uso de punteros si los paquetes no tienen tamaño fijo.
+
+ Formateo del paquete:
+• Cabecera (información sobre el camino) (C), códigos de error (E), final del paquete (F) (figura 3).
+
+Figura 3. Formato de paquete. Fuente: Ortega et al., 2005.
+
+• Divide la información según las características de la red.
+
+ Copia y almacenamiento de datos:
+• Almacenamiento temporal necesario por esperas y formateo.
+
+
+
+
+
+
+
+
+Estructura de Computadores Tema 10. Ideas clave
+
+ Protección. Traducción de direcciones:
+• En multiprogramación desaparece la protección del SO.
+• Traducción de direcciones virtuales a físicas (DMA).
+
+ Control de flujo:
+• Garantiza la fiabilidad de las transferencias.
+
+ Direccionamiento, encaminamiento y reconfiguración.
+
+
+La figura 4 muestra las distintas opciones de ubicación de la interfaz hardware
+respecto al procesador:
+ En el procesador.
+ Conexión a la caché.
+ Conexión al bus de sistema o similar.
+ Conexión al bus E/S.
+
+
+Figura 4. Opciones de ubicación del NI respecto al procesador. Fuente: Ortega et al., 2005.
+
+
+
+
+
+
+Estructura de Computadores Tema 10. Ideas clave
+
+10.5. La red de interconexión
+
+En la figura 1 aparecen los componentes esenciales de la red de interconexión:
+Conmutadores y enlaces y canales.
+
+Conmutadores
+
+La figura 5 representa el diagrama de bloques de un conmutador genérico. Sus características principales son:
+ Dirige los paquetes hacia el nodo destino.
+
+
+ Disponen de varias entradas y salidas, por lo que permiten varias transferencias en paralelo (figura 6.a). También son posibles conexiones uno—a—todos y todos—a—uno para implementar difusiones o reducciones.
+
+ Está compuesto por:
+• Puertos de E/S.
+• Buffers de almacenamiento de la información en tránsito para cada puerto (cola circular o lista entrelazada).
+• Conmutador interno (conecta los buffers de los puertos).
+• Controlador de enlace (CE) (controla las transferencias a través de los enlaces de unidades de control de flujo).
+• Encaminador (usa la información de la cabecera del paquete para dirigir este al puerto de salida adecuado).
+• Circuito de arbitraje (resuelve los conflictos que planteen los paquetes que quieran acceder a la misma salida) (figura 6.b).
+
+
+
+
+
+
+
+Estructura de Computadores Tema 10. Ideas clave
+
+
+Figura 5. Diagrama de bloques de un conmutador genérico. Fuente: Ortega et al., 2005.
+
+
+Figura 6. Diagrama de conexiones de un conmutador. a) Sin conflicto. b) con conflicto.
+Fuente: Ortega et al., 2005.
+
+
+Enlaces y canales
+
+ Enlace: Medio físico que conecta dos componentes del sistema de comunicación (conmutador—conmutador o conmutador—interfaz de red).
+
+ Canal: Conjunto formado por enlace, controladores de enlace y buffers de almacenamiento en emisor y receptor (figura 7).
+
+ El controlador de enlace adecúa el medio de transmisión usado a la información binaria a transmitir o recibir.
+
+ Phit (PHysical UnIT o DigIT): Unidad física de información que se transfiere por un enlace en un ciclo de red.
+
+Estructura de Computadores Tema 10. Ideas clave
+
+ Flit (FLow control unIT o digIT): Unidad lógica de información que se transfiere por un canal entre conmutadores. Es la unidad del control de flujo.
+
+Figura 7. Estructura de un canal. Fuente: Ortega et al., 2005.
+
+
+Tipos de enlaces en computadores paralelos:
+
+
+ Según el medio físico del que están hechos:
+• Hilos eléctricos (aluminio sobre silicio, o cobre).
+• Fibras ópticas (permiten equilibrar el ancho de banda de distancias cortas y largas en mayor medida que el cobre).
+
+ Según el sentido de transferencia:
+• Unidireccionales (un único sentido de transferencia).
+• Bidireccionales (transferencia en los dos sentidos). Full—duplex (dos enlaces, transferencia simultánea). Half—duplex (un enlace, transferencia alternada).
+
+ Respecto a la longitud:
+• Corto (1 símbolo propagándose, el ciclo de red depende del retardo de propagación).
+• Largos o segmentado (varios símbolos propagándose simultáneamente, Ciclo de red << Retardo de propagación).
+
+
+
+
+Estructura de Computadores Tema 10. Ideas clave
+
+ En función de la anchura los enlaces son:
+• Anchos (se transmiten simultáneamente datos y control).
+• Estrechos (multiplexa en el tiempo datos y control).
+
+ La velocidad del canal depende de:
+• La energía empleada para transmitir por una línea.
+• La distancia a atravesar.
+• El ruido.
+• El desplazamiento entre líneas de un enlace.
+• El tamaño del buffer destino (solo en enlaces largos).
+
+
+
+10.6. Prestaciones del sistema de comunicación
+
+En este apartado se muestran las distintas formas y perspectivas de medir las prestaciones en un sistema de comunicación.
+
+Se utilizan medidas de tiempo de respuesta y productividad.
+
+ Prestaciones extremo—a—extremo (point—to—point): prestaciones en la transferencia de un mensaje entre dos nodos (procesos/hebras).
+
+ Prestaciones	globales:	evalúan	prestaciones	en	presencia	de	múltiples transmisiones (mensajes) en paralelo.
+
+ Medidas adicionales.
+• Funcionalidad: tipos de transferencia (tipos de mensajes bilaterales y unilaterales).
+• Escalabilidad: estudio sobre el incremento en prestaciones globales (productividad global) conforme se incrementan las entradas/salidas que comunica el sistema.
+
+
+Estructura de Computadores Tema 10. Ideas clave
+
+• Alta disponibilidad: redundancia de componentes que permitan reducir el tiempo que algunas parejas entrada/salida permanecen sin poder comunicarse como consecuencia de algún fallo o por mantenimiento programado.
+• Tolerancia a fallos: se garantiza que las transferencias en curso cuando se produce algún fallo llegan a su destino.
+• Calidad de servicio (QoS): alternativas para asignar recursos a los mensajes o paquetes.
+
+ Prestaciones en funciones colectivas habituales (difusión, barreras).
+
+
+Prestaciones extremo a extremo
+
+Incluye evaluación hardware y software y se plantea en términos de latencia y ancho de banda. Pretende evaluar la sincronización y el camino completo entre dos nodos.
+
+Hay medidas teóricas y experimentales (microbenchmark, test ping—pong). Entre las medidas de este ámbito están:
+
+ Ancho de banda teórico o capacidad del canal (Mb/s o MB/s).
+ Latencia total o tiempo de comunicación, [T(m), m: tamaño del mensaje en Bytes]: tiempo de transferencia de un mensaje de tamaño m.
+ Latencia [L=T(0)]: tiempo que supone la transferencia de un mensaje de tamaño pequeño (0, 1 byte, 8 bytes).
+ Productividad o ancho de banda efectivo (P) (MB/s): Número de Bytes enviados por unidad de tiempo entre dos nodos.
+
+𝑃(𝑚) = 𝑚/𝑇(𝑚)
+
+ Ancho de banda asintótico (B): productividad a la que se tiende al aumentar el tamaño del mensaje (productividad máxima) (punto de potencia media).
+
+
+
+
+
+Estructura de Computadores Tema 10. Ideas clave
+
+
+
+Figura 8. Latencia total o tiempo de comunicación. Fuente: Ortega et al., 2005.
+
+
+La latencia total o tiempo de comunicación se aproxima, a partir de la latencia y el ancho de banda asintótico, como:
+
+𝑇(𝑚) = 𝐿 + 𝑚 / 𝐵
+
+
+Y está compuesta por (figura 8):
+ Sobrecarga en procesador fuente y destino.
+ Procesamiento de las NI de fuente y destino.
+ Transferencia a través de la red.
+
+Dos últimos conceptos a considerar en este apartado:
+
+ Latencia de transporte de un paquete: el que transcurre desde que se inyecta en la red el primer bit del paquete hasta que su último bit llega al NI destino.
+ Tiempo de encaminamiento: el transcurrido desde que se inyecta la cabecera del paquete hasta que alcanza el NI destino.
+
+Latencia de transporte = tiempo de encaminamiento + (ancho de banda × tamaño del paquete sin cabecera).
+
+
+
+
+
+
+
+
+Estructura de Computadores Tema 10. Ideas clave
+
+Prestaciones globales
+
+Miden el comportamiento de la red de interconexión (o del sistema de comunicación) en presencia de múltiples transferencias simultáneas.
+
+Se evalúan experimentalmente inyectando tráfico desde todos los nodos (o núcleos) de entrada siguiendo algún patrón de comunicación (distribución uniforme, distribución normal, tráfico no uniforme).
+
+Para obtener latencia y ancho de banda global se calculan valores medios o medias
+(dependerán del patrón).
+
+
+Medidas globales:
+
+ Latencia media: Latencia de todos los paquetes dividido entre número de paquetes.
+ Productividad global o productividad aceptada: bits por segundo que se están transfiriendo en toda la red. Se obtiene como los Bits/s aceptados por todas las salidas dividido entre el número de salidas (bits por segundo y nodo).
+ Productividad solicitada o aplicada: Bits/s generados por todas las entradas dividido entre el número de entradas (bits por segundo y nodo).
+ Productividad máxima o ancho de banda asintótico: ancho de banda que se puede aprovechar de forma efectiva para una distribución de destinos dada (punto de saturación de la red).
+ Ancho de banda de la bisección (para tráfico uniforme).
+
+
+
+10.7. Referencias bibliográficas
+
+Ortega, J., Anguita, M. y Prieto, A. (2005). Arquitectura de computadores. Madrid: Thomson.
+
+Estructura de Computadores Tema 10. Ideas clave
+
+
+
+A fondo
+
+
+Redes de interconexión
+
+
+
+Para obtener otra visión sobre las redes de interconexión de sistemas multiprocesador se puede revisar el texto desarrollado por el profesor Bastida de la Universidad de Valladolid.
+
+CESVIMA (Centro de Supercomputación y Visualización de Madrid)
+
+Página web del CESVIMA (Centro de Supercomputación y Visualización de Madrid), donde se encuentra el supercomputador Magerit, que es uno de los supercomputadores
+que integran la red de supercomputadores española.
+
+
+Accede a la página a través del aula virtual o desde la siguiente dirección web: http://www.cesvima.upm.es/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Estructura de Computadores
+Tema 10. A fondo
+
+Infiniband trade association
+
+
+La organización, fundada en 1999, es la encargada de definir las nuevas características y  la  especificación  de  la  arquitectura
+infiniband especialmente para los protocolos de transporte de hardware.
+
+
+Accede a la página a través del aula virtual o desde la siguiente dirección web: https://www.infinibandta.org/about-the-ibta/
+
+
+Validity of the Single Processor Approach to Achieving Large-Scale Computing Capabilities
+
+
+Para ilustrar la comparación entre dos sistemas de comunicación de computadores paralelos se puede revisar este artículo.
+
+Interconnect Analysis: 10GigE and InfiniBand in High Performance Computing
+
+
+
+En este artículo se comparan Redes Ethernet-10GB y Redes infiniband.
+
+
+
+
+
+
+
+Estructura de Computadores
+Tema 10. A fondo
+
+
+
+Actividades
+
+Trabajo. Redes de comunicación de sistemas con múltiples procesadores
+▸	Descripción. En este trabajo debes elegir una red histórica de comunicación en computadores  paralelos  y  desarrollar  un  trabajo  en  el  que  aparezcan
+desarrollados justificadamente los siguientes puntos:
+• Características técnicas esenciales.
+• Periodo de actividad o vigencia.
+• Ámbito de aplicación.
+• Ejemplos de redes competidoras, que sustituyeron a la elegida o a las que la elegida sustituyó.
+
+▸ Criterios de evaluación. Se valorará la descripción justificada de los puntos indicados, así como la originalidad del trabajo y el uso de varias referencias, que deben especificarse en el espacio adecuado.
+
+Se considerarán no aptos aquellos trabajos que se limiten a copiar otros documentos o desarrollos.
+
+▸	Extensión máxima: 9 páginas (1 página de portada, 1 página de índice, 1 página de referencias y 6 páginas de trabajo, como máximo).
+
+
+
+
+
+
+
+
+
+
+
+
+
+Estructura de Computadores Tema 10. Actividades
+
+
+
+Test
+
+1. Respecto a los nodos de un sistema de comunicación, se puede decir que:
+A. En multiprocesadores no necesariamente incluyen un procesador.
+B. En multicomputadores su comunicación se relaciona con los accesos a memoria.
+C. En multiprocesadores se comunican en una sola fase (enviar/recibir, send/receive).
+D. Las tres afirmaciones anteriores son correctas.
+
+
+2. En un sistema de comunicación…
+A. El mensaje es la unidad indivisible de transferencia.
+B. El paquete es la unidad indivisible de transferencia.
+C. La unidad indivisible de transferencia depende de la red.
+D. Ninguna de las tres respuestas anteriores es correcta.
+
+
+3. En el interfaz de red (NI)…
+A. Uno de sus elementos clave es el conmutador.
+B. Se pueden tener que realizar traducciones de dirección virtual a física de memoria principal.
+C. No se produce el control de flujo.
+D. Las tres afirmaciones anteriores son falsas.
+
+4. En relación con los sistemas de comunicación, se puede decir que:
+A. Los buses no se consideran sistemas de comunicación.
+B. Las redes basadas en conmutadores no son aplicables a multiprocesadores.
+C. Se intentan evitar, en la medida de lo posible, los componentes comerciales.
+D. Todas las afirmaciones anteriores son falsas.
+
+
+
+
+
+
+
+Estructura de Computadores
+Tema 10. Test
+
+5. Respecto a un conmutador, se puede decir que…
+A. Puede incluir hardware de arbitraje de conflictos.
+B. Puede integrar un solo puerto de entrada y un solo puerto de salida.
+C. Se ocupa del formateo del paquete a enviar.
+D. Ninguna de las afirmaciones anteriores es cierta.
+
+6. ¿Cuál de las siguientes afirmaciones sobre enlaces no es cierta?
+A. Un enlace puede ser unidireccional o bidireccional.
+B. Incluyen el controlador de enlace.
+C. Puede estar construido a partir de distintos tipos de materiales.
+D. Pueden ser anchos o estrechos según simultaneen datos y control o no.
+
+7. ¿Cuál de los siguientes factores no influye en la velocidad del canal?
+A. El ruido.
+B. La distancia a atravesar.
+C. La energía empleada en la transmisión.
+D. El tamaño del mensaje.
+
+8. El phit es…
+A. La unidad lógica de información que se transfiere por un canal.
+B. La unidad física de información que se transfiere por un enlace en un ciclo de red.
+C. La unidad física de información que transita por un conmutador.
+D. La unidad de información en la que se dividen los mensajes.
+
+
+9. En una evaluación de prestaciones extremo a extremo:
+A. El tiempo de encaminamiento no depende del tamaño del paquete transferido.
+B. La latencia de transporte no incluye la transferencia de la cabecera del paquete.
+C. La latencia total no tiene en cuenta las sobrecargas de origen y destino.
+D. Ninguna de las afirmaciones anteriores es correcta.
+
+Estructura de Computadores
+Tema 10. Test
+
+10. El punto de saturación de una red…
+A. Es independiente del patrón de comunicación empleado.
+B. Se alcanza si la productividad solicitada es menor que la aceptada.
+C. Lo define la productividad máxima.
+D. Marca el punto de trabajo más deseable de la red.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Estructura de Computadores
+Tema 10. Test

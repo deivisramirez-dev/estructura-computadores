@@ -11,6 +11,12 @@ Este repositorio contiene el material didáctico interactivo para el curso de **
 - **Dashboard Ley de Moore**: Visualización interactiva de la evolución de transistores
 - **Material de Referencia**: Documentación y recursos adicionales
 
+### 📖 Tema 8: Procesadores Vectoriales
+- **Arquitecturas SIMD**: Procesamiento paralelo de datos vectoriales
+- **Procesador DLXV**: Modelo didáctico de Hennessy & Patterson
+- **Calculadoras Interactivas**: Herramientas para evaluar rendimiento
+- **Simulador Vectorial**: Visualización de eficiencia y métricas
+
 ## 🚀 Características Principales
 
 ### ✨ Lienzo Didáctico
@@ -51,6 +57,19 @@ EstrucuturaComputadores/
 │       ├── styles.css       # Estilos del dashboard
 │       ├── script.js        # Funcionalidades del dashboard
 │       └── README.md        # Documentación del dashboard
+├── Tema2/                    # Evaluación de Prestaciones
+├── Tema3/                    # Arquitectura del Procesador
+├── Tema4/                    # Almacenamiento e I/O
+├── Tema5/                    # Procesadores Segmentados
+├── Tema6/                    # Procesadores Superescalares
+├── Tema7/                    # Procesadores VLIW
+├── Tema8/                    # Procesadores Vectoriales
+│   ├── index.html           # Interfaz principal
+│   ├── styles.css           # Estilos y diseño
+│   ├── script.js            # Funcionalidades interactivas
+│   ├── package.json         # Configuración del proyecto
+│   ├── README.md            # Documentación del tema
+│   └── tema8.txt            # Contenido académico
 ├── .gitignore               # Archivos a excluir
 └── README.md                # Este archivo
 ```

@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lienzo Didáctico - Sistemas de Comunicación</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1 class="main-title">
+                    <i class="fas fa-network-wired"></i>
+                    Tema 10: Sistemas de Comunicación
+                </h1>
+                <p class="subtitle">Redes de interconexión en computadores paralelos</p>
+            </div>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="nav">
+            <div class="nav-content">
+                <div class="nav-info">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>Programa de Ingeniería Informática</span>
+                </div>
+                <div class="nav-controls">
+                    <button class="btn btn-back" onclick="goToMainPortal()">
+                        <i class="fas fa-home"></i>
+                        <span>Portal Principal</span>
+                    </button>
+                    <button class="btn btn-secondary" onclick="toggleTheme()">
+                        <i class="fas fa-moon"></i>
+                        <span>Tema Oscuro</span>
+                    </button>
+                    <button class="btn btn-primary" onclick="toggleFullscreen()">
+                        <i class="fas fa-expand"></i>
+                        <span>Pantalla Completa</span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main">
+            <!-- Navigation para secciones del tema -->
+            <nav class="navigation">
+                <div class="nav-buttons">
+                    <button class="nav-btn active" data-section="introduccion">
+                        <i class="fas fa-info-circle"></i>
+                        <span>Introducción</span>
+                    </button>
+                    <button class="nav-btn" data-section="clasificacion">
+                        <i class="fas fa-sitemap"></i>
+                        <span>Clasificación</span>
+                    </button>
+                    <button class="nav-btn" data-section="estructura">
+                        <i class="fas fa-cogs"></i>
+                        <span>Estructura General</span>
+                    </button>
+                    <button class="nav-btn" data-section="interfaz">
+                        <i class="fas fa-plug"></i>
+                        <span>Interfaz de Red</span>
+                    </button>
+                    <button class="nav-btn" data-section="conmutadores">
+                        <i class="fas fa-exchange-alt"></i>
+                        <span>Conmutadores</span>
+                    </button>
+                    <button class="nav-btn" data-section="enlaces">
+                        <i class="fas fa-link"></i>
+                        <span>Enlaces y Canales</span>
+                    </button>
+                    <button class="nav-btn" data-section="prestaciones">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Prestaciones</span>
+                    </button>
+                    <button class="nav-btn" data-section="topologias">
+                        <i class="fas fa-project-diagram"></i>
+                        <span>Topologías Avanzadas</span>
+                    </button>
+                    <button class="nav-btn" data-section="ejemplos">
+                        <i class="fas fa-flask"></i>
+                        <span>Ejemplos Prácticos</span>
+                    </button>
+                </div>
+            </nav>
+
+            <!-- Introducción Section -->
+            <section id="introduccion" class="content-section active">
+                <div class="section-header">
+                    <h2><i class="fas fa-info-circle"></i> Introducción a los Sistemas de Comunicación</h2>
+                    <p>Redes de interconexión en computadores paralelos</p>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="card definition-card">
+                        <h3><i class="fas fa-quote-left"></i> Definición</h3>
+                        <p class="highlight">"Sistema de comunicación: conjunto de componentes hardware o software que se encarga de la comunicación de datos entre computadores, en multicomputadores, y entre procesadores y memorias, en multiprocesadores."</p>
+                        <div class="definition-details">
+                            <div class="detail-item">
+                                <i class="fas fa-microchip"></i>
+                                <span>Hardware y software</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-network-wired"></i>
+                                <span>Interconexión de nodos</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-exchange-alt"></i>
+                                <span>Transferencia de datos</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card trends-card">
+                        <h3><i class="fas fa-trending-up"></i> Tendencias Actuales</h3>
+                        <div class="trends-list">
+                            <div class="trend-item">
+                                <i class="fas fa-check-circle"></i>
+                                <div>
+                                    <strong>Sustitución de buses por redes:</strong> Conmutadores y conexiones punto-a-punto
+                                </div>
+                            </div>
+                            <div class="trend-item">
+                                <i class="fas fa-check-circle"></i>
+                                <div>
+                                    <strong>Componentes comerciales:</strong> Mejora en relación prestaciones/coste
+                                </div>
+                            </div>
+                            <div class="trend-item">
+                                <i class="fas fa-check-circle"></i>
+                                <div>
+                                    <strong>Múltiples niveles:</strong> Desde chip hasta sistema completo
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-grid">
+                    <div class="card levels-card">
+                        <h3><i class="fas fa-layer-group"></i> Niveles de Aplicación</h3>
+                        <div class="levels-grid">
+                            <div class="level-item">
+                                <h4><i class="fas fa-microchip"></i> Interno al Chip</h4>
+                                <p>Interconexión entre núcleos del procesador</p>
+                            </div>
+                            <div class="level-item">
+                                <h4><i class="fas fa-memory"></i> Acceso a Memoria</h4>
+                                <p>Comunicación procesador-memoria</p>
+                            </div>
+                            <div class="level-item">
+                                <h4><i class="fas fa-hdd"></i> E/S</h4>
+                                <p>Dispositivos de entrada/salida</p>
+                            </div>
+                            <div class="level-item">
+                                <h4><i class="fas fa-server"></i> Sistema</h4>
+                                <p>Interconexión entre cajas</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card components-card">
+                        <h3><i class="fas fa-puzzle-piece"></i> Componentes Principales</h3>
+                        <div class="components-list">
+                            <div class="component-item">
+                                <h4><i class="fas fa-plug"></i> Interfaz de Red</h4>
+                                <p>Hardware y software de comunicación</p>
+                            </div>
+                            <div class="component-item">
+                                <h4><i class="fas fa-exchange-alt"></i> Conmutadores</h4>
+                                <p>Switch o router para direccionamiento</p>
+                            </div>
+                            <div class="component-item">
+                                <h4><i class="fas fa-link"></i> Enlaces</h4>
+                                <p>Medios físicos de transmisión</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Clasificación Section -->
+            <section id="clasificacion" class="content-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-sitemap"></i> Clasificación de Sistemas de Comunicación</h2>
+                    <p>Criterios de clasificación de redes de comunicación</p>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="card criteria-card">
+                        <h3><i class="fas fa-list"></i> Criterios de Clasificación</h3>
+                        <div class="criteria-list">
+                            <div class="criteria-item">
+                                <h4><i class="fas fa-users"></i> Número de Nodos</h4>
+                                <p>Pequeñas, medianas o grandes redes</p>
+                                <ul>
+                                    <li>2-16 nodos: Pequeñas</li>
+                                    <li>16-256 nodos: Medianas</li>
+                                    <li>256+ nodos: Grandes</li>
+                                </ul>
+                            </div>
+                            <div class="criteria-item">
+                                <h4><i class="fas fa-ruler"></i> Distancia</h4>
+                                <p>Alcance geográfico de la red</p>
+                                <ul>
+                                    <li>Local: Misma habitación</li>
+                                    <li>Metropolitana: Misma ciudad</li>
+                                    <li>Wide Area: Múltiples ubicaciones</li>
+                                </ul>
+                            </div>
+                            <div class="criteria-item">
+                                <h4><i class="fas fa-certificate"></i> Estándar</h4>
+                                <p>Uso de estándares o diseños propietarios</p>
+                                <ul>
+                                    <li>Ethernet, InfiniBand</li>
+                                    <li>Diseños específicos</li>
+                                    <li>Híbridos</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card types-card">
+                        <h3><i class="fas fa-network-wired"></i> Tipos de Redes</h3>
+                        <div class="types-grid">
+                            <div class="type-item">
+                                <h4>Redes de Altas Prestaciones</h4>
+                                <p>Optimizadas para computación paralela</p>
+                                <ul>
+                                    <li>InfiniBand</li>
+                                    <li>Myrinet</li>
+                                    <li>Quadrics</li>
+                                </ul>
+                            </div>
+                            <div class="type-item">
+                                <h4>Redes Estándar</h4>
+                                <p>Protocolos comerciales estándar</p>
+                                <ul>
+                                    <li>Ethernet</li>
+                                    <li>Fast Ethernet</li>
+                                    <li>Gigabit Ethernet</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Estructura Section -->
+            <section id="estructura" class="content-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-cogs"></i> Estructura General del Sistema</h2>
+                    <p>Componentes y organización de sistemas de comunicación</p>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="card diagram-card">
+                        <h3><i class="fas fa-project-diagram"></i> Diagrama de Bloques</h3>
+                        <div class="system-diagram">
+                            <div class="node-group">
+                                <div class="node">
+                                    <div class="processor">CPU 1</div>
+                                    <div class="memory">Memoria</div>
+                                    <div class="ni">NI</div>
+                                </div>
+                                <div class="node">
+                                    <div class="processor">CPU 2</div>
+                                    <div class="memory">Memoria</div>
+                                    <div class="ni">NI</div>
+                                </div>
+                            </div>
+                            <div class="network-core">
+                                <div class="switch">Conmutador</div>
+                                <div class="link">Enlace</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card concepts-card">
+                        <h3><i class="fas fa-lightbulb"></i> Conceptos Clave</h3>
+                        <div class="concepts-list">
+                            <div class="concept-item">
+                                <h4><i class="fas fa-envelope"></i> Mensaje</h4>
+                                <p>Unidad de información transferida entre nodos</p>
+                            </div>
+                            <div class="concept-item">
+                                <h4><i class="fas fa-box"></i> Paquete</h4>
+                                <p>Unidad de transferencia entre interfaces</p>
+                            </div>
+                            <div class="concept-item">
+                                <h4><i class="fas fa-route"></i> Camino</h4>
+                                <p>Secuencia de conmutadores y enlaces</p>
+                            </div>
+                            <div class="concept-item">
+                                <h4><i class="fas fa-puzzle-piece"></i> Flit</h4>
+                                <p>Unidad lógica de control de flujo</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-grid">
+                    <div class="card multiprocessor-card">
+                        <h3><i class="fas fa-microchip"></i> Multiprocesadores UMA</h3>
+                        <div class="multiprocessor-features">
+                            <h4>Características:</h4>
+                            <ul>
+                                <li>Comunicación mediante acceso a memoria</li>
+                                <li>Transparente al programador</li>
+                                <li>Controladores de memoria como interfaz</li>
+                                <li>Protocolo de coherencia de caché</li>
+                                <li>Tamaño de paquete fijo (línea de caché)</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="card multicomputer-card">
+                        <h3><i class="fas fa-server"></i> Multicomputadores</h3>
+                        <div class="multicomputer-features">
+                            <h4>Características:</h4>
+                            <ul>
+                                <li>Comunicación por paso de mensajes</li>
+                                <li>Visible como subsistema de E/S</li>
+                                <li>Control de tamaño de paquetes</li>
+                                <li>Mayor probabilidad de errores</li>
+                                <li>Asistente de comunicación</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Interfaz Section -->
+            <section id="interfaz" class="content-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-plug"></i> Interfaz de Red (NI)</h2>
+                    <p>Hardware y software de comunicación</p>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="card ni-hardware-card">
+                        <h3><i class="fas fa-microchip"></i> Hardware de Interfaz</h3>
+                        <div class="ni-diagram">
+                            <div class="ni-components">
+                                <div class="component">
+                                    <h4>Colas FIFO</h4>
+                                    <p>Envío y recepción</p>
+                                </div>
+                                <div class="component">
+                                    <h4>Asistente</h4>
+                                    <p>Procesador de comunicación</p>
+                                </div>
+                                <div class="component">
+                                    <h4>DMA</h4>
+                                    <p>Controlador de acceso directo</p>
+                                </div>
+                                <div class="component">
+                                    <h4>Memoria NI</h4>
+                                    <p>Almacenamiento de software</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card ni-tasks-card">
+                        <h3><i class="fas fa-tasks"></i> Tareas de la Interfaz</h3>
+                        <div class="tasks-list">
+                            <div class="task-item">
+                                <h4><i class="fas fa-database"></i> Almacenamiento</h4>
+                                <p>Colas de entrada y salida de paquetes</p>
+                            </div>
+                            <div class="task-item">
+                                <h4><i class="fas fa-edit"></i> Formateo</h4>
+                                <p>Cabecera, códigos de error, final de paquete</p>
+                            </div>
+                            <div class="task-item">
+                                <h4><i class="fas fa-copy"></i> Copia de Datos</h4>
+                                <p>Almacenamiento temporal para esperas</p>
+                            </div>
+                            <div class="task-item">
+                                <h4><i class="fas fa-shield-alt"></i> Protección</h4>
+                                <p>Traducción de direcciones virtuales</p>
+                            </div>
+                            <div class="task-item">
+                                <h4><i class="fas fa-tachometer-alt"></i> Control de Flujo</h4>
+                                <p>Garantía de fiabilidad de transferencias</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-grid">
+                    <div class="card placement-card">
+                        <h3><i class="fas fa-map-marker-alt"></i> Ubicación de la Interfaz</h3>
+                        <div class="placement-options">
+                            <div class="placement-item">
+                                <h4><i class="fas fa-microchip"></i> En el Procesador</h4>
+                                <p>Integración directa con la CPU</p>
+                            </div>
+                            <div class="placement-item">
+                                <h4><i class="fas fa-memory"></i> Conexión a Caché</h4>
+                                <p>Acceso directo a la memoria caché</p>
+                            </div>
+                            <div class="placement-item">
+                                <h4><i class="fas fa-bus"></i> Bus de Sistema</h4>
+                                <p>Conectado al bus principal</p>
+                            </div>
+                            <div class="placement-item">
+                                <h4><i class="fas fa-hdd"></i> Bus E/S</h4>
+                                <p>Conectado al bus de entrada/salida</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card differences-card">
+                        <h3><i class="fas fa-balance-scale"></i> Diferencias por Tipo</h3>
+                        <div class="differences-table">
+                            <div class="diff-row">
+                                <div class="diff-cell"><strong>Multicomputadores</strong></div>
+                                <div class="diff-cell">Hardware + Software</div>
+                            </div>
+                            <div class="diff-row">
+                                <div class="diff-cell"><strong>Multiprocesadores</strong></div>
+                                <div class="diff-cell">Solo Hardware</div>
+                            </div>
+                            <div class="diff-row">
+                                <div class="diff-cell"><strong>NUMA</strong></div>
+                                <div class="diff-cell">Controlador de memoria como asistente</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Conmutadores Section -->
+            <section id="conmutadores" class="content-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-exchange-alt"></i> Conmutadores</h2>
+                    <p>Componentes de direccionamiento y enrutamiento</p>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="card switch-diagram-card">
+                        <h3><i class="fas fa-project-diagram"></i> Estructura del Conmutador</h3>
+                        <div class="switch-diagram">
+                            <div class="switch-components">
+                                <div class="switch-component">
+                                    <h4>Puertos E/S</h4>
+                                    <p>Entradas y salidas</p>
+                                </div>
+                                <div class="switch-component">
+                                    <h4>Buffers</h4>
+                                    <p>Almacenamiento temporal</p>
+                                </div>
+                                <div class="switch-component">
+                                    <h4>Conmutador Interno</h4>
+                                    <p>Conexión entre buffers</p>
+                                </div>
+                                <div class="switch-component">
+                                    <h4>Controlador de Enlace</h4>
+                                    <p>Control de transferencias</p>
+                                </div>
+                                <div class="switch-component">
+                                    <h4>Encaminador</h4>
+                                    <p>Direccionamiento de paquetes</p>
+                                </div>
+                                <div class="switch-component">
+                                    <h4>Arbitraje</h4>
+                                    <p>Resolución de conflictos</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card switch-features-card">
+                        <h3><i class="fas fa-cogs"></i> Características</h3>
+                        <div class="features-list">
+                            <div class="feature-item">
+                                <h4><i class="fas fa-route"></i> Direccionamiento</h4>
+                                <p>Dirige paquetes hacia el nodo destino</p>
+                            </div>
+                            <div class="feature-item">
+                                <h4><i class="fas fa-layer-group"></i> Paralelismo</h4>
+                                <p>Múltiples transferencias simultáneas</p>
+                            </div>
+                            <div class="feature-item">
+                                <h4><i class="fas fa-broadcast-tower"></i> Difusión</h4>
+                                <p>Conexiones uno-a-todos y todos-a-uno</p>
+                            </div>
+                            <div class="feature-item">
+                                <h4><i class="fas fa-balance-scale"></i> Arbitraje</h4>
+                                <p>Resolución de conflictos de salida</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Enlaces Section -->
+            <section id="enlaces" class="content-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-link"></i> Enlaces y Canales</h2>
+                    <p>Medios físicos y lógicos de transmisión</p>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="card channel-card">
+                        <h3><i class="fas fa-link"></i> Estructura del Canal</h3>
+                        <div class="channel-diagram">
+                            <div class="channel-components">
+                                <div class="component">
+                                    <h4>Enlace</h4>
+                                    <p>Medio físico de conexión</p>
+                                </div>
+                                <div class="component">
+                                    <h4>Controlador</h4>
+                                    <p>Adaptación al medio</p>
+                                </div>
+                                <div class="component">
+                                    <h4>Buffers</h4>
+                                    <p>Almacenamiento emisor/receptor</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card types-card">
+                        <h3><i class="fas fa-list"></i> Tipos de Enlaces</h3>
+                        <div class="link-types">
+                            <div class="type-category">
+                                <h4><i class="fas fa-wire"></i> Medio Físico</h4>
+                                <div class="type-items">
+                                    <div class="type-item">Hilos eléctricos (cobre, aluminio)</div>
+                                    <div class="type-item">Fibras ópticas</div>
+                                </div>
+                            </div>
+                            <div class="type-category">
+                                <h4><i class="fas fa-arrows-alt-h"></i> Dirección</h4>
+                                <div class="type-items">
+                                    <div class="type-item">Unidireccionales</div>
+                                    <div class="type-item">Bidireccionales (Full/Half duplex)</div>
+                                </div>
+                            </div>
+                            <div class="type-category">
+                                <h4><i class="fas fa-ruler"></i> Longitud</h4>
+                                <div class="type-items">
+                                    <div class="type-item">Cortos (1 símbolo)</div>
+                                    <div class="type-item">Largos (segmentados)</div>
+                                </div>
+                            </div>
+                            <div class="type-category">
+                                <h4><i class="fas fa-expand-arrows-alt"></i> Ancho</h4>
+                                <div class="type-items">
+                                    <div class="type-item">Anchos (datos + control)</div>
+                                    <div class="type-item">Estrechos (multiplexados)</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-grid">
+                    <div class="card units-card">
+                        <h3><i class="fas fa-cube"></i> Unidades de Información</h3>
+                        <div class="units-list">
+                            <div class="unit-item">
+                                <h4><i class="fas fa-microchip"></i> Phit (Physical Unit)</h4>
+                                <p>Unidad física transferida por enlace en un ciclo</p>
+                            </div>
+                            <div class="unit-item">
+                                <h4><i class="fas fa-cogs"></i> Flit (Flow Control Unit)</h4>
+                                <p>Unidad lógica de control de flujo entre conmutadores</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card performance-card">
+                        <h3><i class="fas fa-tachometer-alt"></i> Factores de Velocidad</h3>
+                        <div class="performance-factors">
+                            <div class="factor-item">
+                                <h4><i class="fas fa-bolt"></i> Energía</h4>
+                                <p>Energía empleada para transmitir</p>
+                            </div>
+                            <div class="factor-item">
+                                <h4><i class="fas fa-ruler"></i> Distancia</h4>
+                                <p>Distancia a atravesar</p>
+                            </div>
+                            <div class="factor-item">
+                                <h4><i class="fas fa-volume-mute"></i> Ruido</h4>
+                                <p>Interferencias en la señal</p>
+                            </div>
+                            <div class="factor-item">
+                                <h4><i class="fas fa-database"></i> Buffer</h4>
+                                <p>Tamaño del buffer destino</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Prestaciones Section -->
+            <section id="prestaciones" class="content-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-chart-line"></i> Prestaciones del Sistema</h2>
+                    <p>Métricas y medidas de rendimiento</p>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="card metrics-card">
+                        <h3><i class="fas fa-tachometer-alt"></i> Métricas de Prestaciones</h3>
+                        <div class="metrics-list">
+                            <div class="metric-item">
+                                <h4><i class="fas fa-clock"></i> Latencia Total</h4>
+                                <p>Tiempo de transferencia de un mensaje</p>
+                                <div class="formula">
+                                    <code>T(m) = L + m/B</code>
+                                    <p>L: latencia, m: tamaño, B: ancho de banda</p>
+                                </div>
+                            </div>
+                            <div class="metric-item">
+                                <h4><i class="fas fa-tachometer-alt"></i> Ancho de Banda</h4>
+                                <p>Capacidad teórica del canal</p>
+                                <div class="formula">
+                                    <code>P(m) = m/T(m)</code>
+                                    <p>Productividad efectiva</p>
+                                </div>
+                            </div>
+                            <div class="metric-item">
+                                <h4><i class="fas fa-chart-line"></i> Ancho de Banda Asintótico</h4>
+                                <p>Productividad máxima con mensajes grandes</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card latency-card">
+                        <h3><i class="fas fa-clock"></i> Componentes de Latencia</h3>
+                        <div class="latency-breakdown">
+                            <div class="latency-item">
+                                <h4>Sobrecarga en Procesador</h4>
+                                <p>Fuente y destino</p>
+                            </div>
+                            <div class="latency-item">
+                                <h4>Procesamiento NI</h4>
+                                <p>Interfaz de fuente y destino</p>
+                            </div>
+                            <div class="latency-item">
+                                <h4>Transferencia de Red</h4>
+                                <p>Propagación por la red</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-grid">
+                    <div class="card global-card">
+                        <h3><i class="fas fa-globe"></i> Prestaciones Globales</h3>
+                        <div class="global-metrics">
+                            <div class="global-item">
+                                <h4><i class="fas fa-chart-bar"></i> Latencia Media</h4>
+                                <p>Promedio de todos los paquetes</p>
+                            </div>
+                            <div class="global-item">
+                                <h4><i class="fas fa-tachometer-alt"></i> Productividad Global</h4>
+                                <p>Bits por segundo en toda la red</p>
+                            </div>
+                            <div class="global-item">
+                                <h4><i class="fas fa-chart-line"></i> Productividad Máxima</h4>
+                                <p>Punto de saturación de la red</p>
+                            </div>
+                            <div class="global-item">
+                                <h4><i class="fas fa-cut"></i> Ancho de Banda de Bisección</h4>
+                                <p>Para tráfico uniforme</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card calculator-card">
+                        <h3><i class="fas fa-calculator"></i> Calculadora de Prestaciones</h3>
+                        <div class="calculator">
+                            <div class="input-group">
+                                <label for="latency">Latencia (L):</label>
+                                <input type="number" id="latency" value="1" min="0.1" max="100" step="0.1">
+                                <span>μs</span>
+                            </div>
+                            <div class="input-group">
+                                <label for="bandwidth">Ancho de Banda (B):</label>
+                                <input type="number" id="bandwidth" value="1000" min="1" max="10000" step="10">
+                                <span>MB/s</span>
+                            </div>
+                            <div class="input-group">
+                                <label for="message-size">Tamaño de Mensaje (m):</label>
+                                <input type="number" id="message-size" value="1024" min="1" max="100000" step="1">
+                                <span>bytes</span>
+                            </div>
+                            <button class="btn btn-primary" onclick="calculatePerformance()">
+                                <i class="fas fa-calculator"></i>
+                                Calcular
+                            </button>
+                            <div class="results">
+                                <div class="result-item">
+                                    <strong>Tiempo Total:</strong> <span id="total-time">-</span> μs
+                                </div>
+                                <div class="result-item">
+                                    <strong>Productividad:</strong> <span id="productivity">-</span> MB/s
+                                </div>
+                                <div class="result-item">
+                                    <strong>Eficiencia:</strong> <span id="efficiency">-</span>%
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Topologías Avanzadas Section -->
+            <section id="topologias" class="content-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-project-diagram"></i> Topologías de Red Avanzadas</h2>
+                    <p>Arquitecturas de interconexión para sistemas de alto rendimiento</p>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="card hypercube-card">
+                        <h3><i class="fas fa-cube"></i> Hypercubes (n-Cubos)</h3>
+                        <div class="hypercube-content">
+                            <div class="topology-description">
+                                <h4>Características:</h4>
+                                <ul>
+                                    <li>N nodos conectados en un n-cubo</li>
+                                    <li>Grado de nodo: log₂(N)</li>
+                                    <li>Diámetro: log₂(N)</li>
+                                    <li>Bisection width: N/2</li>
+                                </ul>
+                            </div>
+                            <div class="topology-visualization">
+                                <h4>Ejemplo 3-Cubo (8 nodos):</h4>
+                                <div class="cube-diagram">
+                                    <div class="cube-node">000</div>
+                                    <div class="cube-node">001</div>
+                                    <div class="cube-node">010</div>
+                                    <div class="cube-node">011</div>
+                                    <div class="cube-node">100</div>
+                                    <div class="cube-node">101</div>
+                                    <div class="cube-node">110</div>
+                                    <div class="cube-node">111</div>
+                                </div>
+                                <p>Cada nodo conectado a 3 vecinos (diferencia de 1 bit)</p>
+                            </div>
+                            <div class="topology-advantages">
+                                <h4>Ventajas:</h4>
+                                <ul>
+                                    <li>Diámetro pequeño</li>
+                                    <li>Escalabilidad logarítmica</li>
+                                    <li>Alto bisection width</li>
+                                    <li>Algoritmos de enrutamiento simples</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card torus-card">
+                        <h3><i class="fas fa-th"></i> Torus (Redes Toroidales)</h3>
+                        <div class="torus-content">
+                            <div class="topology-description">
+                                <h4>Características:</h4>
+                                <ul>
+                                    <li>Red 2D o 3D con conexiones wraparound</li>
+                                    <li>Grado de nodo: 4 (2D) o 6 (3D)</li>
+                                    <li>Diámetro: O(√N) para 2D</li>
+                                    <li>Bisection width: 2√N para 2D</li>
+                                </ul>
+                            </div>
+                            <div class="topology-visualization">
+                                <h4>Ejemplo 2D Torus (4x4):</h4>
+                                <div class="torus-diagram">
+                                    <div class="torus-row">
+                                        <div class="torus-node">00</div>
+                                        <div class="torus-node">01</div>
+                                        <div class="torus-node">02</div>
+                                        <div class="torus-node">03</div>
+                                    </div>
+                                    <div class="torus-row">
+                                        <div class="torus-node">10</div>
+                                        <div class="torus-node">11</div>
+                                        <div class="torus-node">12</div>
+                                        <div class="torus-node">13</div>
+                                    </div>
+                                    <div class="torus-row">
+                                        <div class="torus-node">20</div>
+                                        <div class="torus-node">21</div>
+                                        <div class="torus-node">22</div>
+                                        <div class="torus-node">23</div>
+                                    </div>
+                                    <div class="torus-row">
+                                        <div class="torus-node">30</div>
+                                        <div class="torus-node">31</div>
+                                        <div class="torus-node">32</div>
+                                        <div class="torus-node">33</div>
+                                    </div>
+                                </div>
+                                <p>Conexiones wraparound en filas y columnas</p>
+                            </div>
+                            <div class="topology-advantages">
+                                <h4>Ventajas:</h4>
+                                <ul>
+                                    <li>Grado de nodo constante</li>
+                                    <li>Buena escalabilidad</li>
+                                    <li>Simplicidad de implementación</li>
+                                    <li>Alto bisection width</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-grid">
+                    <div class="card fat-tree-card">
+                        <h3><i class="fas fa-sitemap"></i> Fat Trees (Árboles Gordos)</h3>
+                        <div class="fat-tree-content">
+                            <div class="topology-description">
+                                <h4>Características:</h4>
+                                <ul>
+                                    <li>Estructura jerárquica de árbol</li>
+                                    <li>Ancho de banda creciente hacia la raíz</li>
+                                    <li>Grado de nodo variable</li>
+                                    <li>Diámetro: 2 log₂(N)</li>
+                                </ul>
+                            </div>
+                            <div class="topology-visualization">
+                                <h4>Ejemplo Fat Tree:</h4>
+                                <div class="fat-tree-diagram">
+                                    <div class="tree-level">
+                                        <div class="tree-node root">Root</div>
+                                    </div>
+                                    <div class="tree-level">
+                                        <div class="tree-node">Switch 1</div>
+                                        <div class="tree-node">Switch 2</div>
+                                    </div>
+                                    <div class="tree-level">
+                                        <div class="tree-node">Leaf 1</div>
+                                        <div class="tree-node">Leaf 2</div>
+                                        <div class="tree-node">Leaf 3</div>
+                                        <div class="tree-node">Leaf 4</div>
+                                    </div>
+                                </div>
+                                <p>Ancho de banda aumenta hacia la raíz</p>
+                            </div>
+                            <div class="topology-advantages">
+                                <h4>Ventajas:</h4>
+                                <ul>
+                                    <li>Alto bisection width</li>
+                                    <li>Escalabilidad excelente</li>
+                                    <li>Sin bloqueo de red</li>
+                                    <li>Ideal para centros de datos</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card dragonfly-card">
+                        <h3><i class="fas fa-dragon"></i> Dragonfly</h3>
+                        <div class="dragonfly-content">
+                            <div class="topology-description">
+                                <h4>Características:</h4>
+                                <ul>
+                                    <li>Topología de tres niveles</li>
+                                    <li>Grupos de nodos interconectados</li>
+                                    <li>Grado de nodo bajo</li>
+                                    <li>Diámetro: 3</li>
+                                </ul>
+                            </div>
+                            <div class="topology-visualization">
+                                <h4>Estructura Dragonfly:</h4>
+                                <div class="dragonfly-diagram">
+                                    <div class="dragonfly-group">
+                                        <h5>Grupo A</h5>
+                                        <div class="group-nodes">
+                                            <div class="group-node">N1</div>
+                                            <div class="group-node">N2</div>
+                                            <div class="group-node">N3</div>
+                                        </div>
+                                    </div>
+                                    <div class="dragonfly-group">
+                                        <h5>Grupo B</h5>
+                                        <div class="group-nodes">
+                                            <div class="group-node">N4</div>
+                                            <div class="group-node">N5</div>
+                                            <div class="group-node">N6</div>
+                                        </div>
+                                    </div>
+                                    <div class="dragonfly-group">
+                                        <h5>Grupo C</h5>
+                                        <div class="group-nodes">
+                                            <div class="group-node">N7</div>
+                                            <div class="group-node">N8</div>
+                                            <div class="group-node">N9</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p>Conexiones entre grupos para escalabilidad</p>
+                            </div>
+                            <div class="topology-advantages">
+                                <h4>Ventajas:</h4>
+                                <ul>
+                                    <li>Diámetro muy pequeño</li>
+                                    <li>Alto rendimiento</li>
+                                    <li>Escalabilidad masiva</li>
+                                    <li>Eficiencia energética</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-grid">
+                    <div class="card comparison-card">
+                        <h3><i class="fas fa-balance-scale"></i> Comparación de Topologías</h3>
+                        <div class="topology-comparison">
+                            <div class="comparison-table">
+                                <div class="comparison-header">
+                                    <div class="comparison-cell">Topología</div>
+                                    <div class="comparison-cell">Diámetro</div>
+                                    <div class="comparison-cell">Grado</div>
+                                    <div class="comparison-cell">Bisection</div>
+                                    <div class="comparison-cell">Escalabilidad</div>
+                                </div>
+                                <div class="comparison-row">
+                                    <div class="comparison-cell"><strong>Mesh 2D</strong></div>
+                                    <div class="comparison-cell">2√N</div>
+                                    <div class="comparison-cell">4</div>
+                                    <div class="comparison-cell">√N</div>
+                                    <div class="comparison-cell">Buena</div>
+                                </div>
+                                <div class="comparison-row">
+                                    <div class="comparison-cell"><strong>Torus 2D</strong></div>
+                                    <div class="comparison-cell">√N</div>
+                                    <div class="comparison-cell">4</div>
+                                    <div class="comparison-cell">2√N</div>
+                                    <div class="comparison-cell">Buena</div>
+                                </div>
+                                <div class="comparison-row">
+                                    <div class="comparison-cell"><strong>Hypercube</strong></div>
+                                    <div class="comparison-cell">log₂N</div>
+                                    <div class="comparison-cell">log₂N</div>
+                                    <div class="comparison-cell">N/2</div>
+                                    <div class="comparison-cell">Excelente</div>
+                                </div>
+                                <div class="comparison-row">
+                                    <div class="comparison-cell"><strong>Fat Tree</strong></div>
+                                    <div class="comparison-cell">2log₂N</div>
+                                    <div class="comparison-cell">Variable</div>
+                                    <div class="comparison-cell">N/2</div>
+                                    <div class="comparison-cell">Excelente</div>
+                                </div>
+                                <div class="comparison-row">
+                                    <div class="comparison-cell"><strong>Dragonfly</strong></div>
+                                    <div class="comparison-cell">3</div>
+                                    <div class="comparison-cell">Bajo</div>
+                                    <div class="comparison-cell">Alto</div>
+                                    <div class="comparison-cell">Excelente</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card routing-card">
+                        <h3><i class="fas fa-route"></i> Algoritmos de Enrutamiento</h3>
+                        <div class="routing-algorithms">
+                            <div class="algorithm-item">
+                                <h4><i class="fas fa-arrows-alt-h"></i> Dimension-Order Routing</h4>
+                                <p>Enrutamiento siguiendo dimensiones específicas</p>
+                                <div class="algorithm-example">
+                                    <strong>XY Routing:</strong> Primero X, luego Y<br>
+                                    <strong>ZXY Routing:</strong> Primero Z, luego X, luego Y
+                                </div>
+                            </div>
+                            <div class="algorithm-item">
+                                <h4><i class="fas fa-sync"></i> Adaptive Routing</h4>
+                                <p>Enrutamiento que se adapta al estado de la red</p>
+                                <div class="algorithm-example">
+                                    <strong>Minimal:</strong> Solo rutas de longitud mínima<br>
+                                    <strong>Non-minimal:</strong> Permite rutas más largas
+                                </div>
+                            </div>
+                            <div class="algorithm-item">
+                                <h4><i class="fas fa-shield-alt"></i> Deadlock Avoidance</h4>
+                                <p>Prevención de interbloqueos en la red</p>
+                                <div class="algorithm-example">
+                                    <strong>Turn Model:</strong> Restricciones de giro<br>
+                                    <strong>Virtual Channels:</strong> Canales virtuales
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-grid">
+                    <div class="card simulator-card">
+                        <h3><i class="fas fa-play"></i> Simulador de Topologías</h3>
+                        <div class="topology-simulator">
+                            <div class="simulator-controls">
+                                <div class="control-group">
+                                    <label for="topology-type">Tipo de Topología:</label>
+                                    <select id="topology-type">
+                                        <option value="mesh">Mesh 2D</option>
+                                        <option value="torus">Torus 2D</option>
+                                        <option value="hypercube">Hypercube</option>
+                                        <option value="fat-tree">Fat Tree</option>
+                                    </select>
+                                </div>
+                                <div class="control-group">
+                                    <label for="network-size">Tamaño de Red:</label>
+                                    <input type="range" id="network-size" min="4" max="64" value="16">
+                                    <span id="network-size-display">16</span>
+                                </div>
+                                <button class="btn btn-primary" onclick="runTopologySimulation()">
+                                    <i class="fas fa-play"></i>
+                                    Simular Topología
+                                </button>
+                            </div>
+                            <div class="simulation-results">
+                                <div class="result-chart">
+                                    <canvas id="topologyChart" width="400" height="200"></canvas>
+                                </div>
+                                <div class="result-stats">
+                                    <div class="stat-item">
+                                        <strong>Diámetro:</strong> <span id="diameter-result">-</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <strong>Grado Promedio:</strong> <span id="degree-result">-</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <strong>Bisection Width:</strong> <span id="bisection-result">-</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card applications-card">
+                        <h3><i class="fas fa-cogs"></i> Aplicaciones por Topología</h3>
+                        <div class="topology-applications">
+                            <div class="application-item">
+                                <h4><i class="fas fa-microchip"></i> Hypercubes</h4>
+                                <p>Supercomputadores de alto rendimiento</p>
+                                <ul>
+                                    <li>IBM Blue Gene</li>
+                                    <li>Algoritmos de ordenamiento paralelo</li>
+                                    <li>FFT paralelo</li>
+                                </ul>
+                            </div>
+                            <div class="application-item">
+                                <h4><i class="fas fa-server"></i> Fat Trees</h4>
+                                <p>Centros de datos y clústeres</p>
+                                <ul>
+                                    <li>Google Data Centers</li>
+                                    <li>Amazon AWS</li>
+                                    <li>Microsoft Azure</li>
+                                </ul>
+                            </div>
+                            <div class="application-item">
+                                <h4><i class="fas fa-dragon"></i> Dragonfly</h4>
+                                <p>Supercomputadores de próxima generación</p>
+                                <ul>
+                                    <li>Cray XC series</li>
+                                    <li>Intel HPC systems</li>
+                                    <li>Exascale computing</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Ejemplos Section -->
+            <section id="ejemplos" class="content-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-flask"></i> Ejemplos Prácticos</h2>
+                    <p>Aplicaciones y casos de uso de sistemas de comunicación</p>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="card applications-card">
+                        <h3><i class="fas fa-cogs"></i> Aplicaciones Típicas</h3>
+                        <div class="applications-list">
+                            <div class="application-item">
+                                <i class="fas fa-server"></i>
+                                <h4>Clústeres de Computación</h4>
+                                <p>Agrupación de servidores para HPC</p>
+                                <ul>
+                                    <li>InfiniBand</li>
+                                    <li>Ethernet 10G</li>
+                                    <li>Interconexión de nodos</li>
+                                </ul>
+                            </div>
+                            <div class="application-item">
+                                <i class="fas fa-microchip"></i>
+                                <h4>Procesadores Multi-núcleo</h4>
+                                <p>Interconexión entre núcleos</p>
+                                <ul>
+                                    <li>Network-on-Chip</li>
+                                    <li>Buses internos</li>
+                                    <li>Arbitraje de recursos</li>
+                                </ul>
+                            </div>
+                            <div class="application-item">
+                                <i class="fas fa-database"></i>
+                                <h4>Centros de Datos</h4>
+                                <p>Interconexión de racks y servidores</p>
+                                <ul>
+                                    <li>Topologías de red</li>
+                                    <li>Balanceo de carga</li>
+                                    <li>Redundancia</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card benchmarks-card">
+                        <h3><i class="fas fa-vial"></i> Benchmarks de Red</h3>
+                        <div class="benchmarks-list">
+                            <div class="benchmark-item">
+                                <h4>Ping-Pong</h4>
+                                <p>Medida de latencia punto a punto</p>
+                                <div class="benchmark-details">
+                                    <strong>Características:</strong>
+                                    <ul>
+                                        <li>Mensaje pequeño (1 byte)</li>
+                                        <li>Medida de latencia base</li>
+                                        <li>Overhead de software</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="benchmark-item">
+                                <h4>Bandwidth Test</h4>
+                                <p>Medida de ancho de banda</p>
+                                <div class="benchmark-details">
+                                    <strong>Características:</strong>
+                                    <ul>
+                                        <li>Mensajes grandes</li>
+                                        <li>Medida de throughput</li>
+                                        <li>Eficiencia de red</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-grid">
+                    <div class="card simulator-card">
+                        <h3><i class="fas fa-play"></i> Simulador de Red</h3>
+                        <div class="simulator">
+                            <div class="simulator-controls">
+                                <div class="control-group">
+                                    <label for="sim-latency">Latencia Base:</label>
+                                    <input type="range" id="sim-latency" min="0.1" max="10" step="0.1" value="1">
+                                    <span id="sim-latency-display">1.0</span> μs
+                                </div>
+                                <div class="control-group">
+                                    <label for="sim-bandwidth">Ancho de Banda:</label>
+                                    <input type="range" id="sim-bandwidth" min="100" max="10000" step="100" value="1000">
+                                    <span id="sim-bandwidth-display">1000</span> MB/s
+                                </div>
+                                <button class="btn btn-primary" onclick="runNetworkSimulation()">
+                                    <i class="fas fa-play"></i>
+                                    Ejecutar Simulación
+                                </button>
+                            </div>
+                            <div class="simulation-results">
+                                <div class="result-chart">
+                                    <canvas id="networkChart" width="400" height="200"></canvas>
+                                </div>
+                                <div class="result-stats">
+                                    <div class="stat-item">
+                                        <strong>Latencia Total:</strong> <span id="sim-total-latency">-</span> μs
+                                    </div>
+                                    <div class="stat-item">
+                                        <strong>Productividad:</strong> <span id="sim-productivity">-</span> MB/s
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card examples-card">
+                        <h3><i class="fas fa-code"></i> Ejemplos de Código</h3>
+                        <div class="code-examples">
+                            <div class="code-example">
+                                <h4>MPI Send/Receive</h4>
+                                <div class="code-block">
+                                    <code>
+                                        // Proceso 0<br>
+                                        MPI_Send(data, count, MPI_INT, 1, 0, MPI_COMM_WORLD);<br><br>
+                                        // Proceso 1<br>
+                                        MPI_Recv(data, count, MPI_INT, 0, 0, MPI_COMM_WORLD, &status);
+                                    </code>
+                                </div>
+                            </div>
+                            <div class="code-example">
+                                <h4>OpenMP Shared Memory</h4>
+                                <div class="code-block">
+                                    <code>
+                                        #pragma omp parallel shared(data)<br>
+                                        {<br>
+                                        &nbsp;&nbsp;int tid = omp_get_thread_num();<br>
+                                        &nbsp;&nbsp;data[tid] = compute(tid);<br>
+                                        }
+                                    </code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

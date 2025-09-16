@@ -1,0 +1,1662 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lienzo Didáctico - Computadores Paralelos</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1 class="main-title">
+                    <i class="fas fa-sitemap"></i>
+                    Tema 9: Introducción a los Computadores Paralelos
+                </h1>
+                <p class="subtitle">Arquitecturas MIMD y sistemas con múltiples procesadores</p>
+            </div>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="nav">
+            <div class="nav-content">
+                <div class="nav-info">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>Programa de Ingeniería Informática</span>
+                </div>
+                <div class="nav-controls">
+                    <button class="btn btn-back" onclick="goToMainPortal()">
+                        <i class="fas fa-home"></i>
+                        <span>Portal Principal</span>
+                    </button>
+                    <button class="btn btn-secondary" onclick="toggleTheme()">
+                        <i class="fas fa-moon"></i>
+                        <span>Tema Oscuro</span>
+                    </button>
+                    <button class="btn btn-primary" onclick="toggleFullscreen()">
+                        <i class="fas fa-expand"></i>
+                        <span>Pantalla Completa</span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main">
+            <!-- Navigation para secciones del tema -->
+            <nav class="navigation">
+                <div class="nav-buttons">
+                    <button class="nav-btn active" data-section="introduccion">
+                        <i class="fas fa-info-circle"></i>
+                        <span>Introducción</span>
+                    </button>
+                    <button class="nav-btn" data-section="paralelismo">
+                        <i class="fas fa-layer-group"></i>
+                        <span>Niveles de Paralelismo</span>
+                    </button>
+                    <button class="nav-btn" data-section="clasificacion">
+                        <i class="fas fa-project-diagram"></i>
+                        <span>Clasificación MIMD</span>
+                    </button>
+                    <button class="nav-btn" data-section="multiprocesadores">
+                        <i class="fas fa-microchip"></i>
+                        <span>Multiprocesadores</span>
+                    </button>
+                    <button class="nav-btn" data-section="multicomputadores">
+                        <i class="fas fa-server"></i>
+                        <span>Multicomputadores</span>
+                    </button>
+                    <button class="nav-btn" data-section="prestaciones">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Prestaciones</span>
+                    </button>
+                    <button class="nav-btn" data-section="programacion">
+                        <i class="fas fa-code"></i>
+                        <span>Programación Paralela</span>
+                    </button>
+                    <button class="nav-btn" data-section="optimizacion">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Optimización</span>
+                    </button>
+                    <button class="nav-btn" data-section="ejemplos">
+                        <i class="fas fa-flask"></i>
+                        <span>Ejemplos Prácticos</span>
+                    </button>
+                </div>
+            </nav>
+
+            <!-- Introducción Section -->
+            <section id="introduccion" class="content-section active">
+                <div class="section-header">
+                    <h2><i class="fas fa-info-circle"></i> Introducción a los Computadores Paralelos</h2>
+                    <p>Arquitecturas MIMD y sistemas con múltiples procesadores</p>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="card definition-card">
+                        <h3><i class="fas fa-quote-left"></i> Definición</h3>
+                        <p class="highlight">"Los computadores paralelos son arquitecturas paralelas, a nivel de sistema computador, implementadas replicando procesadores."</p>
+                        <div class="definition-details">
+                            <div class="detail-item">
+                                <i class="fas fa-sitemap"></i>
+                                <span>Clasificación MIMD de Flynn</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-microchip"></i>
+                                <span>Múltiples procesadores</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-cogs"></i>
+                                <span>Procesamiento simultáneo</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card motivation-card">
+                        <h3><i class="fas fa-lightbulb"></i> Motivación</h3>
+                        <div class="motivation-list">
+                            <div class="motivation-item">
+                                <i class="fas fa-check-circle"></i>
+                                <div>
+                                    <strong>Aplicaciones que requieren arquitecturas paralelas:</strong> Simulaciones científicas, procesamiento de datos masivos
+                                </div>
+                            </div>
+                            <div class="motivation-item">
+                                <i class="fas fa-check-circle"></i>
+                                <div>
+                                    <strong>Accesibilidad del hardware:</strong> Componentes comerciales disponibles
+                                </div>
+                            </div>
+                            <div class="motivation-item">
+                                <i class="fas fa-check-circle"></i>
+                                <div>
+                                    <strong>Optimización de prestaciones:</strong> Mejora de la relación rendimiento/coste
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-grid">
+                    <div class="card alternatives-card">
+                        <h3><i class="fas fa-cogs"></i> Alternativas para Implementar Paralelismo</h3>
+                        <div class="alternatives-grid">
+                            <div class="alternative-item">
+                                <h4><i class="fas fa-stream"></i> Segmentación</h4>
+                                <p>División del sistema en etapas conectadas en cascada (pipeline)</p>
+                                <ul>
+                                    <li>Cauce segmentado</li>
+                                    <li>Pipeline de instrucciones</li>
+                                    <li>Procesamiento en etapas</li>
+                                </ul>
+                            </div>
+                            <div class="alternative-item">
+                                <h4><i class="fas fa-copy"></i> Replicación de Componentes</h4>
+                                <p>Unidades funcionales iguales con conexión paralela</p>
+                                <ul>
+                                    <li>Múltiples ALUs</li>
+                                    <li>Procesadores independientes</li>
+                                    <li>Unidades especializadas</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card flynn-card">
+                        <h3><i class="fas fa-project-diagram"></i> Clasificación Flynn</h3>
+                        <div class="flynn-classification">
+                            <div class="flynn-item">
+                                <h4>SISD</h4>
+                                <p>Single Instruction, Single Data</p>
+                                <p>Procesador tradicional secuencial</p>
+                            </div>
+                            <div class="flynn-item">
+                                <h4>SIMD</h4>
+                                <p>Single Instruction, Multiple Data</p>
+                                <p>Procesamiento vectorial</p>
+                            </div>
+                            <div class="flynn-item">
+                                <h4>MISD</h4>
+                                <p>Multiple Instruction, Single Data</p>
+                                <p>Múltiples procesadores sobre mismos datos</p>
+                            </div>
+                            <div class="flynn-item">
+                                <h4>MIMD</h4>
+                                <p>Multiple Instruction, Multiple Data</p>
+                                <p><strong>Computadores paralelos</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Paralelismo Section -->
+            <section id="paralelismo" class="content-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-layer-group"></i> Niveles de Paralelismo</h2>
+                    <p>Clasificación del paralelismo según el nivel de abstracción</p>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="card levels-card">
+                        <h3><i class="fas fa-sitemap"></i> Niveles de Paralelismo Funcional</h3>
+                        <div class="parallelism-levels">
+                            <div class="level-item">
+                                <h4>Nivel de Programa</h4>
+                                <p>Paralelismo entre programas independientes</p>
+                                <div class="level-example">
+                                    <code>Programa A || Programa B || Programa C</code>
+                                </div>
+                            </div>
+                            <div class="level-item">
+                                <h4>Nivel de Funciones</h4>
+                                <p>Paralelismo entre funciones dentro de un programa</p>
+                                <div class="level-example">
+                                    <code>func1() || func2() || func3()</code>
+                                </div>
+                            </div>
+                            <div class="level-item">
+                                <h4>Nivel de Bucles</h4>
+                                <p>Paralelismo en iteraciones de bucles</p>
+                                <div class="level-example">
+                                    <code>for i in parallel: process(data[i])</code>
+                                </div>
+                            </div>
+                            <div class="level-item">
+                                <h4>Nivel de Operaciones</h4>
+                                <p>Paralelismo a nivel de instrucciones</p>
+                                <div class="level-example">
+                                    <code>ADD || MUL || LOAD</code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card granularity-card">
+                        <h3><i class="fas fa-balance-scale"></i> Granularidad del Paralelismo</h3>
+                        <div class="granularity-chart">
+                            <div class="granularity-item fine">
+                                <h4>Granularidad Fina</h4>
+                                <p>Pocas operaciones por unidad paralela</p>
+                                <div class="granularity-bar">
+                                    <div class="bar-fill" style="width: 20%"></div>
+                                </div>
+                                <p>Ejemplo: Instrucciones individuales</p>
+                            </div>
+                            <div class="granularity-item medium">
+                                <h4>Granularidad Media</h4>
+                                <p>Número moderado de operaciones</p>
+                                <div class="granularity-bar">
+                                    <div class="bar-fill" style="width: 50%"></div>
+                                </div>
+                                <p>Ejemplo: Bucles, funciones</p>
+                            </div>
+                            <div class="granularity-item coarse">
+                                <h4>Granularidad Gruesa</h4>
+                                <p>Muchas operaciones por unidad paralela</p>
+                                <div class="granularity-bar">
+                                    <div class="bar-fill" style="width: 80%"></div>
+                                </div>
+                                <p>Ejemplo: Programas completos</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-grid">
+                    <div class="card types-card">
+                        <h3><i class="fas fa-code"></i> Tipos de Paralelismo de Aplicación</h3>
+                        <div class="parallelism-types">
+                            <div class="type-item">
+                                <h4><i class="fas fa-tasks"></i> Paralelismo de Tareas</h4>
+                                <p>Extracción de la estructura lógica de funciones</p>
+                                <div class="type-example">
+                                    <h5>Ejemplo:</h5>
+                                    <code>
+                                        Task1: Leer datos<br>
+                                        Task2: Procesar datos<br>
+                                        Task3: Escribir resultados
+                                    </code>
+                                </div>
+                            </div>
+                            <div class="type-item">
+                                <h4><i class="fas fa-database"></i> Paralelismo de Datos</h4>
+                                <p>Operaciones sobre estructuras de datos (matrices)</p>
+                                <div class="type-example">
+                                    <h5>Ejemplo:</h5>
+                                    <code>
+                                        for i in parallel:<br>
+                                        &nbsp;&nbsp;result[i] = matrix[i] * vector[i]
+                                    </code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card units-card">
+                        <h3><i class="fas fa-microchip"></i> Unidades de Ejecución</h3>
+                        <div class="execution-units">
+                            <div class="unit-item">
+                                <h4><i class="fas fa-cog"></i> Hardware (Procesador)</h4>
+                                <p>Gestiona la ejecución de instrucciones</p>
+                                <ul>
+                                    <li>Procesamiento de instrucciones</li>
+                                    <li>Control de flujo</li>
+                                    <li>Acceso a memoria</li>
+                                </ul>
+                            </div>
+                            <div class="unit-item">
+                                <h4><i class="fas fa-desktop"></i> Software (Sistema Operativo)</h4>
+                                <p>Gestiona procesos y hebras</p>
+                                <ul>
+                                    <li>Procesos independientes</li>
+                                    <li>Hilos (threads)</li>
+                                    <li>Planificación de tareas</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Clasificación Section -->
+            <section id="clasificacion" class="content-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-project-diagram"></i> Clasificación de Computadores Paralelos</h2>
+                    <p>Organización según el sistema de memoria</p>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="card classification-card">
+                        <h3><i class="fas fa-sitemap"></i> Clasificación Principal</h3>
+                        <div class="classification-tree">
+                            <div class="tree-node root">
+                                <h4>Computadores Paralelos MIMD</h4>
+                            </div>
+                            <div class="tree-branch">
+                                <div class="tree-node">
+                                    <h4>Multiprocesadores</h4>
+                                    <p>Memoria Compartida (SM)</p>
+                                </div>
+                                <div class="tree-children">
+                                    <div class="tree-node">
+                                        <h5>UMA</h5>
+                                        <p>Acceso Uniforme a Memoria</p>
+                                    </div>
+                                    <div class="tree-node">
+                                        <h5>NUMA</h5>
+                                        <p>Acceso No Uniforme a Memoria</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tree-branch">
+                                <div class="tree-node">
+                                    <h4>Multicomputadores</h4>
+                                    <p>Memoria Distribuida (DM)</p>
+                                </div>
+                                <div class="tree-children">
+                                    <div class="tree-node">
+                                        <h5>MPP</h5>
+                                        <p>Procesadores Masivamente Paralelos</p>
+                                    </div>
+                                    <div class="tree-node">
+                                        <h5>Clúster</h5>
+                                        <p>Agrupación de computadores</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card comparison-card">
+                        <h3><i class="fas fa-balance-scale"></i> Comparación Multiprocesadores vs Multicomputadores</h3>
+                        <div class="comparison-table">
+                            <div class="comparison-header">
+                                <div class="comparison-cell">Característica</div>
+                                <div class="comparison-cell">Multiprocesadores</div>
+                                <div class="comparison-cell">Multicomputadores</div>
+                            </div>
+                            <div class="comparison-row">
+                                <div class="comparison-cell"><strong>Memoria</strong></div>
+                                <div class="comparison-cell">Compartida</div>
+                                <div class="comparison-cell">Distribuida</div>
+                            </div>
+                            <div class="comparison-row">
+                                <div class="comparison-cell"><strong>Comunicación</strong></div>
+                                <div class="comparison-cell">Variables compartidas</div>
+                                <div class="comparison-cell">Paso de mensajes</div>
+                            </div>
+                            <div class="comparison-row">
+                                <div class="comparison-cell"><strong>Escalabilidad</strong></div>
+                                <div class="comparison-cell">Limitada</div>
+                                <div class="comparison-cell">Alta</div>
+                            </div>
+                            <div class="comparison-row">
+                                <div class="comparison-cell"><strong>Programación</strong></div>
+                                <div class="comparison-cell">Más sencilla</div>
+                                <div class="comparison-cell">Más compleja</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Multiprocesadores Section -->
+            <section id="multiprocesadores" class="content-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-microchip"></i> Multiprocesadores (Memoria Compartida)</h2>
+                    <p>Sistemas con memoria compartida y espacio de direccionamiento único</p>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="card smp-card">
+                        <h3><i class="fas fa-sitemap"></i> SMP (Symmetric MultiProcessor)</h3>
+                        <div class="smp-diagram">
+                            <div class="processor-grid">
+                                <div class="processor">CPU 1</div>
+                                <div class="processor">CPU 2</div>
+                                <div class="processor">CPU 3</div>
+                                <div class="processor">CPU 4</div>
+                            </div>
+                            <div class="memory-shared">
+                                <h4>Memoria Compartida</h4>
+                                <p>Acceso uniforme para todos los procesadores</p>
+                            </div>
+                        </div>
+                        <div class="smp-characteristics">
+                            <h4>Características:</h4>
+                            <ul>
+                                <li>Acceso uniforme a memoria (UMA)</li>
+                                <li>Comunicación mediante variables compartidas</li>
+                                <li>Programación más sencilla</li>
+                                <li>Escalabilidad limitada</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="card numa-card">
+                        <h3><i class="fas fa-network-wired"></i> NUMA (Non-Uniform Memory Access)</h3>
+                        <div class="numa-diagram">
+                            <div class="numa-node">
+                                <div class="processor">CPU 1</div>
+                                <div class="memory-local">Memoria Local</div>
+                            </div>
+                            <div class="numa-node">
+                                <div class="processor">CPU 2</div>
+                                <div class="memory-local">Memoria Local</div>
+                            </div>
+                            <div class="interconnect">Red de Interconexión</div>
+                        </div>
+                        <div class="numa-characteristics">
+                            <h4>Características:</h4>
+                            <ul>
+                                <li>Acceso no uniforme a memoria</li>
+                                <li>Memoria distribuida físicamente</li>
+                                <li>Mayor escalabilidad</li>
+                                <li>Latencia variable según ubicación</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-grid">
+                    <div class="card coherence-card">
+                        <h3><i class="fas fa-sync"></i> Coherencia de Caché</h3>
+                        <div class="coherence-explanation">
+                            <p>En sistemas con memoria compartida, múltiples procesadores pueden tener copias de los mismos datos en sus cachés. La coherencia de caché garantiza que todas las copias sean consistentes.</p>
+                            
+                            <div class="coherence-protocols">
+                                <h4>Protocolos de Coherencia:</h4>
+                                <div class="protocol-item">
+                                    <h5>MSI (Modified, Shared, Invalid)</h5>
+                                    <p>Estados: Modificado, Compartido, Inválido</p>
+                                </div>
+                                <div class="protocol-item">
+                                    <h5>MESI (Modified, Exclusive, Shared, Invalid)</h5>
+                                    <p>Estados: Modificado, Exclusivo, Compartido, Inválido</p>
+                                </div>
+                                <div class="protocol-item">
+                                    <h5>MOESI (Modified, Owned, Exclusive, Shared, Invalid)</h5>
+                                    <p>Estados: Modificado, Propio, Exclusivo, Compartido, Inválido</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card synchronization-card">
+                        <h3><i class="fas fa-lock"></i> Sincronización</h3>
+                        <div class="synchronization-methods">
+                            <h4>Métodos de Sincronización:</h4>
+                            <div class="sync-item">
+                                <h5><i class="fas fa-flag"></i> Semáforos</h5>
+                                <p>Control de acceso a recursos compartidos</p>
+                            </div>
+                            <div class="sync-item">
+                                <h5><i class="fas fa-lock"></i> Mutex</h5>
+                                <p>Exclusión mutua para secciones críticas</p>
+                            </div>
+                            <div class="sync-item">
+                                <h5><i class="fas fa-bars"></i> Barreras</h5>
+                                <p>Sincronización de puntos de ejecución</p>
+                            </div>
+                            <div class="sync-item">
+                                <h5><i class="fas fa-exchange-alt"></i> Variables de Condición</h5>
+                                <p>Espera de condiciones específicas</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Multicomputadores Section -->
+            <section id="multicomputadores" class="content-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-server"></i> Multicomputadores (Memoria Distribuida)</h2>
+                    <p>Sistemas con memoria distribuida y comunicación por mensajes</p>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="card dm-card">
+                        <h3><i class="fas fa-sitemap"></i> Características de Memoria Distribuida</h3>
+                        <div class="dm-diagram">
+                            <div class="dm-node">
+                                <div class="processor">CPU 1</div>
+                                <div class="memory-private">Memoria Privada</div>
+                                <div class="network-interface">NI</div>
+                            </div>
+                            <div class="dm-node">
+                                <div class="processor">CPU 2</div>
+                                <div class="memory-private">Memoria Privada</div>
+                                <div class="network-interface">NI</div>
+                            </div>
+                            <div class="network">Red de Interconexión</div>
+                        </div>
+                        <div class="dm-characteristics">
+                            <h4>Características:</h4>
+                            <ul>
+                                <li>Cada procesador tiene su espacio de direccionamiento</li>
+                                <li>Comunicación mediante paso de mensajes</li>
+                                <li>Alta escalabilidad</li>
+                                <li>Programación más compleja</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="card message-passing-card">
+                        <h3><i class="fas fa-comments"></i> Comunicación por Mensajes</h3>
+                        <div class="message-passing">
+                            <div class="message-example">
+                                <h4>Operaciones Básicas:</h4>
+                                <div class="code-example">
+                                    <code>
+                                        // Proceso A (Enviador)<br>
+                                        send(data, destination);<br><br>
+                                        // Proceso B (Receptor)<br>
+                                        receive(data, source);
+                                    </code>
+                                </div>
+                            </div>
+                            <div class="message-types">
+                                <h4>Tipos de Comunicación:</h4>
+                                <div class="type-item">
+                                    <h5>Síncrona</h5>
+                                    <p>El envío espera confirmación de recepción</p>
+                                </div>
+                                <div class="type-item">
+                                    <h5>Asíncrona</h5>
+                                    <p>El envío no espera confirmación</p>
+                                </div>
+                                <div class="type-item">
+                                    <h5>Bloqueante</h5>
+                                    <p>La operación bloquea hasta completarse</p>
+                                </div>
+                                <div class="type-item">
+                                    <h5>No Bloqueante</h5>
+                                    <p>La operación retorna inmediatamente</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-grid">
+                    <div class="card cluster-card">
+                        <h3><i class="fas fa-server"></i> Clústeres y Configuraciones</h3>
+                        <div class="cluster-types">
+                            <div class="cluster-item">
+                                <h4><i class="fas fa-server"></i> Clúster Beowulf</h4>
+                                <p>Agrupación de computadores comerciales con Linux</p>
+                                <ul>
+                                    <li>Coste reducido</li>
+                                    <li>Fácil mantenimiento</li>
+                                    <li>Escalabilidad horizontal</li>
+                                </ul>
+                            </div>
+                            <div class="cluster-item">
+                                <h4><i class="fas fa-network-wired"></i> NOW (Network of Workstations)</h4>
+                                <p>Red de estaciones de trabajo interconectadas</p>
+                                <ul>
+                                    <li>Aprovecha recursos ociosos</li>
+                                    <li>Coste mínimo</li>
+                                    <li>Rendimiento variable</li>
+                                </ul>
+                            </div>
+                            <div class="cluster-item">
+                                <h4><i class="fas fa-globe"></i> Grid Computing</h4>
+                                <p>Computación distribuida a gran escala</p>
+                                <ul>
+                                    <li>Recursos geográficamente distribuidos</li>
+                                    <li>Estándares abiertos</li>
+                                    <li>Computación voluntaria</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card mpp-card">
+                        <h3><i class="fas fa-microchip"></i> MPP (Massively Parallel Processors)</h3>
+                        <div class="mpp-characteristics">
+                            <h4>Características de MPP:</h4>
+                            <ul>
+                                <li>Miles de procesadores</li>
+                                <li>Memoria distribuida</li>
+                                <li>Red de interconexión de alta velocidad</li>
+                                <li>Optimizado para aplicaciones científicas</li>
+                            </ul>
+                            
+                            <div class="mpp-examples">
+                                <h4>Ejemplos Históricos:</h4>
+                                <div class="example-item">
+                                    <strong>IBM Blue Gene:</strong> Hasta 1M procesadores
+                                </div>
+                                <div class="example-item">
+                                    <strong>Cray T3E:</strong> Hasta 2048 procesadores
+                                </div>
+                                <div class="example-item">
+                                    <strong>Intel Paragon:</strong> Hasta 4096 procesadores
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Prestaciones Section -->
+            <section id="prestaciones" class="content-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-chart-line"></i> Prestaciones en Computadores Paralelos</h2>
+                    <p>Métricas y medidas de rendimiento</p>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="card metrics-card">
+                        <h3><i class="fas fa-tachometer-alt"></i> Métricas de Prestaciones</h3>
+                        <div class="performance-metrics">
+                            <div class="metric-item">
+                                <h4><i class="fas fa-clock"></i> Tiempo de Ejecución</h4>
+                                <p>Tiempo necesario para ejecutar una aplicación</p>
+                                <div class="metric-formula">
+                                    <code>T(p) = T_c(p) + T_o(p)</code>
+                                    <p>Donde T_c es tiempo de cómputo y T_o es sobrecarga</p>
+                                </div>
+                            </div>
+                            <div class="metric-item">
+                                <h4><i class="fas fa-tachometer-alt"></i> Throughput</h4>
+                                <p>Número de aplicaciones procesadas por unidad de tiempo</p>
+                                <div class="metric-formula">
+                                    <code>Throughput = Aplicaciones / Tiempo</code>
+                                </div>
+                            </div>
+                            <div class="metric-item">
+                                <h4><i class="fas fa-chart-line"></i> Speedup</h4>
+                                <p>Mejora en el rendimiento con múltiples procesadores</p>
+                                <div class="metric-formula">
+                                    <code>S(p) = T(1) / T(p)</code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card speedup-card">
+                        <h3><i class="fas fa-chart-line"></i> Tipos de Speedup</h3>
+                        <div class="speedup-types">
+                            <div class="speedup-item">
+                                <h4>Lineal: S(p) = p</h4>
+                                <p>Distribución perfecta del trabajo</p>
+                                <div class="speedup-bar">
+                                    <div class="bar-fill linear" style="width: 100%"></div>
+                                </div>
+                            </div>
+                            <div class="speedup-item">
+                                <h4>Superlineal: S(p) > p</h4>
+                                <p>Beneficios adicionales del paralelismo</p>
+                                <div class="speedup-bar">
+                                    <div class="bar-fill superlinear" style="width: 120%"></div>
+                                </div>
+                            </div>
+                            <div class="speedup-item">
+                                <h4>Sublineal: S(p) < p</h4>
+                                <p>Limitaciones del paralelismo</p>
+                                <div class="speedup-bar">
+                                    <div class="bar-fill sublinear" style="width: 60%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-grid">
+                    <div class="card amdahl-card">
+                        <h3><i class="fas fa-calculator"></i> Ley de Amdahl</h3>
+                        <div class="amdahl-formula">
+                            <h4>Fórmula de Amdahl:</h4>
+                            <div class="formula">
+                                <code>S(p) = 1 / ((1 - f) + f/p)</code>
+                            </div>
+                            <div class="formula-explanation">
+                                <p><strong>f:</strong> Fracción paralelizable del programa</p>
+                                <p><strong>p:</strong> Número de procesadores</p>
+                                <p><strong>S(p):</strong> Speedup obtenido</p>
+                            </div>
+                        </div>
+                        <div class="amdahl-calculator">
+                            <h4>Calculadora de Speedup:</h4>
+                            <div class="input-group">
+                                <label for="parallel-fraction">Fracción Paralelizable (f):</label>
+                                <input type="range" id="parallel-fraction" min="0" max="1" step="0.01" value="0.8">
+                                <span id="parallel-fraction-value">0.8</span>
+                            </div>
+                            <div class="input-group">
+                                <label for="processors">Número de Procesadores (p):</label>
+                                <input type="range" id="processors" min="1" max="64" value="4">
+                                <span id="processors-value">4</span>
+                            </div>
+                            <div class="result">
+                                <strong>Speedup: <span id="speedup-result">2.5</span>x</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card efficiency-card">
+                        <h3><i class="fas fa-chart-pie"></i> Eficiencia del Sistema</h3>
+                        <div class="efficiency-metrics">
+                            <div class="efficiency-item">
+                                <h4>Eficiencia</h4>
+                                <div class="formula">
+                                    <code>E(p) = S(p) / p</code>
+                                </div>
+                                <p>Relación entre speedup y número de procesadores</p>
+                            </div>
+                            <div class="efficiency-item">
+                                <h4>Isoeficiencia</h4>
+                                <p>Función que indica cómo debe crecer el tamaño del problema para mantener la eficiencia constante</p>
+                            </div>
+                            <div class="efficiency-item">
+                                <h4>Escalabilidad</h4>
+                                <p>Capacidad del sistema para mantener o mejorar el rendimiento al aumentar el número de procesadores</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Programación Paralela Section -->
+            <section id="programacion" class="content-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-code"></i> Programación Paralela Práctica</h2>
+                    <p>Herramientas y técnicas para desarrollar aplicaciones paralelas</p>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="card openmp-card">
+                        <h3><i class="fas fa-microchip"></i> OpenMP (Memoria Compartida)</h3>
+                        <div class="openmp-content">
+                            <div class="openmp-intro">
+                                <h4>¿Qué es OpenMP?</h4>
+                                <p><strong>OpenMP (Open Multi-Processing)</strong> es un estándar de programación paralela para sistemas de <strong>memoria compartida</strong>. Permite paralelizar programas de forma relativamente sencilla usando directivas del compilador.</p>
+                                
+                                <div class="concept-explanation">
+                                    <h5>🔧 Características Principales:</h5>
+                                    <ul>
+                                        <li><strong>Directivas del compilador:</strong> Instrucciones especiales que le dicen al compilador cómo paralelizar el código</li>
+                                        <li><strong>Paralelización automática:</strong> El compilador se encarga de crear y gestionar los hilos</li>
+                                        <li><strong>Memoria compartida:</strong> Todos los hilos pueden acceder a la misma memoria</li>
+                                        <li><strong>Fácil de usar:</strong> Solo necesitas agregar directivas a tu código existente</li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="concept-explanation">
+                                    <h5>🏗️ Arquitectura:</h5>
+                                    <p>OpenMP funciona en sistemas donde múltiples procesadores comparten la misma memoria RAM. Es ideal para:</p>
+                                    <ul>
+                                        <li>Servidores con múltiples núcleos</li>
+                                        <li>Estaciones de trabajo de alto rendimiento</li>
+                                        <li>Supercomputadores con memoria compartida</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <div class="openmp-features">
+                                <h4>Directivas Principales:</h4>
+                                <ul>
+                                    <li><strong>#pragma omp parallel:</strong> Crea un equipo de hilos</li>
+                                    <li><strong>#pragma omp parallel for:</strong> Paraleliza un bucle</li>
+                                    <li><strong>#pragma omp critical:</strong> Sección crítica (solo un hilo a la vez)</li>
+                                    <li><strong>#pragma omp reduction:</strong> Operaciones de reducción (suma, producto, etc.)</li>
+                                </ul>
+                            </div>
+                            <div class="code-example">
+                                <h4>Ejemplo 1: Suma de Elementos de un Vector</h4>
+                                <div class="example-context">
+                                    <h5>📋 Enunciado:</h5>
+                                    <p>Dado un vector de N elementos, calcular la suma de todos sus elementos utilizando OpenMP. El programa debe mostrar el tiempo de ejecución y el resultado final.</p>
+                                </div>
+                                <div class="code-block">
+                                    <code>
+                                        #include &lt;omp.h&gt;<br>
+                                        #include &lt;stdio.h&gt;<br>
+                                        #include &lt;stdlib.h&gt;<br>
+                                        #include &lt;time.h&gt;<br><br>
+                                        #define N 1000000<br><br>
+                                        int main() {<br>
+                                        &nbsp;&nbsp;int *vector = (int*)malloc(N * sizeof(int));<br>
+                                        &nbsp;&nbsp;long long suma = 0;<br>
+                                        &nbsp;&nbsp;double start_time, end_time;<br><br>
+                                        &nbsp;&nbsp;// Inicializar vector con valores aleatorios<br>
+                                        &nbsp;&nbsp;for(int i = 0; i &lt; N; i++) {<br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;vector[i] = rand() % 100;<br>
+                                        &nbsp;&nbsp;}<br><br>
+                                        &nbsp;&nbsp;start_time = omp_get_wtime();<br>
+                                        &nbsp;&nbsp;<br>
+                                        &nbsp;&nbsp;// Paralelización con OpenMP<br>
+                                        &nbsp;&nbsp;#pragma omp parallel for reduction(+:suma)<br>
+                                        &nbsp;&nbsp;for(int i = 0; i &lt; N; i++) {<br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;suma += vector[i];<br>
+                                        &nbsp;&nbsp;}<br>
+                                        &nbsp;&nbsp;<br>
+                                        &nbsp;&nbsp;end_time = omp_get_wtime();<br>
+                                        &nbsp;&nbsp;<br>
+                                        &nbsp;&nbsp;printf("Suma total: %lld\n", suma);<br>
+                                        &nbsp;&nbsp;printf("Tiempo de ejecución: %f segundos\n", end_time - start_time);<br>
+                                        &nbsp;&nbsp;printf("Hilos utilizados: %d\n", omp_get_max_threads());<br>
+                                        &nbsp;&nbsp;<br>
+                                        &nbsp;&nbsp;free(vector);<br>
+                                        &nbsp;&nbsp;return 0;<br>
+                                        }
+                                    </code>
+                                </div>
+                                <div class="explanation">
+                                    <h5>🔍 Explicación Detallada:</h5>
+                                    <ul>
+                                        <li><strong>#pragma omp parallel for:</strong> Crea múltiples hilos y distribuye las iteraciones del bucle entre ellos</li>
+                                        <li><strong>reduction(+:suma):</strong> Cada hilo mantiene una copia local de 'suma', al final se suman todas las copias</li>
+                                        <li><strong>omp_get_wtime():</strong> Función de OpenMP para medir tiempo de ejecución con alta precisión</li>
+                                        <li><strong>omp_get_max_threads():</strong> Obtiene el número máximo de hilos disponibles</li>
+                                        <li><strong>Ventaja:</strong> El bucle se ejecuta en paralelo, reduciendo significativamente el tiempo de ejecución</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <div class="code-example">
+                                <h4>Ejemplo 2: Multiplicación de Matrices</h4>
+                                <div class="example-context">
+                                    <h5>📋 Enunciado:</h5>
+                                    <p>Implementar la multiplicación de dos matrices cuadradas de NxN utilizando OpenMP. Comparar el rendimiento con diferentes números de hilos.</p>
+                                </div>
+                                <div class="code-block">
+                                    <code>
+                                        #include &lt;omp.h&gt;<br>
+                                        #include &lt;stdio.h&gt;<br>
+                                        #include &lt;stdlib.h&gt;<br><br>
+                                        #define N 512<br><br>
+                                        void matrix_multiply(double **A, double **B, double **C) {<br>
+                                        &nbsp;&nbsp;#pragma omp parallel for<br>
+                                        &nbsp;&nbsp;for(int i = 0; i &lt; N; i++) {<br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;for(int j = 0; j &lt; N; j++) {<br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;C[i][j] = 0.0;<br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(int k = 0; k &lt; N; k++) {<br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;C[i][j] += A[i][k] * B[k][j];<br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                                        &nbsp;&nbsp;}<br>
+                                        }<br><br>
+                                        int main() {<br>
+                                        &nbsp;&nbsp;// Asignar memoria para matrices<br>
+                                        &nbsp;&nbsp;double **A = (double**)malloc(N * sizeof(double*));<br>
+                                        &nbsp;&nbsp;double **B = (double**)malloc(N * sizeof(double*));<br>
+                                        &nbsp;&nbsp;double **C = (double**)malloc(N * sizeof(double*));<br>
+                                        &nbsp;&nbsp;<br>
+                                        &nbsp;&nbsp;for(int i = 0; i &lt; N; i++) {<br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;A[i] = (double*)malloc(N * sizeof(double));<br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;B[i] = (double*)malloc(N * sizeof(double));<br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;C[i] = (double*)malloc(N * sizeof(double));<br>
+                                        &nbsp;&nbsp;}<br>
+                                        &nbsp;&nbsp;<br>
+                                        &nbsp;&nbsp;// Inicializar matrices<br>
+                                        &nbsp;&nbsp;for(int i = 0; i &lt; N; i++) {<br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;for(int j = 0; j &lt; N; j++) {<br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A[i][j] = 1.0;<br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;B[i][j] = 1.0;<br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                                        &nbsp;&nbsp;}<br>
+                                        &nbsp;&nbsp;<br>
+                                        &nbsp;&nbsp;double start = omp_get_wtime();<br>
+                                        &nbsp;&nbsp;matrix_multiply(A, B, C);<br>
+                                        &nbsp;&nbsp;double end = omp_get_wtime();<br>
+                                        &nbsp;&nbsp;<br>
+                                        &nbsp;&nbsp;printf("Tiempo de ejecución: %f segundos\n", end - start);<br>
+                                        &nbsp;&nbsp;printf("Hilos utilizados: %d\n", omp_get_num_threads());<br>
+                                        &nbsp;&nbsp;<br>
+                                        &nbsp;&nbsp;// Liberar memoria<br>
+                                        &nbsp;&nbsp;for(int i = 0; i &lt; N; i++) {<br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;free(A[i]); free(B[i]); free(C[i]);<br>
+                                        &nbsp;&nbsp;}<br>
+                                        &nbsp;&nbsp;free(A); free(B); free(C);<br>
+                                        &nbsp;&nbsp;return 0;<br>
+                                        }
+                                    </code>
+                                </div>
+                                <div class="explanation">
+                                    <h5>🔍 Explicación Detallada:</h5>
+                                    <ul>
+                                        <li><strong>Paralelización del bucle externo:</strong> Solo el bucle 'i' se paraleliza para evitar condiciones de carrera</li>
+                                        <li><strong>Independencia de datos:</strong> Cada hilo calcula filas diferentes de la matriz resultado</li>
+                                        <li><strong>Acceso a memoria:</strong> Cada hilo accede a diferentes filas, minimizando conflictos de caché</li>
+                                        <li><strong>Escalabilidad:</strong> El rendimiento mejora proporcionalmente al número de hilos (hasta cierto punto)</li>
+                                        <li><strong>Complejidad:</strong> O(N³) con paralelización O(N²) en el bucle externo</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card mpi-card">
+                        <h3><i class="fas fa-network-wired"></i> MPI (Memoria Distribuida)</h3>
+                        <div class="mpi-content">
+                            <div class="mpi-intro">
+                                <h4>¿Qué es MPI?</h4>
+                                <p><strong>MPI (Message Passing Interface)</strong> es un estándar de programación paralela para sistemas de <strong>memoria distribuida</strong>. Permite que múltiples procesos independientes se comuniquen enviándose mensajes.</p>
+                                
+                                <div class="concept-explanation">
+                                    <h5>🔧 Características Principales:</h5>
+                                    <ul>
+                                        <li><strong>Comunicación por mensajes:</strong> Los procesos se comunican enviándose datos explícitamente</li>
+                                        <li><strong>Memoria distribuida:</strong> Cada proceso tiene su propia memoria privada</li>
+                                        <li><strong>Escalabilidad horizontal:</strong> Puede ejecutarse en múltiples máquinas conectadas por red</li>
+                                        <li><strong>Independencia de procesos:</strong> Cada proceso es independiente y puede fallar sin afectar a otros</li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="concept-explanation">
+                                    <h5>🏗️ Arquitectura:</h5>
+                                    <p>MPI funciona en sistemas donde cada procesador tiene su propia memoria. Es ideal para:</p>
+                                    <ul>
+                                        <li>Clusters de computadoras</li>
+                                        <li>Supercomputadores distribuidos</li>
+                                        <li>Grid computing (computación en red)</li>
+                                        <li>Cloud computing distribuido</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <div class="mpi-features">
+                                <h4>Funciones Principales:</h4>
+                                <ul>
+                                    <li><strong>MPI_Init/MPI_Finalize:</strong> Inicializar y finalizar MPI</li>
+                                    <li><strong>MPI_Send/MPI_Recv:</strong> Envío y recepción de mensajes</li>
+                                    <li><strong>MPI_Bcast:</strong> Difusión (broadcast) de datos</li>
+                                    <li><strong>MPI_Reduce:</strong> Reducción de datos entre procesos</li>
+                                    <li><strong>MPI_Gather/MPI_Scatter:</strong> Recolección y distribución de datos</li>
+                                </ul>
+                            </div>
+                            <div class="code-example">
+                                <h4>Ejemplo 1: Suma Distribuida de un Vector</h4>
+                                <div class="example-context">
+                                    <h5>📋 Enunciado:</h5>
+                                    <p>Calcular la suma de un vector de N elementos distribuido entre P procesos usando MPI. El proceso 0 debe mostrar el resultado final.</p>
+                                </div>
+                                <div class="code-block">
+                                    <code>
+                                        #include &lt;mpi.h&gt;<br>
+                                        #include &lt;stdio.h&gt;<br>
+                                        #include &lt;stdlib.h&gt;<br><br>
+                                        #define N 1000000<br><br>
+                                        int main(int argc, char *argv[]) {<br>
+                                        &nbsp;&nbsp;int rank, size, i;<br>
+                                        &nbsp;&nbsp;int *vector, *local_vector;<br>
+                                        &nbsp;&nbsp;int local_size, local_sum = 0, global_sum = 0;<br>
+                                        &nbsp;&nbsp;double start_time, end_time;<br><br>
+                                        &nbsp;&nbsp;MPI_Init(&argc, &argv);<br>
+                                        &nbsp;&nbsp;MPI_Comm_rank(MPI_COMM_WORLD, &rank);<br>
+                                        &nbsp;&nbsp;MPI_Comm_size(MPI_COMM_WORLD, &size);<br><br>
+                                        &nbsp;&nbsp;local_size = N / size;<br>
+                                        &nbsp;&nbsp;local_vector = (int*)malloc(local_size * sizeof(int));<br><br>
+                                        &nbsp;&nbsp;if(rank == 0) {<br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;vector = (int*)malloc(N * sizeof(int));<br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;for(i = 0; i &lt; N; i++) {<br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vector[i] = rand() % 100;<br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;start_time = MPI_Wtime();<br>
+                                        &nbsp;&nbsp;}<br><br>
+                                        &nbsp;&nbsp;// Distribuir datos<br>
+                                        &nbsp;&nbsp;MPI_Scatter(vector, local_size, MPI_INT, local_vector, local_size, MPI_INT, 0, MPI_COMM_WORLD);<br><br>
+                                        &nbsp;&nbsp;// Calcular suma local<br>
+                                        &nbsp;&nbsp;for(i = 0; i &lt; local_size; i++) {<br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;local_sum += local_vector[i];<br>
+                                        &nbsp;&nbsp;}<br><br>
+                                        &nbsp;&nbsp;// Reducir suma global<br>
+                                        &nbsp;&nbsp;MPI_Reduce(&local_sum, &global_sum, 1, MPI_INT, MPI_SUM, 0, MPI_COMM_WORLD);<br><br>
+                                        &nbsp;&nbsp;if(rank == 0) {<br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;end_time = MPI_Wtime();<br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;printf("Suma total: %d\n", global_sum);<br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;printf("Tiempo de ejecución: %f segundos\n", end_time - start_time);<br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;printf("Procesos utilizados: %d\n", size);<br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;free(vector);<br>
+                                        &nbsp;&nbsp;}<br><br>
+                                        &nbsp;&nbsp;free(local_vector);<br>
+                                        &nbsp;&nbsp;MPI_Finalize();<br>
+                                        &nbsp;&nbsp;return 0;<br>
+                                        }
+                                    </code>
+                                </div>
+                                <div class="explanation">
+                                    <h5>🔍 Explicación Detallada:</h5>
+                                    <ul>
+                                        <li><strong>MPI_Scatter:</strong> Distribuye el vector completo desde el proceso 0 a todos los procesos</li>
+                                        <li><strong>MPI_Reduce:</strong> Suma todas las sumas locales y envía el resultado al proceso 0</li>
+                                        <li><strong>MPI_Wtime():</strong> Función de MPI para medir tiempo de ejecución</li>
+                                        <li><strong>Distribución de trabajo:</strong> Cada proceso calcula la suma de su porción del vector</li>
+                                        <li><strong>Ventaja:</strong> Escalabilidad horizontal - más procesos = mejor rendimiento</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <div class="code-example">
+                                <h4>Ejemplo 2: Multiplicación de Matrices Distribuida</h4>
+                                <div class="example-context">
+                                    <h5>📋 Enunciado:</h5>
+                                    <p>Implementar la multiplicación de matrices A×B=C distribuyendo las filas de A entre los procesos. Cada proceso calcula sus filas correspondientes de C.</p>
+                                </div>
+                                <div class="code-block">
+                                    <code>
+                                        #include &lt;mpi.h&gt;<br>
+                                        #include &lt;stdio.h&gt;<br>
+                                        #include &lt;stdlib.h&gt;<br><br>
+                                        #define N 512<br><br>
+                                        int main(int argc, char *argv[]) {<br>
+                                        &nbsp;&nbsp;int rank, size, i, j, k;<br>
+                                        &nbsp;&nbsp;int rows_per_proc, start_row, end_row;<br>
+                                        &nbsp;&nbsp;double **A, **B, **C;<br>
+                                        &nbsp;&nbsp;double *local_A, *local_C;<br>
+                                        &nbsp;&nbsp;double start_time, end_time;<br><br>
+                                        &nbsp;&nbsp;MPI_Init(&argc, &argv);<br>
+                                        &nbsp;&nbsp;MPI_Comm_rank(MPI_COMM_WORLD, &rank);<br>
+                                        &nbsp;&nbsp;MPI_Comm_size(MPI_COMM_WORLD, &size);<br><br>
+                                        &nbsp;&nbsp;rows_per_proc = N / size;<br>
+                                        &nbsp;&nbsp;start_row = rank * rows_per_proc;<br>
+                                        &nbsp;&nbsp;end_row = start_row + rows_per_proc;<br><br>
+                                        &nbsp;&nbsp;if(rank == 0) {<br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;// Inicializar matrices completas en proceso 0<br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;A = (double**)malloc(N * sizeof(double*));<br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;B = (double**)malloc(N * sizeof(double*));<br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;C = (double**)malloc(N * sizeof(double*));<br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;<br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;for(i = 0; i &lt; N; i++) {<br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A[i] = (double*)malloc(N * sizeof(double));<br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;B[i] = (double*)malloc(N * sizeof(double));<br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;C[i] = (double*)malloc(N * sizeof(double));<br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;<br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;// Inicializar con valores<br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;for(i = 0; i &lt; N; i++) {<br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(j = 0; j &lt; N; j++) {<br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A[i][j] = 1.0;<br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;B[i][j] = 1.0;<br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;start_time = MPI_Wtime();<br>
+                                        &nbsp;&nbsp;}<br><br>
+                                        &nbsp;&nbsp;// Distribuir filas de A<br>
+                                        &nbsp;&nbsp;local_A = (double*)malloc(rows_per_proc * N * sizeof(double));<br>
+                                        &nbsp;&nbsp;local_C = (double*)malloc(rows_per_proc * N * sizeof(double));<br>
+                                        &nbsp;&nbsp;<br>
+                                        &nbsp;&nbsp;MPI_Scatter(A[0], rows_per_proc * N, MPI_DOUBLE, local_A, rows_per_proc * N, MPI_DOUBLE, 0, MPI_COMM_WORLD);<br>
+                                        &nbsp;&nbsp;<br>
+                                        &nbsp;&nbsp;// Broadcast matriz B a todos los procesos<br>
+                                        &nbsp;&nbsp;if(rank != 0) B = (double**)malloc(N * sizeof(double*));<br>
+                                        &nbsp;&nbsp;if(rank != 0) {<br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;for(i = 0; i &lt; N; i++) {<br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;B[i] = (double*)malloc(N * sizeof(double));<br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                                        &nbsp;&nbsp;}<br>
+                                        &nbsp;&nbsp;MPI_Bcast(B[0], N * N, MPI_DOUBLE, 0, MPI_COMM_WORLD);<br><br>
+                                        &nbsp;&nbsp;// Multiplicación local<br>
+                                        &nbsp;&nbsp;for(i = 0; i &lt; rows_per_proc; i++) {<br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;for(j = 0; j &lt; N; j++) {<br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;local_C[i * N + j] = 0.0;<br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(k = 0; k &lt; N; k++) {<br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;local_C[i * N + j] += local_A[i * N + k] * B[k][j];<br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                                        &nbsp;&nbsp;}<br><br>
+                                        &nbsp;&nbsp;// Recopilar resultados<br>
+                                        &nbsp;&nbsp;MPI_Gather(local_C, rows_per_proc * N, MPI_DOUBLE, C[0], rows_per_proc * N, MPI_DOUBLE, 0, MPI_COMM_WORLD);<br><br>
+                                        &nbsp;&nbsp;if(rank == 0) {<br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;end_time = MPI_Wtime();<br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;printf("Tiempo de ejecución: %f segundos\n", end_time - start_time);<br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;printf("Procesos utilizados: %d\n", size);<br>
+                                        &nbsp;&nbsp;}<br><br>
+                                        &nbsp;&nbsp;free(local_A); free(local_C);<br>
+                                        &nbsp;&nbsp;if(rank != 0) {<br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;for(i = 0; i &lt; N; i++) free(B[i]);<br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;free(B);<br>
+                                        &nbsp;&nbsp;}<br>
+                                        &nbsp;&nbsp;MPI_Finalize();<br>
+                                        &nbsp;&nbsp;return 0;<br>
+                                        }
+                                    </code>
+                                </div>
+                                <div class="explanation">
+                                    <h5>🔍 Explicación Detallada:</h5>
+                                    <ul>
+                                        <li><strong>MPI_Scatter:</strong> Distribuye filas de A entre procesos</li>
+                                        <li><strong>MPI_Bcast:</strong> Envía matriz B completa a todos los procesos</li>
+                                        <li><strong>MPI_Gather:</strong> Recopila resultados de todos los procesos</li>
+                                        <li><strong>Distribución por filas:</strong> Cada proceso calcula filas específicas de C</li>
+                                        <li><strong>Comunicación colectiva:</strong> Uso eficiente de operaciones MPI para distribución de datos</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-grid">
+                    <div class="card comparison-card">
+                        <h3><i class="fas fa-balance-scale"></i> OpenMP vs MPI: Comparación</h3>
+                        <div class="comparison-content">
+                            <div class="comparison-table">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Característica</th>
+                                            <th>OpenMP</th>
+                                            <th>MPI</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>Modelo de Memoria</strong></td>
+                                            <td>Memoria Compartida</td>
+                                            <td>Memoria Distribuida</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Unidad de Trabajo</strong></td>
+                                            <td>Hilos (Threads)</td>
+                                            <td>Procesos (Processes)</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Comunicación</strong></td>
+                                            <td>Implícita (memoria compartida)</td>
+                                            <td>Explícita (mensajes)</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Escalabilidad</strong></td>
+                                            <td>Vertical (múltiples núcleos)</td>
+                                            <td>Horizontal (múltiples máquinas)</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Facilidad de Uso</strong></td>
+                                            <td>Fácil (directivas del compilador)</td>
+                                            <td>Moderada (gestión de comunicación)</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Rendimiento</strong></td>
+                                            <td>Alto (acceso directo a memoria)</td>
+                                            <td>Alto (paralelismo masivo)</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Casos de Uso</strong></td>
+                                            <td>Algoritmos con dependencias de datos</td>
+                                            <td>Problemas masivamente paralelos</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                            <div class="comparison-summary">
+                                <h4>📊 Resumen de Diferencias:</h4>
+                                <div class="summary-grid">
+                                    <div class="summary-item openmp-summary">
+                                        <h5><i class="fas fa-microchip"></i> OpenMP</h5>
+                                        <p><strong>Mejor para:</strong> Programas que necesitan compartir datos frecuentemente entre hilos, algoritmos con dependencias complejas, desarrollo rápido de prototipos.</p>
+                                        <p><strong>Limitaciones:</strong> Limitado a una sola máquina, número limitado de hilos.</p>
+                                    </div>
+                                    <div class="summary-item mpi-summary">
+                                        <h5><i class="fas fa-network-wired"></i> MPI</h5>
+                                        <p><strong>Mejor para:</strong> Problemas que se pueden dividir en partes independientes, computación masivamente paralela, clusters de computadoras.</p>
+                                        <p><strong>Limitaciones:</strong> Más complejo de programar, comunicación explícita requerida.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-grid">
+                    <div class="card patterns-card">
+                        <h3><i class="fas fa-puzzle-piece"></i> Patrones de Algoritmos Paralelos</h3>
+                        <div class="patterns-list">
+                            <div class="pattern-item">
+                                <h4><i class="fas fa-map"></i> Map-Reduce</h4>
+                                <p>Procesamiento de datos distribuido en dos fases</p>
+                                <div class="pattern-example">
+                                    <strong>Fase Map:</strong> Aplicar función a cada elemento<br>
+                                    <strong>Fase Reduce:</strong> Combinar resultados parciales
+                                </div>
+                            </div>
+                            <div class="pattern-item">
+                                <h4><i class="fas fa-cut"></i> Divide y Vencerás</h4>
+                                <p>División recursiva del problema en subproblemas</p>
+                                <div class="pattern-example">
+                                    <strong>Divide:</strong> Dividir problema en subproblemas<br>
+                                    <strong>Conquista:</strong> Resolver subproblemas recursivamente<br>
+                                    <strong>Combina:</strong> Combinar soluciones
+                                </div>
+                            </div>
+                            <div class="pattern-item">
+                                <h4><i class="fas fa-stream"></i> Pipeline</h4>
+                                <p>Procesamiento en etapas secuenciales</p>
+                                <div class="pattern-example">
+                                    <strong>Etapa 1:</strong> Lectura de datos<br>
+                                    <strong>Etapa 2:</strong> Procesamiento<br>
+                                    <strong>Etapa 3:</strong> Escritura de resultados
+                                </div>
+                            </div>
+                            <div class="pattern-item">
+                                <h4><i class="fas fa-users"></i> Farm/Worker</h4>
+                                <p>Distribución de tareas entre trabajadores</p>
+                                <div class="pattern-example">
+                                    <strong>Master:</strong> Distribuye tareas<br>
+                                    <strong>Workers:</strong> Procesan tareas asignadas<br>
+                                    <strong>Resultados:</strong> Recopilación de resultados
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card tools-card">
+                        <h3><i class="fas fa-tools"></i> Herramientas de Desarrollo</h3>
+                        <div class="tools-list">
+                            <div class="tool-item">
+                                <h4><i class="fas fa-chart-line"></i> Profiling Tools</h4>
+                                <div class="tool-details">
+                                    <strong>Intel VTune:</strong> Análisis de rendimiento avanzado<br>
+                                    <strong>NVIDIA Nsight:</strong> Profiling para GPU<br>
+                                    <strong>gprof:</strong> Profiling básico de CPU<br>
+                                    <strong>Valgrind:</strong> Detección de memory leaks
+                                </div>
+                            </div>
+                            <div class="tool-item">
+                                <h4><i class="fas fa-bug"></i> Debugging</h4>
+                                <div class="tool-details">
+                                    <strong>GDB:</strong> Debugger con soporte multi-hilo<br>
+                                    <strong>TotalView:</strong> Debugger para HPC<br>
+                                    <strong>DDT:</strong> Debugger de Allinea<br>
+                                    <strong>Intel Inspector:</strong> Detección de errores
+                                </div>
+                            </div>
+                            <div class="tool-item">
+                                <h4><i class="fas fa-chart-bar"></i> Performance Analysis</h4>
+                                <div class="tool-details">
+                                    <strong>Intel Advisor:</strong> Análisis de vectorización<br>
+                                    <strong>AMD uProf:</strong> Profiling de AMD<br>
+                                    <strong>Score-P:</strong> Instrumentación automática<br>
+                                    <strong>TAU:</strong> Toolkit de análisis
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Optimización Section -->
+            <section id="optimizacion" class="content-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-tachometer-alt"></i> Optimización de Rendimiento</h2>
+                    <p>Técnicas avanzadas para mejorar el rendimiento de aplicaciones paralelas</p>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="card load-balancing-card">
+                        <h3><i class="fas fa-balance-scale"></i> Load Balancing</h3>
+                        <div class="load-balancing-content">
+                            <h4>Estrategias de Balanceo:</h4>
+                            <div class="strategy-list">
+                                <div class="strategy-item">
+                                    <h5>Estático</h5>
+                                    <p>Distribución fija de tareas al inicio</p>
+                                    <ul>
+                                        <li>Round-robin</li>
+                                        <li>Distribución por peso</li>
+                                        <li>Distribución por capacidad</li>
+                                    </ul>
+                                </div>
+                                <div class="strategy-item">
+                                    <h5>Dinámico</h5>
+                                    <p>Ajuste de carga durante la ejecución</p>
+                                    <ul>
+                                        <li>Work stealing</li>
+                                        <li>Work sharing</li>
+                                        <li>Adaptativo</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card cache-coherence-card">
+                        <h3><i class="fas fa-sync"></i> Protocolos de Coherencia de Caché</h3>
+                        <div class="coherence-protocols">
+                            <div class="protocol-detail">
+                                <h4>MSI (Modified, Shared, Invalid)</h4>
+                                <div class="protocol-states">
+                                    <div class="state-item">
+                                        <strong>Modified:</strong> Línea modificada, solo en este caché
+                                    </div>
+                                    <div class="state-item">
+                                        <strong>Shared:</strong> Línea válida, posiblemente en otros cachés
+                                    </div>
+                                    <div class="state-item">
+                                        <strong>Invalid:</strong> Línea no válida
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="protocol-detail">
+                                <h4>MESI (Modified, Exclusive, Shared, Invalid)</h4>
+                                <div class="protocol-states">
+                                    <div class="state-item">
+                                        <strong>Modified:</strong> Línea modificada, solo en este caché
+                                    </div>
+                                    <div class="state-item">
+                                        <strong>Exclusive:</strong> Línea válida, solo en este caché
+                                    </div>
+                                    <div class="state-item">
+                                        <strong>Shared:</strong> Línea válida, en múltiples cachés
+                                    </div>
+                                    <div class="state-item">
+                                        <strong>Invalid:</strong> Línea no válida
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-grid">
+                    <div class="card false-sharing-card">
+                        <h3><i class="fas fa-exclamation-triangle"></i> False Sharing</h3>
+                        <div class="false-sharing-content">
+                            <h4>Problema:</h4>
+                            <p>Múltiples hilos acceden a variables diferentes en la misma línea de caché, causando invalidaciones innecesarias.</p>
+                            
+                            <div class="false-sharing-example">
+                                <h4>Ejemplo Problemático:</h4>
+                                <div class="code-block">
+                                    <code>
+                                        struct Data {<br>
+                                        &nbsp;&nbsp;int counter1;  // Hilo 1 modifica<br>
+                                        &nbsp;&nbsp;int counter2;  // Hilo 2 modifica<br>
+                                        } data;
+                                    </code>
+                                </div>
+                                
+                                <h4>Solución - Padding:</h4>
+                                <div class="code-block">
+                                    <code>
+                                        struct Data {<br>
+                                        &nbsp;&nbsp;int counter1;<br>
+                                        &nbsp;&nbsp;char padding[64];  // Padding para separar líneas<br>
+                                        &nbsp;&nbsp;int counter2;<br>
+                                        } data;
+                                    </code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card memory-hierarchy-card">
+                        <h3><i class="fas fa-layer-group"></i> Optimización de Jerarquía de Memoria</h3>
+                        <div class="memory-optimization">
+                            <h4>Técnicas de Optimización:</h4>
+                            <div class="optimization-techniques">
+                                <div class="technique-item">
+                                    <h5><i class="fas fa-memory"></i> Localidad Espacial</h5>
+                                    <p>Acceder a datos contiguos en memoria</p>
+                                    <div class="technique-example">
+                                        <code>// Bueno: Acceso secuencial<br>for(i=0; i&lt;n; i++) sum += array[i];</code>
+                                    </div>
+                                </div>
+                                <div class="technique-item">
+                                    <h5><i class="fas fa-clock"></i> Localidad Temporal</h5>
+                                    <p>Reutilizar datos recientemente accedidos</p>
+                                    <div class="technique-example">
+                                        <code>// Bueno: Reutilizar variables<br>int temp = compute();<br>result = temp * temp;</code>
+                                    </div>
+                                </div>
+                                <div class="technique-item">
+                                    <h5><i class="fas fa-compress"></i> Prefetching</h5>
+                                    <p>Cargar datos antes de necesitarlos</p>
+                                    <div class="technique-example">
+                                        <code>// Prefetch manual<br>__builtin_prefetch(&array[i+1], 1, 3);</code>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-grid">
+                    <div class="card optimization-tools-card">
+                        <h3><i class="fas fa-wrench"></i> Herramientas de Optimización</h3>
+                        <div class="optimization-tools">
+                            <div class="tool-category">
+                                <h4><i class="fas fa-chart-line"></i> Profiling Avanzado</h4>
+                                <div class="tool-list">
+                                    <div class="tool-item">
+                                        <strong>Intel VTune Profiler:</strong> Análisis detallado de CPU y memoria
+                                    </div>
+                                    <div class="tool-item">
+                                        <strong>AMD uProf:</strong> Profiling específico para procesadores AMD
+                                    </div>
+                                    <div class="tool-item">
+                                        <strong>NVIDIA Nsight Compute:</strong> Análisis de kernels CUDA
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tool-category">
+                                <h4><i class="fas fa-bug"></i> Detección de Problemas</h4>
+                                <div class="tool-list">
+                                    <div class="tool-item">
+                                        <strong>Intel Inspector:</strong> Detección de race conditions
+                                    </div>
+                                    <div class="tool-item">
+                                        <strong>Valgrind Helgrind:</strong> Detección de problemas de concurrencia
+                                    </div>
+                                    <div class="tool-item">
+                                        <strong>ThreadSanitizer:</strong> Detección de data races
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card performance-metrics-card">
+                        <h3><i class="fas fa-chart-bar"></i> Métricas de Rendimiento</h3>
+                        <div class="metrics-content">
+                            <h4>Métricas Clave:</h4>
+                            <div class="metric-categories">
+                                <div class="metric-category">
+                                    <h5>Eficiencia</h5>
+                                    <ul>
+                                        <li>Speedup: S(p) = T(1) / T(p)</li>
+                                        <li>Eficiencia: E(p) = S(p) / p</li>
+                                        <li>Escalabilidad: Crecimiento del problema</li>
+                                    </ul>
+                                </div>
+                                <div class="metric-category">
+                                    <h5>Comunicación</h5>
+                                    <ul>
+                                        <li>Overhead de comunicación</li>
+                                        <li>Latencia de red</li>
+                                        <li>Ancho de banda utilizado</li>
+                                    </ul>
+                                </div>
+                                <div class="metric-category">
+                                    <h5>Memoria</h5>
+                                    <ul>
+                                        <li>Cache hit ratio</li>
+                                        <li>Memory bandwidth</li>
+                                        <li>False sharing</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Ejemplos Section -->
+            <section id="ejemplos" class="content-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-flask"></i> Ejemplos Prácticos</h2>
+                    <p>Aplicaciones y casos de uso de computadores paralelos</p>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="card applications-card">
+                        <h3><i class="fas fa-cogs"></i> Aplicaciones Típicas</h3>
+                        <div class="applications-list">
+                            <div class="application-item">
+                                <i class="fas fa-atom"></i>
+                                <h4>Simulaciones Científicas</h4>
+                                <p>Modelado de fenómenos físicos complejos</p>
+                                <ul>
+                                    <li>Dinámica de fluidos</li>
+                                    <li>Simulaciones climáticas</li>
+                                    <li>Física de partículas</li>
+                                </ul>
+                            </div>
+                            <div class="application-item">
+                                <i class="fas fa-dna"></i>
+                                <h4>Bioinformática</h4>
+                                <p>Análisis de secuencias genéticas</p>
+                                <ul>
+                                    <li>Alineamiento de secuencias</li>
+                                    <li>Predicción de estructuras</li>
+                                    <li>Análisis de proteínas</li>
+                                </ul>
+                            </div>
+                            <div class="application-item">
+                                <i class="fas fa-image"></i>
+                                <h4>Procesamiento de Imágenes</h4>
+                                <p>Análisis y manipulación de imágenes</p>
+                                <ul>
+                                    <li>Reconocimiento de patrones</li>
+                                    <li>Filtrado de imágenes</li>
+                                    <li>Compresión de video</li>
+                                </ul>
+                            </div>
+                            <div class="application-item">
+                                <i class="fas fa-database"></i>
+                                <h4>Minería de Datos</h4>
+                                <p>Análisis de grandes volúmenes de datos</p>
+                                <ul>
+                                    <li>Machine Learning</li>
+                                    <li>Análisis predictivo</li>
+                                    <li>Procesamiento de Big Data</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card benchmarks-card">
+                        <h3><i class="fas fa-vial"></i> Benchmarks Paralelos</h3>
+                        <div class="benchmarks-list">
+                            <div class="benchmark-item">
+                                <h4>SPEC OMP2012</h4>
+                                <p>Benchmark para aplicaciones OpenMP</p>
+                                <div class="benchmark-details">
+                                    <strong>Características:</strong>
+                                    <ul>
+                                        <li>12 aplicaciones reales</li>
+                                        <li>Paralelismo de memoria compartida</li>
+                                        <li>Métricas de speedup y eficiencia</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="benchmark-item">
+                                <h4>SPEC MPI2007</h4>
+                                <p>Benchmark para aplicaciones MPI</p>
+                                <div class="benchmark-details">
+                                    <strong>Características:</strong>
+                                    <ul>
+                                        <li>13 aplicaciones reales</li>
+                                        <li>Paralelismo de memoria distribuida</li>
+                                        <li>Escalabilidad de aplicaciones</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="benchmark-item">
+                                <h4>HPCC (HPC Challenge)</h4>
+                                <p>Suite de benchmarks para HPC</p>
+                                <div class="benchmark-details">
+                                    <strong>Características:</strong>
+                                    <ul>
+                                        <li>7 kernels de prueba</li>
+                                        <li>Métricas de ancho de banda</li>
+                                        <li>Latencia de comunicación</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-grid">
+                    <div class="card simulator-card">
+                        <h3><i class="fas fa-play"></i> Simulador de Speedup</h3>
+                        <div class="simulator">
+                            <div class="simulator-controls">
+                                <div class="control-group">
+                                    <label for="sim-parallel-fraction">Fracción Paralelizable:</label>
+                                    <input type="range" id="sim-parallel-fraction" min="0" max="1" step="0.01" value="0.8">
+                                    <span id="sim-parallel-fraction-display">0.8</span>
+                                </div>
+                                <div class="control-group">
+                                    <label for="sim-max-processors">Máximo Procesadores:</label>
+                                    <input type="range" id="sim-max-processors" min="2" max="128" value="32">
+                                    <span id="sim-max-processors-display">32</span>
+                                </div>
+                                <button class="btn btn-primary" onclick="runSpeedupSimulation()">
+                                    <i class="fas fa-play"></i>
+                                    Ejecutar Simulación
+                                </button>
+                            </div>
+                            <div class="simulation-results">
+                                <div class="result-chart">
+                                    <canvas id="speedupChart" width="400" height="200"></canvas>
+                                </div>
+                                <div class="result-stats">
+                                    <div class="stat-item">
+                                        <strong>Speedup Máximo:</strong> <span id="max-speedup">-</span>x
+                                    </div>
+                                    <div class="stat-item">
+                                        <strong>Eficiencia Máxima:</strong> <span id="max-efficiency">-</span>%
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card examples-card">
+                        <h3><i class="fas fa-code"></i> Ejemplos de Código</h3>
+                        <div class="code-examples">
+                            <div class="code-example">
+                                <h4>OpenMP (Memoria Compartida)</h4>
+                                <div class="code-block">
+                                    <code>
+                                        #pragma omp parallel for<br>
+                                        for (int i = 0; i < n; i++) {<br>
+                                        &nbsp;&nbsp;result[i] = compute(data[i]);<br>
+                                        }
+                                    </code>
+                                </div>
+                            </div>
+                            <div class="code-example">
+                                <h4>MPI (Memoria Distribuida)</h4>
+                                <div class="code-block">
+                                    <code>
+                                        MPI_Init(&argc, &argv);<br>
+                                        MPI_Comm_rank(MPI_COMM_WORLD, &rank);<br>
+                                        MPI_Comm_size(MPI_COMM_WORLD, &size);<br>
+                                        // ... procesamiento paralelo ...<br>
+                                        MPI_Finalize();
+                                    </code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

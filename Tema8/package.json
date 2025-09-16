@@ -1,0 +1,51 @@
+{
+  "name": "lienzo-didactico-procesadores-vectoriales",
+  "version": "1.0.0",
+  "description": "Lienzo didáctico interactivo para Procesadores Vectoriales - UNIR",
+  "main": "index.html",
+  "scripts": {
+    "start": "python -m http.server 8000",
+    "serve": "npx http-server -p 8000 -o",
+    "dev": "live-server --port=8000 --open=/",
+    "build": "echo 'No build process required for static files'",
+    "deploy": "echo 'Deploy to your preferred hosting service'"
+  },
+  "keywords": [
+    "educación",
+    "arquitectura",
+    "computadores",
+    "interactivo",
+    "lienzo",
+    "didáctico",
+    "unir",
+    "estructura",
+    "procesadores",
+    "vectoriales",
+    "simd",
+    "paralelismo",
+    "dlxv",
+    "rendimiento"
+  ],
+  "author": "Equipo Docente UNIR",
+  "license": "Educational",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/unir/estructura-computadores-lienzo"
+  },
+  "bugs": {
+    "url": "https://github.com/unir/estructura-computadores-lienzo/issues"
+  },
+  "homepage": "https://unir.github.io/estructura-computadores-lienzo",
+  "devDependencies": {
+    "http-server": "^14.1.1",
+    "live-server": "^1.2.2"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
+}

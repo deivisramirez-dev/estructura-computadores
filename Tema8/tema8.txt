@@ -1,0 +1,547 @@
+﻿
+Tema 8
+
+
+
+
+
+
+Estructura de Computadores
+
+Procesadores vectoriales
+
+
+
+
+
+
+
+
+
+
+Índice
+Esquema	3
+Ideas clave	4
+8.1. Introducción y objetivos	4
+8.2. Introducción	4
+8.3. Arquitectura vectorial y prestaciones	6
+8.4. El sistema de memoria en procesadores vectoriales	11
+8.5. Medidas de rendimiento en procesadores vectoriales	14
+8.6 Eficiencia del procesamiento vectorial	16
+8.7. Referencias bibliográficas	17
+A fondo	18
+Test	20
+
+© Universidad Internacional de La Rioja (UNIR)
+
+
+
+
+
+
+
+
+
+
+
+
+I NT R O D U C C I Ó NMotivación
+
+
+Ideas clave
+
+8.1. Introducción y objetivos
+
+
+
+En este tema se presentan los procesadores vectoriales empezando con su motivación, ámbito de aplicación y desarrollo histórico.
+
+Posteriormente se presenta una arquitectura vectorial básica, estudiando sus elementos fundamentales y sus fuentes de incremento de prestaciones.
+
+Más tarde se presentan algunos tipos de configuraciones de memoria adecuados para el trabajo con vectores.
+
+El tema finaliza definiendo las medidas de evaluación de rendimiento y observando los conflictos que pueden reducir ese rendimiento.
+
+
+
+8.2. Introducción
+
+Los procesadores vectoriales constituyen la arquitectura más frecuente cuando se pretende aprovechar el paralelismo de datos (cada instrucción vectorial codifica una operación sobre todos los componentes del vector).
+
+Se ajustan a la clase SIMD de la clasificación de Flynn, de hecho, es otra forma de designarlos.
+
+Su desarrollo ha estado tradicionalmente vinculado al cálculo científico.
+
+
+Estructura de Computadores
+Tema 8. Ideas clave
+
+Se trata de arquitecturas que buscan ejecutar de forma paralela operaciones que se realizan sobre operandos constituidos por componentes (vectores, matrices).
+
+Las operaciones sobre vectores presentan propiedades muy adecuadas para el
+procesamiento paralelo:
+
+ El cálculo de cada componente del vector resultado es independiente del de los demás, esto favorece la ejecución en unidades de proceso segmentadas (no hay conflicto de dependencias entre componentes).
+
+
+
+
+𝐴⃗  = (𝑎1, 𝑎2, … , 𝑎𝑛)
+
+→ 𝐴 + 𝐵⃗ = (𝑎
+
++ 𝑏 , 𝑎
+
++ 𝑏 , … , 𝑎
+
++ 𝑏 )
+
+⃗𝐵⃗ 
+
+(𝑏1
+
+, 𝑏2
+
+}
+, … , 𝑏𝑛)
+
+1	1	2	2
+
+𝑛	𝑛
+
+
+ Una operación vectorial agrupa una gran cantidad de cálculos. Reduce el número de instrucciones a ejecutar y sustituye bucle por instrucción (menores riesgos de control).
+
+ADDV V1,V2,V3 = for i:=1 to n do V1(i):=V2(i)+V3(i)
+
+ Los vectores pueden almacenarse ocupando posiciones adyacentes y las operaciones vectoriales acceden a varios de ellos: se aprovechan de forma eficiente configuraciones de optimización de memoria (entrelazado…) mejorando su ancho de banda.
+
+ Desde la perspectiva del tipo de paralelismo que explotan, este tipo de configuraciones se acercan más al explícito de los procesadores VLIW que al implícito de los superescalares.
+
+
+
+
+
+
+
+
+
+
+Estructura de Computadores
+Tema 8. Ideas clave
+
+
+Tabla 1. Cronología de algunos de los principales procesadores vectoriales. Fuente: Ortega et al., 2005.
+
+
+La tabla 1 es un cuadro resumen de algunas de las máquinas a las que se hace referencia en el manual de la asignatura y la evolución en el tiempo de este tipo de procesadores. Deben conocerse, en este sentido, los conceptos de procesador vectorial de tipo memoria-memoria y registro-registro.
+
+
+
+8.3. Arquitectura vectorial y prestaciones
+
+En este apartado se presenta la idea de un procesador vectorial básico y se particulariza en el procesador DLXV de Hennessy y Patterson (Hennessy & Patterson, 2002).
+
+En general, la estructura de un procesador vectorial del tipo registro-registro
+responde al esquema de la figura 1.
+
+
+
+
+
+
+
+
+Estructura de Computadores
+Tema 8. Ideas clave
+
+
+Figura 1. Diagrama de bloques de un procesador vectorial básico. Fuente: Ortega et al., 2005.
+
+
+Se trata de un procesador segmentado en el que las unidades más significativas son:
+
+
+ La unidad escalar: procesa instrucciones escalares, está internamente segmentada y respondería a las características de un procesador de este tipo. Entre otros elementos incorpora un banco de registros escalares (para operandos enteros o reales) y una serie de cauces escalares para procesar los diferentes tipos de instrucciones. No presenta ninguna ventaja respecto a un procesador escalar clásico.
+
+ La unidad vectorial: se ocupa de las instrucciones vectoriales (al menos un operando fuente vector y operando destino vector): Integrada por un banco de registros vectoriales (capaz de almacenar las componentes de un vector) y por unidades de proceso vectorial para operaciones de distinta naturaleza (operandos enteros, reales o lógicos; operaciones aritméticas o lógicas) que trabajan con los registros vectoriales y también tienen acceso a los registros escalares de la otra unidad.
+
+
+
+
+Estructura de Computadores
+Tema 8. Ideas clave
+
+ La unidad de carga/almacenamiento (LOAD/STORE): es la que se encarga de la transferencia de componentes entre la memoria (donde están los vectores propiamente dichos) y los registros vectoriales (se analiza en el apartado siguiente).
+
+Las unidades de proceso vectorial estarán internamente segmentadas de modo que puedan ejecutar simultáneamente la operación que corresponda sobre componentes distintas (completamente segmentada: una componente procesada por ciclo).
+
+En relación con la estructura interna del procesador vectorial existen una serie de parámetros característicos:
+
+ Longitud de palabra: Define el tamaño de operando a usar y con ello el tamaño en Bytes de los distintos registros (escalar entero o real, componente vectorial). Puede ser única o distinguir entre valor real (mayor) y valor entero (menor).
+
+ Longitud máxima de vector (MVL, Maximum Vector Length): Parámetro que especifica el número de componentes que puede albergar un vector. Los vectores se pueden operar con una sola instrucción, así que, en principio, cuanto mayores sean, mejor.
+
+ Número de registros en los bancos:
+• Registros vectoriales.
+• Registros escalares enteros.
+• Registros escalares reales (coma flotante).
+
+
+ Número y tipo de unidades de proceso vectorial: dispone de varios cauces vectoriales independientes con funcionalidades distintas. Incluso puede haber unidades de proceso replicadas del mismo tipo.
+
+
+
+
+
+
+Estructura de Computadores
+Tema 8. Ideas clave
+
+En este tipo de procesadores, la segmentación se aplica de forma diversa:
+
+
+ En el procesamiento de instrucciones se usa para ganar ILP.
+ En el procesamiento de datos se usa a varios niveles:
+• Microsegmentación: Segmentación interna de las unidades vectoriales.
+• Macrosegmentación: Encadenamiento de las operaciones vectoriales.
+
+
+Si se dispone de varios cauces vectoriales segmentados que implementan la misma operación vectorial (ej. suma), se podrán realizar varias sumas segmentadas a la vez. Se puede usar para lograr:
+
+ Paralelismo funcional: si las operaciones son de instrucciones diferentes.
+ Paralelismo de datos: si se reparten los elementos de un vector entre los cauces.
+
+Procesador DLXV
+
+El procesador didáctico desarrollado por Hennessy y Patterson en 1990 a partir de una simplificación del CRAY-1, lo usaremos como ejemplo con posibles variantes en su estructura original.
+
+Está formado por:
+ 8 registros vectoriales (V1 a V8) de 64 componentes de 8 Bytes.
+ 5 unidades funcionales de cálculo (suma/resta coma flotantes, multiplicación reales, división reales, operaciones entre enteros y operaciones lógicas) totalmente segmentadas y una de carga/almacenamiento.
+ 64 registros escalares.
+ 32 de 4 Bytes para enteros de propósito general (R0 a R31).
+ 32 (F0 a F31) de 8 Bytes para datos en coma flotante.
+
+
+
+
+
+
+
+
+
+Estructura de Computadores
+Tema 8. Ideas clave
+
+Registros o elementos especiales:
+
+
+ Longitud máxima de vector (MVL): parámetro de valor 64 en este caso.
+ Registro longitud de vector (VLR, Vector Length Register): especifica el número de componentes de vector con el que se va a trabajar. Su valor por defecto es MVL.
+ Vector máscara (VM, Vector Mask): registro vectorial con componentes booleanas que sirve para seleccionar las componentes que se van a «procesar» en las operaciones vectoriales.
+
+La tabla 2 muestra las instrucciones más significativas de este procesador.
+
+
+InstrucciónDescripciónADDV Vi,Vj,VkSuma vectorial: Vj+Vk→ViADDSV Vi,Fj,VkSuma vector/escalar: Fj+Vk→ViSUBV Vi,Vj,VkResta vectorial: Vj-Vk→ViSUBSV Vi,Fj,VkResta escalar/vector: Fj-Vk→ViSUBVS Vi,Vj,FkResta vector/escalar: Vj-Fk→ViMULTV Vi,Vj,VkMultiplicación vectorial:Vj*Vk→ViMULTSV Vi,Fj,VkMultiplicación escalar/vector:Fj*Vk→ViDIVV Vi,Vj,VkDivisión vectorial: Vj/Vk→ViDIVSV Vi,Fj,VkDivisión escalar/vector: Fj/Vk→ViDIVVS Vi,Vj,FkDivisión vector/escalar: Vj/Fk→ViLV Vi,RjCarga: (Rj)→ViSV Ri,VjAlmacenamiento: Vj→(Ri)LVWS Vi,(Rj,Rk)Carga: (Rj)→Vi con separación RkSVWS (Ri,Rj),VkAlmacenamiento: Vk→(Ri) con separación RjLVI Vi,(Rj+Vk)Carga: (Rj)→Vi usando Vk como índiceSVI (Ri+Vj),VkAlmacenamiento: Vk→(Ri) usando Vj como
+índiceCVI Vi,RjCrea vector índice Vi con separación RjS V Vi,VjCompara Vi-Vj y actualiza VM(*)S SV Fi,VjCompara Fi-Vj usando un escalar como
+operando y actualiza VM(*)POP Ri,VMNº de unos de VM→Ri
+Estructura de Computadores
+Tema 8. Ideas clave
+
+CVMInicializa VM todo a unosMOVI2S VLR,RiRi→VLRMOVS2I Ri,VLRVLR→RiMOVF2S VM,FiFi→VMMOVS2F Fi,VMVM→Fi(*) “  ” indica la condición: EQ, NE, GT, GE, LT o LE.Tabla 2. Selección de instrucciones vectoriales del DLXV. Fuente: Hennessy & Patterson., 2002.
+
+
+
+8.4. El sistema de memoria en procesadores vectoriales
+La unidad de carga y almacenamiento de un procesador vectorial de tipo registro- registro busca tener un comportamiento equivalente a una unidad de proceso totalmente segmentada, para ello la organización de la memoria debe ser concurrente con este resultado y los accesos a las componentes vectoriales en memoria se deben realizar a posiciones consecutivas.
+
+Para conseguir una organización adecuada de la memoria se emplea el entrelazado de memoria, que consiste en distribuir las posiciones de memoria en distintos módulos, bancos o bloques. Un conjunto de bits de la dirección distinguirá el módulo y el resto cada posición de memoria dentro del módulo.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Estructura de Computadores
+Tema 8. Ideas clave
+
+
+
+Figura 2. Entrelazado inferior y superior para una memoria de 1MB (220B) dividida en 64 (26) módulos de 16KB (214B). Fuente: Ortega et al., 2005.
+
+El entrelazado admite dos opciones (figura 2):
+
+
+ Entrelazado de orden superior o alto:
+• Usa los bits más significativos de la dirección.
+• Crea módulos con posiciones consecutivas.
+• Aislamiento de módulos.
+
+ Entrelazado de orden inferior o bajo:
+• Usa los bits menos significativos de la dirección.
+• Crea módulos con posiciones salteadas.
+• Acceso entrelazado o interpaginado.
+
+La figura 3 muestra el efecto del entrelazado en una memoria de 32 (25) posiciones que se distribuye en 4 (22) módulos de 8 (23) posiciones cada uno.
+
+En general las memorias se organizan aprovechando ambos entrelazados.
+
+
+
+
+
+
+
+
+
+
+
+Estructura de Computadores
+Tema 8. Ideas clave
+
+Respecto a la conexión procesador-memoria, existen dos alternativas, que hay que conocer para organizar el acceso a memoria y obtener un buen ancho de banda, además, ambos pueden usar los dos entrelazados. Se trata de:
+
+ Organización de memoria de tipo S (simultáneo).
+ Organización de memoria de tipo C (concurrente).
+
+
+Figura 3. Ejemplo de entrelazado para una memoria de 32B (25B) organizada en 4 (22) módulos de 16KB (23B).
+Fuente: Ortega et al., 2005.
+
+
+La finalidad de las dos opciones es la de conseguir un comportamiento segmentado en las unidades de carga/almacenamiento (LOAD/STORE) del procesador cuando se transfieren vectores. Esto se podrá garantizar cuando los accesos se realicen a posiciones consecutivas, no pudiendo garantizar el resultado si el acceso no es consecutivo. Debe tenerse en cuenta el efecto de la distancia o separación entre elementos (stride).
+
+
+
+
+
+
+
+
+
+
+
+Estructura de Computadores
+Tema 8. Ideas clave
+
+8.5. Medidas de rendimiento en procesadores vectoriales
+Un procesador vectorial aprovecha el paralelismo de datos que existe en los vectores (paralelismo explícito) con ello consigue agrupar instrucciones de proceso de componentes y saltos (bucle) que serían necesarios para ejecutar la operación equivalente en un procesador escalar.
+
+Además, cada operación vectorial se ejecuta en una unidad funcional segmentada en la que las componentes del vector resultante se obtienen como un proceso independiente.
+
+En estas condiciones el tiempo de ejecución de una operación vectorial de k componentes (con k≤MVL) será:
+
+Tk = TLI + k × TPC
+[8.1]
+
+
+Donde:
+
+ TLI es el tiempo de latencia (o tiempo de arranque) de la unidad de proceso. Equivaldría al tiempo de ejecución de una componente aislada, para una operación.
+ k: número de componentes del vector.
+ TPC es el tiempo por componente. Tiempo que tarda en obtenerse una componente procesada nueva tras la anterior. En un cauce lineal es el tiempo consumido por cada etapa del cauce.
+
+La expresión [8.1] sería aplicable tanto a unidades de proceso vectorial como a la unidad LOAD/STORE siempre que el acceso sea a posiciones consecutivas o equivalente.
+
+Estructura de Computadores
+Tema 8. Ideas clave
+
+Además del paralelismo vinculado a los cauces de proceso, un procesador vectorial puede llegar a aprovechar el paralelismo entre las propias unidades mediante dos técnicas:
+
+ Solapamiento de cauces: iniciar el proceso de operaciones vectoriales a medida que se decodifican. Se consiguen grupos de instrucciones con un comportamiento común (convoyes, para algunos autores). Esta agrupación estaría limitada por uso del mismo cauce o por dependencia real de operandos.
+ Encadenamiento de cauces: permite que un cauce empiece a procesar los resultados de otro cauce según este va generando componentes. Esta técnica puede paliar el efecto de la dependencia de operandos porque una operación dependiente solo debería espera el TLI de la operación de la que depende.
+
+Para implementar estás técnicas se requiere que el procesador disponga de los recursos hardware adecuados (conexiones entre cauces y registros vectoriales y entre los propios cauces).
+
+En el manual de la asignatura se presentan diferentes supuestos como ejemplo y se describe cómo tenerlas en cuenta a la hora de evaluar el tiempo de proceso de un conjunto de instrucciones.
+
+Por último, en la tabla 3 se presentan algunas medidas empleadas en los procesadores vectoriales para evaluar sus prestaciones al ejecutar un código determinado (algunos autores presentan los Rs como rendimientos):
+
+Rk: Operaciones por unidad de tiempo para vector de k componentes
+(Operaciones vectoriales ejecutadas × k)
+Rk =	T
+kR∞: Operaciones por unidad de tiempo para un vector de longitud infinita
+R∞ = lim Rk
+k→∞N1/2: Número de componentes de un
+vector para que:R∞
+RN1⁄2 = 2
+
+
+Estructura de Computadores
+Tema 8. Ideas clave
+
+Wk: Productividad (Throughput)      k Wk = T
+kE: Eficiencia vectorialRk	Wk
+E =	= Operaciones ×
+R∞	R∞Tabla 3. Medidas de prestaciones para procesadores vectoriales. Fuente: Ortega et al., 2005.
+
+
+
+8.6 Eficiencia del procesamiento vectorial
+
+En este apartado se presentan algunas técnicas, que se deben conocer, para completar las distintas opciones de ejecución en un procesador vectorial como son:
+
+ Troceado de vectores (Strip mining): solución que hay que adoptar cuando k>MVL. En ese caso es necesario incluir un bucle de ejecución que trabaje sobre trozos de vector a razón de MVL.
+ Uso del VM (vector máscara) en sentencias con instrucciones condicionales.
+ Ejecución de arrays mediante agrupación/dispersión (gather-scatter) de las componentes de los vectores.
+
+Teniendo en cuenta la posibilidad de tener que incluir un bucle de troceado, la evaluación del tiempo de ejecución de un fragmente de código vectorial con vectores de k componentes quedaría:
+
+
+𝑘
+𝑇𝑘 = 𝑇𝐵𝐴𝑆𝐸 + ⌈
+
+⌉ × (𝑇𝐵𝑈𝐶𝐿𝐸 + 𝑇𝐿𝐼) + 𝑘 × 𝑇𝑃𝐶
+
+⏟     𝑀 𝑉 𝐿 
+𝑆𝑂𝐵𝑅𝐸𝐶𝐴𝑅𝐺𝐴(𝑂𝐾)
+
+[8.2]
+
+Donde:
+
+
+ TBASE: tiempo consumido por las instrucciones escalares previas al bucle.
+ TBUCLE: tiempo asociado al control del bucle.
+
+
+
+
+Estructura de Computadores
+Tema 8. Ideas clave
+
+ TLI: tiempo de inicio del conjunto de instrucciones (se evalúa teniendo en cuenta solapamientos y encadenamientos).
+ k: componentes de vector en el código (si cambia debe tenerse en cuenta).
+
+ ⌈ 𝑘
+𝑀𝑉𝐿
+
+⌉: cociente por exceso de k y MVL.
+
+
+Y también se presentan los conceptos de:
+ Tiempo por elemento = Tk/k.
+ Sobrecarga (Overhead) por elemento = Ok/k.
+
+
+
+8.7. Referencias bibliográficas
+
+Hennessy, J. y Patterson, D. (2002). Arquitectura de Computadores: Un enfoque cuantitativo. Madrid. McGraw-Hill.
+
+Ortega, J., Anguita, M. y Prieto, A. (2005). Arquitectura de computadores. Madrid: Thomson.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Estructura de Computadores
+Tema 8. Ideas clave
+
+
+
+A fondo
+
+
+Ejemplos de procesador vectorial
+
+
+
+El ejemplo de procesador vectorial presentado en las páginas 308 a 311 de este manual.
+
+Procesador vectorial
+
+
+
+Para obtener una visión más directa del procesador vectorial y, sobre todo, del DLXV es muy recomendable leer el capítulo 7: «Procesadores vectoriales».
+
+Multiprocessors and Thread-Level Parallelism
+
+
+
+Para profundizar en los conceptos tratados en este tema y observar cómo se han aplicado las técnicas básicas vistas aquí a procesadores gráficos, sería conveniente revisar el capítulo 4: Multiprocessors and Thread-Level Parallelism.
+
+
+
+
+
+
+
+
+
+Estructura de Computadores
+Tema 8. A fondo
+
+Compiladores para procesadores vectoriales
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Estructura de Computadores
+Tema 8. Test

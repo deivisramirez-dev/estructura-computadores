@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lienzo Didáctico - Procesadores Vectoriales</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1 class="main-title">
+                    <i class="fas fa-vector-square"></i>
+                    Tema 8: Procesadores Vectoriales
+                </h1>
+                <p class="subtitle">Arquitectura SIMD y procesamiento paralelo de datos</p>
+            </div>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="nav">
+            <div class="nav-content">
+                <div class="nav-info">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>Programa de Ingeniería Informática</span>
+                </div>
+                <div class="nav-controls">
+                    <button class="btn btn-back" onclick="goToMainPortal()">
+                        <i class="fas fa-home"></i>
+                        <span>Portal Principal</span>
+                    </button>
+                    <button class="btn btn-secondary" onclick="toggleTheme()">
+                        <i class="fas fa-moon"></i>
+                        <span>Tema Oscuro</span>
+                    </button>
+                    <button class="btn btn-primary" onclick="toggleFullscreen()">
+                        <i class="fas fa-expand"></i>
+                        <span>Pantalla Completa</span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main">
+            <!-- Navigation para secciones del tema -->
+            <nav class="navigation">
+                <div class="nav-buttons">
+                    <button class="nav-btn active" data-section="introduccion">
+                        <i class="fas fa-info-circle"></i>
+                        <span>Introducción</span>
+                    </button>
+                    <button class="nav-btn" data-section="arquitectura">
+                        <i class="fas fa-microchip"></i>
+                        <span>Arquitectura</span>
+                    </button>
+                    <button class="nav-btn" data-section="memoria">
+                        <i class="fas fa-memory"></i>
+                        <span>Sistema de Memoria</span>
+                    </button>
+                    <button class="nav-btn" data-section="rendimiento">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Medidas de Rendimiento</span>
+                    </button>
+                    <button class="nav-btn" data-section="eficiencia">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Eficiencia</span>
+                    </button>
+                    <button class="nav-btn" data-section="ejemplos">
+                        <i class="fas fa-code"></i>
+                        <span>Ejemplos Prácticos</span>
+                    </button>
+                </div>
+            </nav>
+
+            <!-- Introducción Section -->
+            <section id="introduccion" class="content-section active">
+                <div class="section-header">
+                    <h2><i class="fas fa-info-circle"></i> Introducción a los Procesadores Vectoriales</h2>
+                    <p>Arquitecturas SIMD para procesamiento paralelo de datos</p>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="card definition-card">
+                        <h3><i class="fas fa-quote-left"></i> Definición</h3>
+                        <p class="highlight">"Los procesadores vectoriales constituyen la arquitectura más frecuente cuando se pretende aprovechar el paralelismo de datos (cada instrucción vectorial codifica una operación sobre todos los componentes del vector)."</p>
+                        <div class="definition-details">
+                            <div class="detail-item">
+                                <i class="fas fa-sitemap"></i>
+                                <span>Clasificación SIMD de Flynn</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-calculator"></i>
+                                <span>Procesamiento paralelo de vectores</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-flask"></i>
+                                <span>Vinculado al cálculo científico</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card motivation-card">
+                        <h3><i class="fas fa-lightbulb"></i> Motivación</h3>
+                        <div class="motivation-list">
+                            <div class="motivation-item">
+                                <i class="fas fa-check-circle"></i>
+                                <div>
+                                    <strong>Independencia de componentes:</strong> El cálculo de cada componente del vector resultado es independiente del de los demás
+                                </div>
+                            </div>
+                            <div class="motivation-item">
+                                <i class="fas fa-check-circle"></i>
+                                <div>
+                                    <strong>Reducción de instrucciones:</strong> Una operación vectorial agrupa una gran cantidad de cálculos
+                                </div>
+                            </div>
+                            <div class="motivation-item">
+                                <i class="fas fa-check-circle"></i>
+                                <div>
+                                    <strong>Acceso eficiente:</strong> Los vectores se almacenan en posiciones adyacentes
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-grid">
+                    <div class="card example-card">
+                        <h3><i class="fas fa-code"></i> Ejemplo de Operación Vectorial</h3>
+                        <div class="vector-operation">
+                            <div class="vector-formula">
+                                <p><strong>Suma de Vectores:</strong></p>
+                                <div class="formula">
+                                    <p>𝐴⃗ = (𝑎₁, 𝑎₂, ..., 𝑎ₙ)</p>
+                                    <p>𝐵⃗ = (𝑏₁, 𝑏₂, ..., 𝑏ₙ)</p>
+                                    <p>𝐴⃗ + 𝐵⃗ = (𝑎₁ + 𝑏₁, 𝑎₂ + 𝑏₂, ..., 𝑎ₙ + 𝑏ₙ)</p>
+                                </div>
+                            </div>
+                            <div class="instruction-example">
+                                <p><strong>Instrucción Vectorial:</strong></p>
+                                <code>ADDV V1, V2, V3</code>
+                                <p>Equivale a:</p>
+                                <code>for i:=1 to n do V1(i):=V2(i)+V3(i)</code>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card timeline-card">
+                        <h3><i class="fas fa-history"></i> Evolución Histórica</h3>
+                        <div class="timeline">
+                            <div class="timeline-item">
+                                <div class="timeline-date">1970s</div>
+                                <div class="timeline-content">
+                                    <h4>Primeros Procesadores Vectoriales</h4>
+                                    <p>CRAY-1, CDC STAR-100</p>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-date">1980s</div>
+                                <div class="timeline-content">
+                                    <h4>Desarrollo Comercial</h4>
+                                    <p>Fujitsu VP, Hitachi S-810</p>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-date">1990s</div>
+                                <div class="timeline-content">
+                                    <h4>Procesador DLXV</h4>
+                                    <p>Modelo didáctico de Hennessy & Patterson</p>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-date">2000s+</div>
+                                <div class="timeline-content">
+                                    <h4>GPUs y SIMD Moderno</h4>
+                                    <p>Extensión a procesadores gráficos</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Arquitectura Section -->
+            <section id="arquitectura" class="content-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-microchip"></i> Arquitectura Vectorial y Prestaciones</h2>
+                    <p>Estructura de un procesador vectorial básico</p>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="card architecture-card">
+                        <h3><i class="fas fa-sitemap"></i> Componentes Principales</h3>
+                        <div class="architecture-components">
+                            <div class="component-item">
+                                <h4><i class="fas fa-cogs"></i> Unidad Escalar</h4>
+                                <p>Procesa instrucciones escalares, internamente segmentada</p>
+                                <ul>
+                                    <li>Banco de registros escalares</li>
+                                    <li>Cauces escalares</li>
+                                    <li>Sin ventajas sobre procesador escalar clásico</li>
+                                </ul>
+                            </div>
+                            <div class="component-item">
+                                <h4><i class="fas fa-vector-square"></i> Unidad Vectorial</h4>
+                                <p>Se ocupa de las instrucciones vectoriales</p>
+                                <ul>
+                                    <li>Banco de registros vectoriales</li>
+                                    <li>Unidades de proceso vectorial</li>
+                                    <li>Acceso a registros escalares</li>
+                                </ul>
+                            </div>
+                            <div class="component-item">
+                                <h4><i class="fas fa-exchange-alt"></i> Unidad LOAD/STORE</h4>
+                                <p>Transferencia entre memoria y registros vectoriales</p>
+                                <ul>
+                                    <li>Gestión de transferencias</li>
+                                    <li>Optimización de accesos</li>
+                                    <li>Entrelazado de memoria</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card architecture-diagram-card">
+                        <h3><i class="fas fa-diagram-project"></i> Arquitectura de Supercomputador Vectorial</h3>
+                        <div class="diagram-container">
+                            <div class="diagram-image">
+                                <img src="ArquitecturaSupercomputadorVectorial.png" alt="Arquitectura de Supercomputador Vectorial" />
+                            </div>
+                            <div class="diagram-explanation">
+                                <h4>Descripción de la Arquitectura</h4>
+                                <p>Este diagrama muestra la arquitectura típica de un supercomputador vectorial con registros, que combina procesamiento escalar y vectorial para maximizar el rendimiento en aplicaciones científicas.</p>
+                                
+                                <div class="architecture-details">
+                                    <div class="detail-section">
+                                        <h5><i class="fas fa-microchip"></i> Procesador Escalar</h5>
+                                        <ul>
+                                            <li><strong>Unidad de Control Escalar:</strong> Decodifica instrucciones y coordina operaciones</li>
+                                            <li><strong>Cauces Funcionales Escalares:</strong> Procesan datos escalares tradicionales</li>
+                                            <li><strong>Funcionalidad:</strong> Maneja control de flujo y operaciones no vectoriales</li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div class="detail-section">
+                                        <h5><i class="fas fa-vector-square"></i> Procesador Vectorial</h5>
+                                        <ul>
+                                            <li><strong>Unidad de Control Vectorial:</strong> Gestiona instrucciones vectoriales</li>
+                                            <li><strong>Registros Vectoriales:</strong> Almacenan operandos vectoriales (ej. 64 componentes de 64 bits)</li>
+                                            <li><strong>Cauces Funcionales Vectoriales:</strong> Múltiples unidades para operaciones paralelas</li>
+                                            <li><strong>Contador de Componente:</strong> Seguimiento en ciclos sucesivos del cauce</li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div class="detail-section">
+                                        <h5><i class="fas fa-memory"></i> Memoria Principal</h5>
+                                        <ul>
+                                            <li><strong>Centro de la Arquitectura:</strong> Conecta todos los procesadores</li>
+                                            <li><strong>Intercambio de Datos:</strong> Escalares y vectoriales</li>
+                                            <li><strong>Acceso Concurrente:</strong> Múltiples unidades pueden acceder simultáneamente</li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div class="detail-section">
+                                        <h5><i class="fas fa-cogs"></i> Características Especiales</h5>
+                                        <ul>
+                                            <li><strong>Registros Reconfigurables:</strong> Algunas máquinas (Fujitsu) permiten ajustar longitud dinámicamente</li>
+                                            <li><strong>Recursos Fijos:</strong> Número de registros y unidades funcionales predeterminado</li>
+                                            <li><strong>Reserva de Recursos:</strong> Necesaria para evitar conflictos entre operaciones</li>
+                                            <li><strong>Computador Anfitrión:</strong> Interfaz con el usuario y gestión del sistema</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                
+                                <div class="performance-notes">
+                                    <h5><i class="fas fa-chart-line"></i> Ventajas de esta Arquitectura</h5>
+                                    <div class="advantages-grid">
+                                        <div class="advantage-item">
+                                            <i class="fas fa-rocket"></i>
+                                            <span>Alto rendimiento en aplicaciones científicas</span>
+                                        </div>
+                                        <div class="advantage-item">
+                                            <i class="fas fa-layer-group"></i>
+                                            <span>Procesamiento paralelo eficiente</span>
+                                        </div>
+                                        <div class="advantage-item">
+                                            <i class="fas fa-memory"></i>
+                                            <span>Acceso optimizado a memoria</span>
+                                        </div>
+                                        <div class="advantage-item">
+                                            <i class="fas fa-cogs"></i>
+                                            <span>Flexibilidad en configuración</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card dlxv-card">
+                        <h3><i class="fas fa-microchip"></i> Procesador DLXV</h3>
+                        <p>Modelo didáctico desarrollado por Hennessy y Patterson (1990)</p>
+                        <div class="dlxv-specs">
+                            <div class="spec-group">
+                                <h4>Registros Vectoriales</h4>
+                                <ul>
+                                    <li>8 registros (V1 a V8)</li>
+                                    <li>64 componentes de 8 Bytes</li>
+                                    <li>MVL = 64</li>
+                                </ul>
+                            </div>
+                            <div class="spec-group">
+                                <h4>Unidades Funcionales</h4>
+                                <ul>
+                                    <li>Suma/resta coma flotante</li>
+                                    <li>Multiplicación reales</li>
+                                    <li>División reales</li>
+                                    <li>Operaciones enteras</li>
+                                    <li>Operaciones lógicas</li>
+                                    <li>Carga/almacenamiento</li>
+                                </ul>
+                            </div>
+                            <div class="spec-group">
+                                <h4>Registros Escalares</h4>
+                                <ul>
+                                    <li>32 registros enteros (R0-R31)</li>
+                                    <li>32 registros reales (F0-F31)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-grid">
+                    <div class="card parameters-card">
+                        <h3><i class="fas fa-sliders-h"></i> Parámetros Característicos</h3>
+                        <div class="parameters-grid">
+                            <div class="parameter-item">
+                                <h4>Longitud de Palabra</h4>
+                                <p>Define el tamaño de operando y registros</p>
+                                <ul>
+                                    <li>Única o diferenciada</li>
+                                    <li>Entero vs Real</li>
+                                </ul>
+                            </div>
+                            <div class="parameter-item">
+                                <h4>MVL (Maximum Vector Length)</h4>
+                                <p>Número máximo de componentes por vector</p>
+                                <ul>
+                                    <li>Cuanto mayor, mejor</li>
+                                    <li>Limitado por hardware</li>
+                                </ul>
+                            </div>
+                            <div class="parameter-item">
+                                <h4>Número de Registros</h4>
+                                <p>Capacidad de almacenamiento</p>
+                                <ul>
+                                    <li>Registros vectoriales</li>
+                                    <li>Registros escalares</li>
+                                </ul>
+                            </div>
+                            <div class="parameter-item">
+                                <h4>Unidades de Proceso</h4>
+                                <p>Tipos y número de cauces</p>
+                                <ul>
+                                    <li>Independientes</li>
+                                    <li>Replicadas</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card instructions-card">
+                        <h3><i class="fas fa-list"></i> Instrucciones Principales</h3>
+                        <div class="instructions-table">
+                            <div class="instruction-category">
+                                <h4>Operaciones Aritméticas</h4>
+                                <div class="instruction-list">
+                                    <div class="instruction-item">
+                                        <code>ADDV Vi,Vj,Vk</code>
+                                        <span>Suma vectorial: Vj+Vk→Vi</span>
+                                    </div>
+                                    <div class="instruction-item">
+                                        <code>MULTV Vi,Vj,Vk</code>
+                                        <span>Multiplicación vectorial: Vj*Vk→Vi</span>
+                                    </div>
+                                    <div class="instruction-item">
+                                        <code>DIVV Vi,Vj,Vk</code>
+                                        <span>División vectorial: Vj/Vk→Vi</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="instruction-category">
+                                <h4>Acceso a Memoria</h4>
+                                <div class="instruction-list">
+                                    <div class="instruction-item">
+                                        <code>LV Vi,Rj</code>
+                                        <span>Carga: (Rj)→Vi</span>
+                                    </div>
+                                    <div class="instruction-item">
+                                        <code>SV Ri,Vj</code>
+                                        <span>Almacenamiento: Vj→(Ri)</span>
+                                    </div>
+                                    <div class="instruction-item">
+                                        <code>LVWS Vi,(Rj,Rk)</code>
+                                        <span>Carga con separación Rk</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Memoria Section -->
+            <section id="memoria" class="content-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-memory"></i> Sistema de Memoria en Procesadores Vectoriales</h2>
+                    <p>Organización de memoria para acceso eficiente a vectores</p>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="card memory-card">
+                        <h3><i class="fas fa-layer-group"></i> Entrelazado de Memoria</h3>
+                        <p>Distribución de posiciones de memoria en distintos módulos para acceso concurrente</p>
+                        <div class="interleaving-types">
+                            <div class="interleaving-item">
+                                <h4><i class="fas fa-arrow-up"></i> Entrelazado Superior (Alto)</h4>
+                                <ul>
+                                    <li>Usa bits más significativos</li>
+                                    <li>Crea módulos con posiciones consecutivas</li>
+                                    <li>Aislamiento de módulos</li>
+                                </ul>
+                            </div>
+                            <div class="interleaving-item">
+                                <h4><i class="fas fa-arrow-down"></i> Entrelazado Inferior (Bajo)</h4>
+                                <ul>
+                                    <li>Usa bits menos significativos</li>
+                                    <li>Crea módulos con posiciones salteadas</li>
+                                    <li>Acceso entrelazado</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card organization-card">
+                        <h3><i class="fas fa-sitemap"></i> Organizaciones de Memoria</h3>
+                        <div class="organization-types">
+                            <div class="org-item">
+                                <h4><i class="fas fa-sync"></i> Tipo S (Simultáneo)</h4>
+                                <p>Acceso simultáneo a múltiples módulos</p>
+                                <ul>
+                                    <li>Mayor ancho de banda</li>
+                                    <li>Acceso paralelo</li>
+                                    <li>Complejidad hardware</li>
+                                </ul>
+                            </div>
+                            <div class="org-item">
+                                <h4><i class="fas fa-stream"></i> Tipo C (Concurrente)</h4>
+                                <p>Acceso secuencial con solapamiento</p>
+                                <ul>
+                                    <li>Menor complejidad</li>
+                                    <li>Acceso pipeline</li>
+                                    <li>Eficiencia moderada</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-grid">
+                    <div class="card stride-card">
+                        <h3><i class="fas fa-route"></i> Efecto del Stride</h3>
+                        <p>La distancia entre elementos consecutivos afecta el rendimiento</p>
+                        <div class="stride-examples">
+                            <div class="stride-example">
+                                <h4>Stride = 1 (Óptimo)</h4>
+                                <p>Acceso a posiciones consecutivas</p>
+                                <code>V[0], V[1], V[2], V[3], ...</code>
+                            </div>
+                            <div class="stride-example">
+                                <h4>Stride > 1 (Subóptimo)</h4>
+                                <p>Acceso con separación</p>
+                                <code>V[0], V[2], V[4], V[6], ...</code>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card performance-card">
+                        <h3><i class="fas fa-chart-line"></i> Impacto en Rendimiento</h3>
+                        <div class="performance-factors">
+                            <div class="factor-item">
+                                <i class="fas fa-check-circle"></i>
+                                <h4>Acceso Consecutivo</h4>
+                                <p>Máximo ancho de banda</p>
+                            </div>
+                            <div class="factor-item">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <h4>Acceso No Consecutivo</h4>
+                                <p>Reducción del rendimiento</p>
+                            </div>
+                            <div class="factor-item">
+                                <i class="fas fa-cogs"></i>
+                                <h4>Configuración Hardware</h4>
+                                <p>Determina la eficiencia</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Rendimiento Section -->
+            <section id="rendimiento" class="content-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-tachometer-alt"></i> Medidas de Rendimiento</h2>
+                    <p>Métricas para evaluar el rendimiento de procesadores vectoriales</p>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="card time-card">
+                        <h3><i class="fas fa-clock"></i> Tiempo de Ejecución</h3>
+                        <div class="time-formula">
+                            <h4>Fórmula Básica</h4>
+                            <div class="formula">
+                                <p><strong>Tₖ = TLI + k × TPC</strong></p>
+                            </div>
+                            <div class="formula-explanation">
+                                <div class="variable">
+                                    <strong>TLI:</strong> Tiempo de latencia (arranque)
+                                </div>
+                                <div class="variable">
+                                    <strong>k:</strong> Número de componentes del vector
+                                </div>
+                                <div class="variable">
+                                    <strong>TPC:</strong> Tiempo por componente
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card techniques-card">
+                        <h3><i class="fas fa-cogs"></i> Técnicas de Optimización</h3>
+                        <div class="techniques-list">
+                            <div class="technique-item">
+                                <h4><i class="fas fa-layer-group"></i> Solapamiento de Cauces</h4>
+                                <p>Iniciar operaciones vectoriales mientras se decodifican</p>
+                                <ul>
+                                    <li>Agrupación en convoyes</li>
+                                    <li>Limitado por dependencias</li>
+                                </ul>
+                            </div>
+                            <div class="technique-item">
+                                <h4><i class="fas fa-link"></i> Encadenamiento de Cauces</h4>
+                                <p>Un cauce procesa resultados de otro según se generan</p>
+                                <ul>
+                                    <li>Reduce dependencias</li>
+                                    <li>Solo espera TLI</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-grid">
+                    <div class="card metrics-card">
+                        <h3><i class="fas fa-chart-bar"></i> Métricas de Prestaciones</h3>
+                        <div class="metrics-table">
+                            <div class="metric-item">
+                                <h4>Rₖ (Rendimiento)</h4>
+                                <div class="formula">
+                                    <p>Rₖ = (Operaciones × k) / Tₖ</p>
+                                </div>
+                                <p>Operaciones por unidad de tiempo para vector de k componentes</p>
+                            </div>
+                            <div class="metric-item">
+                                <h4>R∞ (Rendimiento Asintótico)</h4>
+                                <div class="formula">
+                                    <p>R∞ = lim Rₖ</p>
+                                    <p>k→∞</p>
+                                </div>
+                                <p>Operaciones por unidad de tiempo para vector infinito</p>
+                            </div>
+                            <div class="metric-item">
+                                <h4>N₁/₂ (Punto de Eficiencia)</h4>
+                                <div class="formula">
+                                    <p>R∞</p>
+                                    <p>Rₙ₁/₂ = ——</p>
+                                    <p>2</p>
+                                </div>
+                                <p>Número de componentes para 50% de eficiencia</p>
+                            </div>
+                            <div class="metric-item">
+                                <h4>E (Eficiencia Vectorial)</h4>
+                                <div class="formula">
+                                    <p>E = Rₖ / R∞</p>
+                                </div>
+                                <p>Relación entre rendimiento actual y máximo</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card calculator-card">
+                        <h3><i class="fas fa-calculator"></i> Calculadora de Rendimiento</h3>
+                        <div class="calculator">
+                            <div class="input-group">
+                                <label for="tli">TLI (Tiempo de Latencia):</label>
+                                <input type="number" id="tli" value="10" min="1" max="100">
+                                <span>ciclos</span>
+                            </div>
+                            <div class="input-group">
+                                <label for="tpc">TPC (Tiempo por Componente):</label>
+                                <input type="number" id="tpc" value="1" min="0.1" max="10" step="0.1">
+                                <span>ciclos</span>
+                            </div>
+                            <div class="input-group">
+                                <label for="vector-length">Longitud del Vector:</label>
+                                <input type="number" id="vector-length" value="64" min="1" max="1000">
+                                <span>componentes</span>
+                            </div>
+                            <button class="btn btn-primary" onclick="calculatePerformance()">
+                                <i class="fas fa-calculator"></i>
+                                Calcular
+                            </button>
+                            <div class="results" id="performance-results">
+                                <div class="result-item">
+                                    <strong>Tiempo Total:</strong> <span id="total-time">-</span> ciclos
+                                </div>
+                                <div class="result-item">
+                                    <strong>Rendimiento:</strong> <span id="performance">-</span> ops/ciclo
+                                </div>
+                                <div class="result-item">
+                                    <strong>Eficiencia:</strong> <span id="efficiency">-</span>%
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Eficiencia Section -->
+            <section id="eficiencia" class="content-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-chart-line"></i> Eficiencia del Procesamiento Vectorial</h2>
+                    <p>Técnicas para optimizar el rendimiento vectorial</p>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="card strip-mining-card">
+                        <h3><i class="fas fa-cut"></i> Troceado de Vectores (Strip Mining)</h3>
+                        <p>Solución cuando k > MVL (Maximum Vector Length)</p>
+                        <div class="strip-mining">
+                            <div class="problem">
+                                <h4>Problema:</h4>
+                                <p>Vector de 200 elementos con MVL = 64</p>
+                            </div>
+                            <div class="solution">
+                                <h4>Solución:</h4>
+                                <div class="code-block">
+                                    <code>
+                                        for i := 0 to 2 do begin<br>
+                                        &nbsp;&nbsp;VLR := min(64, 200 - i*64);<br>
+                                        &nbsp;&nbsp;/* Procesar VLR elementos */<br>
+                                        end
+                                    </code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card mask-card">
+                        <h3><i class="fas fa-mask"></i> Vector Máscara (VM)</h4>
+                        <p>Selección condicional de componentes</p>
+                        <div class="mask-example">
+                            <div class="example">
+                                <h4>Ejemplo:</h4>
+                                <div class="code-block">
+                                    <code>
+                                        if (A[i] > 0) then<br>
+                                        &nbsp;&nbsp;B[i] := A[i] * 2<br>
+                                        else<br>
+                                        &nbsp;&nbsp;B[i] := 0
+                                    </code>
+                                </div>
+                            </div>
+                            <div class="vector-instruction">
+                                <h4>Instrucción Vectorial:</h4>
+                                <div class="code-block">
+                                    <code>
+                                        SGT VM, A, 0    /* Comparar A > 0 */<br>
+                                        MULTV B, A, 2   /* B := A * 2 */<br>
+                                        /* Solo donde VM = 1 */
+                                    </code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-grid">
+                    <div class="card gather-scatter-card">
+                        <h3><i class="fas fa-random"></i> Gather-Scatter</h3>
+                        <p>Acceso a arrays con índices no consecutivos</p>
+                        <div class="gather-scatter">
+                            <div class="gather">
+                                <h4><i class="fas fa-download"></i> Gather</h4>
+                                <p>Recolección de elementos dispersos</p>
+                                <div class="code-block">
+                                    <code>
+                                        for i := 1 to n do<br>
+                                        &nbsp;&nbsp;V[i] := A[index[i]]
+                                    </code>
+                                </div>
+                            </div>
+                            <div class="scatter">
+                                <h4><i class="fas fa-upload"></i> Scatter</h4>
+                                <p>Dispersión de elementos</p>
+                                <div class="code-block">
+                                    <code>
+                                        for i := 1 to n do<br>
+                                        &nbsp;&nbsp;A[index[i]] := V[i]
+                                    </code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card overhead-card">
+                        <h3><i class="fas fa-chart-pie"></i> Análisis de Sobrecarga</h3>
+                        <div class="overhead-formula">
+                            <h4>Fórmula Completa:</h4>
+                            <div class="formula">
+                                <p><strong>Tₖ = Tₘₐₑ + ⌈k/MVL⌉ × (Tₘᵤₑₗₑ + TLI) + k × TPC</strong></p>
+                            </div>
+                            <div class="formula-breakdown">
+                                <div class="term">
+                                    <strong>Tₘₐₑ:</strong> Tiempo de instrucciones escalares
+                                </div>
+                                <div class="term">
+                                    <strong>Tₘᵤₑₗₑ:</strong> Tiempo de control del bucle
+                                </div>
+                                <div class="term">
+                                    <strong>TLI:</strong> Tiempo de inicio
+                                </div>
+                                <div class="term">
+                                    <strong>k × TPC:</strong> Tiempo de procesamiento
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Ejemplos Section -->
+            <section id="ejemplos" class="content-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-code"></i> Ejemplos Prácticos</h2>
+                    <p>Implementaciones y casos de uso de procesadores vectoriales</p>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="card example-card">
+                        <h3><i class="fas fa-calculator"></i> Suma de Vectores</h3>
+                        <div class="example-comparison">
+                            <div class="scalar-version">
+                                <h4>Código Escalar:</h4>
+                                <div class="code-block">
+                                    <code>
+                                        for i := 1 to n do<br>
+                                        &nbsp;&nbsp;C[i] := A[i] + B[i]
+                                    </code>
+                                </div>
+                                <p><strong>Tiempo:</strong> n × (tiempo de suma)</p>
+                            </div>
+                            <div class="vector-version">
+                                <h4>Código Vectorial:</h4>
+                                <div class="code-block">
+                                    <code>
+                                        LV V1, A    /* Cargar A */<br>
+                                        LV V2, B    /* Cargar B */<br>
+                                        ADDV V3, V1, V2  /* Sumar */<br>
+                                        SV C, V3    /* Guardar resultado */
+                                    </code>
+                                </div>
+                                <p><strong>Tiempo:</strong> TLI + n × TPC</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card example-card">
+                        <h3><i class="fas fa-chart-line"></i> Producto Escalar</h3>
+                        <div class="dot-product">
+                            <div class="formula">
+                                <p><strong>Resultado = Σ(A[i] × B[i])</strong></p>
+                            </div>
+                            <div class="vector-code">
+                                <h4>Implementación Vectorial:</h4>
+                                <div class="code-block">
+                                    <code>
+                                        LV V1, A<br>
+                                        LV V2, B<br>
+                                        MULTV V3, V1, V2<br>
+                                        /* Reducción necesaria */
+                                    </code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-grid">
+                    <div class="card simulator-card">
+                        <h3><i class="fas fa-play"></i> Simulador de Rendimiento</h3>
+                        <div class="simulator">
+                            <div class="simulator-controls">
+                                <div class="control-group">
+                                    <label for="sim-vector-length">Longitud del Vector:</label>
+                                    <input type="range" id="sim-vector-length" min="1" max="1000" value="100">
+                                    <span id="sim-vector-display">100</span>
+                                </div>
+                                <div class="control-group">
+                                    <label for="sim-mvl">MVL:</label>
+                                    <input type="range" id="sim-mvl" min="32" max="256" value="64">
+                                    <span id="sim-mvl-display">64</span>
+                                </div>
+                                <button class="btn btn-primary" onclick="runSimulation()">
+                                    <i class="fas fa-play"></i>
+                                    Ejecutar Simulación
+                                </button>
+                            </div>
+                            <div class="simulation-results" id="simulation-results">
+                                <div class="result-chart">
+                                    <canvas id="performanceChart" width="400" height="200"></canvas>
+                                </div>
+                                <div class="result-stats">
+                                    <div class="stat-item">
+                                        <strong>Eficiencia:</strong> <span id="sim-efficiency">-</span>%
+                                    </div>
+                                    <div class="stat-item">
+                                        <strong>Speedup:</strong> <span id="sim-speedup">-</span>x
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card applications-card">
+                        <h3><i class="fas fa-flask"></i> Aplicaciones Típicas</h3>
+                        <div class="applications-list">
+                            <div class="application-item">
+                                <i class="fas fa-atom"></i>
+                                <h4>Cálculo Científico</h4>
+                                <p>Simulaciones numéricas, análisis de fluidos</p>
+                            </div>
+                            <div class="application-item">
+                                <i class="fas fa-image"></i>
+                                <h4>Procesamiento de Imágenes</h4>
+                                <p>Filtros, transformaciones, reconocimiento</p>
+                            </div>
+                            <div class="application-item">
+                                <i class="fas fa-signal"></i>
+                                <h4>Procesamiento de Señales</h4>
+                                <p>FFT, filtros digitales, análisis espectral</p>
+                            </div>
+                            <div class="application-item">
+                                <i class="fas fa-brain"></i>
+                                <h4>Machine Learning</h4>
+                                <p>Operaciones matriciales, redes neuronales</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

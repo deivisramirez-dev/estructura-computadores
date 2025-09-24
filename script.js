@@ -89,7 +89,8 @@ function topicExists(topicPath) {
         'Tema7',
         'Tema8',
         'Tema9',
-        'Tema10'
+        'Tema10',
+        'Tema11'
     ];
     
     return availableTopics.includes(topicPath);

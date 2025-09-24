@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 11: Redes de Interconexión - Estructura de Computadores</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1 class="main-title">
+                    <i class="fas fa-network-wired"></i>
+                    Tema 11: Redes de Interconexión
+                </h1>
+                <p class="subtitle">Topología, conmutación, control de flujo y encaminamiento en sistemas paralelos</p>
+            </div>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="nav">
+            <div class="nav-content">
+                <div class="nav-info">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>Programa de Ingeniería Informática</span>
+                </div>
+                <div class="nav-controls">
+                    <button class="btn btn-back" onclick="goToMainPortal()">
+                        <i class="fas fa-home"></i>
+                        <span>Portal Principal</span>
+                    </button>
+                    <button class="btn btn-secondary" onclick="toggleTheme()">
+                        <i class="fas fa-moon"></i>
+                        <span>Tema Oscuro</span>
+                    </button>
+                    <button class="btn btn-primary" onclick="toggleFullscreen()">
+                        <i class="fas fa-expand"></i>
+                        <span>Pantalla Completa</span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main">
+            <!-- Navigation -->
+            <nav class="navigation">
+                <div class="nav-buttons">
+                    <button class="nav-btn active" data-section="introduccion">
+                        <i class="fas fa-info-circle"></i>
+                        <span>Introducción</span>
+                    </button>
+                    <button class="nav-btn" data-section="topologia">
+                        <i class="fas fa-project-diagram"></i>
+                        <span>Topología</span>
+                    </button>
+                    <button class="nav-btn" data-section="conmutacion">
+                        <i class="fas fa-exchange-alt"></i>
+                        <span>Conmutación</span>
+                    </button>
+                    <button class="nav-btn" data-section="control-flujo">
+                        <i class="fas fa-stream"></i>
+                        <span>Control de Flujo</span>
+                    </button>
+                    <button class="nav-btn" data-section="encaminamiento">
+                        <i class="fas fa-route"></i>
+                        <span>Encaminamiento</span>
+                    </button>
+                    <button class="nav-btn" data-section="simulador">
+                        <i class="fas fa-play"></i>
+                        <span>Simulador</span>
+                    </button>
+                </div>
+            </nav>
+
+            <!-- Introducción Section -->
+            <section id="introduccion" class="content-section active">
+                <div class="section-header">
+                    <h2><i class="fas fa-info-circle"></i> Introducción a las Redes de Interconexión</h2>
+                    <p>Fundamentos del diseño de redes en sistemas paralelos</p>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="card definition-card">
+                        <h3><i class="fas fa-quote-left"></i> Objetivos del Tema</h3>
+                        <p class="highlight">Este tema se ocupa de conocer las diferentes partes en las que se puede dividir el estudio o diseño de una red de interconexión para sistemas paralelos.</p>
+                        <div class="objectives-list">
+                            <div class="objective-item">
+                                <i class="fas fa-project-diagram"></i>
+                                <span><strong>Topología:</strong> Estructura física de interconexión</span>
+                            </div>
+                            <div class="objective-item">
+                                <i class="fas fa-exchange-alt"></i>
+                                <span><strong>Conmutación:</strong> Técnicas de transferencia de datos</span>
+                            </div>
+                            <div class="objective-item">
+                                <i class="fas fa-stream"></i>
+                                <span><strong>Control de Flujo:</strong> Gestión del tráfico de información</span>
+                            </div>
+                            <div class="objective-item">
+                                <i class="fas fa-route"></i>
+                                <span><strong>Encaminamiento:</strong> Algoritmos de selección de rutas</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card levels-card">
+                        <h3><i class="fas fa-layer-group"></i> Niveles de Servicio</h3>
+                        <div class="levels-diagram">
+                            <div class="level-item">
+                                <div class="level-icon"><i class="fas fa-code"></i></div>
+                                <div class="level-content">
+                                    <h4>Nivel de API</h4>
+                                    <p>Interfaz al programador de aplicaciones</p>
+                                </div>
+                            </div>
+                            <div class="level-item">
+                                <div class="level-icon"><i class="fas fa-envelope"></i></div>
+                                <div class="level-content">
+                                    <h4>Nivel de Mensaje</h4>
+                                    <p>Gestión de mensajes completos</p>
+                                </div>
+                            </div>
+                            <div class="level-item">
+                                <div class="level-icon"><i class="fas fa-route"></i></div>
+                                <div class="level-content">
+                                    <h4>Nivel de Encaminamiento</h4>
+                                    <p>Selección de rutas y paquetes</p>
+                                </div>
+                            </div>
+                            <div class="level-item">
+                                <div class="level-icon"><i class="fas fa-exchange-alt"></i></div>
+                                <div class="level-content">
+                                    <h4>Nivel de Conmutación</h4>
+                                    <p>Transferencia de flits</p>
+                                </div>
+                            </div>
+                            <div class="level-item">
+                                <div class="level-icon"><i class="fas fa-microchip"></i></div>
+                                <div class="level-content">
+                                    <h4>Nivel Físico</h4>
+                                    <p>Transferencia de phits</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-grid">
+                    <div class="card units-card">
+                        <h3><i class="fas fa-cubes"></i> Unidades de Transferencia</h3>
+                        <div class="units-table">
+                            <div class="unit-row">
+                                <div class="unit-component">Sistema de Comunicación</div>
+                                <div class="unit-arrow">→</div>
+                                <div class="unit-data">Mensajes</div>
+                            </div>
+                            <div class="unit-row">
+                                <div class="unit-component">Red de Interconexión</div>
+                                <div class="unit-arrow">→</div>
+                                <div class="unit-data">Paquetes</div>
+                            </div>
+                            <div class="unit-row">
+                                <div class="unit-component">Conmutadores</div>
+                                <div class="unit-arrow">→</div>
+                                <div class="unit-data">Flits</div>
+                            </div>
+                            <div class="unit-row">
+                                <div class="unit-component">Controladores de Enlace</div>
+                                <div class="unit-arrow">→</div>
+                                <div class="unit-data">Phits</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card design-space-card">
+                        <h3><i class="fas fa-drafting-compass"></i> Espacio de Diseño</h3>
+                        <div class="design-aspects">
+                            <div class="aspect-item">
+                                <h4><i class="fas fa-project-diagram"></i> Topología</h4>
+                                <p>Estructura de interconexión física modelada como grafo</p>
+                            </div>
+                            <div class="aspect-item">
+                                <h4><i class="fas fa-route"></i> Encaminamiento</h4>
+                                <p>Determina el camino a seguir por un paquete</p>
+                            </div>
+                            <div class="aspect-item">
+                                <h4><i class="fas fa-exchange-alt"></i> Conmutación</h4>
+                                <p>Cómo la información atraviesa el camino al destino</p>
+                            </div>
+                            <div class="aspect-item">
+                                <h4><i class="fas fa-stream"></i> Control de Flujo</h4>
+                                <p>Cuándo se mueve información entre componentes</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Nueva sección: Unidades de Transferencia -->
+                <div class="content-section-units">
+                    <div class="card units-transfer-card">
+                        <h3><i class="fas fa-layer-group"></i> Unidades de Transferencia y Componentes</h3>
+                        <div class="units-content">
+                            <div class="units-image-container">
+                                <img src="UnidadesTransferenciaComponentes.png" alt="Unidades de Transferencia y Componentes" class="units-image">
+                                <div class="image-caption">
+                                    <strong>Figura 1:</strong> Jerarquía de unidades de transferencia en redes de interconexión
+                                </div>
+                            </div>
+                            
+                            <div class="units-explanation">
+                                <h4><i class="fas fa-info-circle"></i> Explicación Detallada</h4>
+                                <div class="explanation-content">
+                                    <p>Esta figura muestra la <strong>jerarquía de unidades de transferencia</strong> que se utilizan en las redes de interconexión, desde el nivel más básico hasta el más complejo:</p>
+                                    
+                                    <div class="units-hierarchy">
+                                        <div class="unit-level">
+                                            <div class="unit-header">
+                                                <i class="fas fa-microchip"></i>
+                                                <h5>Phit (Physical Hit)</h5>
+                                            </div>
+                                            <div class="unit-description">
+                                                <p><strong>Unidad más básica:</strong> Representa un bit físico transmitido por un enlace de comunicación.</p>
+                                                <ul>
+                                                    <li>Corresponde a la transferencia de un bit por ciclo de reloj</li>
+                                                    <li>Es la unidad fundamental de transferencia a nivel físico</li>
+                                                    <li>Determina el ancho de banda básico del enlace</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="unit-level">
+                                            <div class="unit-header">
+                                                <i class="fas fa-puzzle-piece"></i>
+                                                <h5>Flit (Flow Control Unit)</h5>
+                                            </div>
+                                            <div class="unit-description">
+                                                <p><strong>Unidad de control de flujo:</strong> Agrupación de phits que se maneja como una unidad indivisible.</p>
+                                                <ul>
+                                                    <li>Contiene información de control y datos</li>
+                                                    <li>Es la unidad básica de conmutación en técnicas como wormhole</li>
+                                                    <li>Permite el control granular del flujo de datos</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="unit-level">
+                                            <div class="unit-header">
+                                                <i class="fas fa-envelope"></i>
+                                                <h5>Paquete (Packet)</h5>
+                                            </div>
+                                            <div class="unit-description">
+                                                <p><strong>Unidad de información:</strong> Contiene datos del usuario más información de control.</p>
+                                                <ul>
+                                                    <li>Incluye cabecera con información de encaminamiento</li>
+                                                    <li>Es la unidad de transferencia en técnicas como store-and-forward</li>
+                                                    <li>Puede contener múltiples flits</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="unit-level">
+                                            <div class="unit-header">
+                                                <i class="fas fa-file-alt"></i>
+                                                <h5>Mensaje (Message)</h5>
+                                            </div>
+                                            <div class="unit-description">
+                                                <p><strong>Unidad de aplicación:</strong> Representa una operación completa de comunicación.</p>
+                                                <ul>
+                                                    <li>Puede dividirse en múltiples paquetes</li>
+                                                    <li>Es la unidad lógica de comunicación entre aplicaciones</li>
+                                                    <li>Requiere control de flujo extremo a extremo</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="units-relationships">
+                                        <h5><i class="fas fa-sitemap"></i> Relaciones entre Unidades</h5>
+                                        <div class="relationship-diagram">
+                                            <div class="relationship-item">
+                                                <strong>1 Phit</strong> = 1 bit físico
+                                            </div>
+                                            <div class="relationship-arrow">→</div>
+                                            <div class="relationship-item">
+                                                <strong>1 Flit</strong> = N phits (típicamente 8-64 bits)
+                                            </div>
+                                            <div class="relationship-arrow">→</div>
+                                            <div class="relationship-item">
+                                                <strong>1 Paquete</strong> = M flits (típicamente 1-16 flits)
+                                            </div>
+                                            <div class="relationship-arrow">→</div>
+                                            <div class="relationship-item">
+                                                <strong>1 Mensaje</strong> = K paquetes (variable según aplicación)
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="units-importance">
+                                        <h5><i class="fas fa-star"></i> Importancia en el Diseño de Redes</h5>
+                                        <div class="importance-points">
+                                            <div class="importance-point">
+                                                <i class="fas fa-cogs"></i>
+                                                <div>
+                                                    <strong>Diseño de Conmutadores:</strong> El tamaño de flit determina el ancho de banda interno y la complejidad de los buffers.
+                                                </div>
+                                            </div>
+                                            <div class="importance-point">
+                                                <i class="fas fa-tachometer-alt"></i>
+                                                <div>
+                                                    <strong>Rendimiento:</strong> Unidades más pequeñas permiten mejor paralelismo pero mayor overhead de control.
+                                                </div>
+                                            </div>
+                                            <div class="importance-point">
+                                                <i class="fas fa-shield-alt"></i>
+                                                <div>
+                                                    <strong>Control de Flujo:</strong> Diferentes técnicas de conmutación operan a diferentes niveles de la jerarquía.
+                                                </div>
+                                            </div>
+                                            <div class="importance-point">
+                                                <i class="fas fa-balance-scale"></i>
+                                                <div>
+                                                    <strong>Balance Costo-Rendimiento:</strong> La elección de unidades afecta directamente el costo y rendimiento de la red.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Topología Section -->
+            <section id="topologia" class="content-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-project-diagram"></i> Topología de Redes</h2>
+                    <p>Clasificación y características de las topologías de interconexión</p>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="card classification-card">
+                        <h3><i class="fas fa-sitemap"></i> Clasificación por Patrón</h3>
+                        <div class="topology-types">
+                            <div class="topology-type">
+                                <h4><i class="fas fa-grip"></i> Regulares</h4>
+                                <p>Presentan un patrón reconocible que se repite</p>
+                                <ul>
+                                    <li>Malla (Mesh)</li>
+                                    <li>Toro (Torus)</li>
+                                    <li>Hipercubo</li>
+                                </ul>
+                            </div>
+                            <div class="topology-type">
+                                <h4><i class="fas fa-random"></i> Irregulares</h4>
+                                <p>No siguen un patrón reconocible</p>
+                                <ul>
+                                    <li>Redes ad-hoc</li>
+                                    <li>Topologías asimétricas</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card connection-card">
+                        <h3><i class="fas fa-link"></i> Clasificación por Conexión</h3>
+                        <div class="connection-types">
+                            <div class="connection-type">
+                                <h4><i class="fas fa-arrows-alt-h"></i> Redes Estáticas (Directas)</h4>
+                                <p>Conexiones fijas entre nodos</p>
+                                <div class="subtypes">
+                                    <div class="subtype">
+                                        <strong>Ortogonales:</strong> Malla, Toro, Hipercubo
+                                    </div>
+                                    <div class="subtype">
+                                        <strong>No Ortogonales:</strong> Árbol, Anillo
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="connection-type">
+                                <h4><i class="fas fa-exchange-alt"></i> Redes Dinámicas</h4>
+                                <p>Conexiones variables</p>
+                                <div class="subtypes">
+                                    <div class="subtype">
+                                        <strong>Medio Compartido:</strong> Bus
+                                    </div>
+                                    <div class="subtype">
+                                        <strong>Indirectas:</strong> Barras cruzadas, MIN
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Conmutación Section -->
+            <section id="conmutacion" class="content-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-exchange-alt"></i> Técnicas de Conmutación</h2>
+                    <p>Métodos de transferencia de datos en redes de interconexión</p>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="card switching-card">
+                        <h3><i class="fas fa-database"></i> Almacenamiento y Reenvío (Store and Forward)</h3>
+                        <div class="switching-technique">
+                            <div class="technique-description">
+                                <p><strong>Características:</strong></p>
+                                <ul>
+                                    <li>Buffer de tamaño múltiplo de paquete</li>
+                                    <li>Unidad de transferencia: paquete completo</li>
+                                    <li>Un canal ocupado por unidad de transferencia</li>
+                                    <li>Origen en redes WAN y primeros multicomputadores</li>
+                                </ul>
+                            </div>
+                            <div class="technique-pros-cons">
+                                <div class="pros">
+                                    <h4><i class="fas fa-check-circle"></i> Ventajas</h4>
+                                    <ul>
+                                        <li>Control de errores por paquete</li>
+                                        <li>Buffering simple</li>
+                                        <li>Fácil implementación</li>
+                                    </ul>
+                                </div>
+                                <div class="cons">
+                                    <h4><i class="fas fa-times-circle"></i> Desventajas</h4>
+                                    <ul>
+                                        <li>Alta latencia</li>
+                                        <li>Uso ineficiente de buffers</li>
+                                        <li>No aprovecha paralelismo</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card switching-card">
+                        <h3><i class="fas fa-worm"></i> Conmutación Vermiforme (Wormhole)</h3>
+                        <div class="switching-technique">
+                            <div class="technique-description">
+                                <p><strong>Características:</strong></p>
+                                <ul>
+                                    <li>Segmenta el camino para transferencia simultánea</li>
+                                    <li>Buffer múltiplo de flit</li>
+                                    <li>Múltiples canales ocupados simultáneamente</li>
+                                    <li>Origen en multicomputadores</li>
+                                </ul>
+                            </div>
+                            <div class="technique-pros-cons">
+                                <div class="pros">
+                                    <h4><i class="fas fa-check-circle"></i> Ventajas</h4>
+                                    <ul>
+                                        <li>Baja latencia</li>
+                                        <li>Uso eficiente de buffers</li>
+                                        <li>Paralelismo en transferencia</li>
+                                    </ul>
+                                </div>
+                                <div class="cons">
+                                    <h4><i class="fas fa-times-circle"></i> Desventajas</h4>
+                                    <ul>
+                                        <li>Complejidad en control de flujo</li>
+                                        <li>Posibles bloqueos</li>
+                                        <li>Implementación compleja</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-grid">
+                    <div class="card switching-card">
+                        <h3><i class="fas fa-cut"></i> Virtual Cut-Through (VCT)</h3>
+                        <div class="switching-technique">
+                            <div class="technique-description">
+                                <p><strong>Características:</strong></p>
+                                <ul>
+                                    <li>Combinación de segmentación y buffering</li>
+                                    <li>Buffer de tamaño múltiplo de paquete</li>
+                                    <li>Múltiples canales en paralelo</li>
+                                    <li>Propuesto para redes de computadores</li>
+                                </ul>
+                            </div>
+                            <div class="technique-pros-cons">
+                                <div class="pros">
+                                    <h4><i class="fas fa-check-circle"></i> Ventajas</h4>
+                                    <ul>
+                                        <li>Balance entre latencia y complejidad</li>
+                                        <li>Menos bloqueos que wormhole</li>
+                                        <li>Mejor que store-and-forward</li>
+                                    </ul>
+                                </div>
+                                <div class="cons">
+                                    <h4><i class="fas fa-times-circle"></i> Desventajas</h4>
+                                    <ul>
+                                        <li>Mayor complejidad que store-and-forward</li>
+                                        <li>Buffers más grandes</li>
+                                        <li>Control de flujo más complejo</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card switching-card">
+                        <h3><i class="fas fa-route"></i> Conmutación de Circuitos</h3>
+                        <div class="switching-technique">
+                            <div class="technique-description">
+                                <p><strong>Características:</strong></p>
+                                <ul>
+                                    <li>Reserva del camino completo</li>
+                                    <li>Envío de sonda para reservar recursos</li>
+                                    <li>Unidad de transferencia: mensaje</li>
+                                    <li>Origen en redes telefónicas</li>
+                                </ul>
+                            </div>
+                            <div class="technique-pros-cons">
+                                <div class="pros">
+                                    <h4><i class="fas fa-check-circle"></i> Ventajas</h4>
+                                    <ul>
+                                        <li>Garantía de ancho de banda</li>
+                                        <li>Sin contención una vez establecido</li>
+                                        <li>Latencia predecible</li>
+                                    </ul>
+                                </div>
+                                <div class="cons">
+                                    <h4><i class="fas fa-times-circle"></i> Desventajas</h4>
+                                    <ul>
+                                        <li>Alta latencia de establecimiento</li>
+                                        <li>Uso ineficiente con tráfico irregular</li>
+                                        <li>Complejidad en reserva de recursos</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Control de Flujo Section -->
+            <section id="control-flujo" class="content-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-stream"></i> Control de Flujo</h2>
+                    <p>Mecanismos de gestión del tráfico de información en redes</p>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="card flow-levels-card">
+                        <h3><i class="fas fa-layer-group"></i> Niveles de Control de Flujo</h3>
+                        <div class="flow-levels">
+                            <div class="flow-level">
+                                <div class="level-header">
+                                    <i class="fas fa-microchip"></i>
+                                    <h4>Control Físico (Phit)</h4>
+                                </div>
+                                <div class="level-content">
+                                    <p><strong>Objetivo:</strong> Garantizar transferencia sin solapamiento</p>
+                                    <div class="level-types">
+                                        <div class="type-item">
+                                            <strong>Síncrono:</strong> Gobernado por señal de reloj
+                                        </div>
+                                        <div class="type-item">
+                                            <strong>Asíncrono:</strong> Señales petición/reconocimiento
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="flow-level">
+                                <div class="level-header">
+                                    <i class="fas fa-exchange-alt"></i>
+                                    <h4>Control de Conmutación (Flit)</h4>
+                                </div>
+                                <div class="level-content">
+                                    <p><strong>Objetivo:</strong> Arbitraje y almacenamiento garantizado</p>
+                                    <div class="level-functions">
+                                        <ul>
+                                            <li>Arbitra entre entradas simultáneas</li>
+                                            <li>Transfiere flits entre conmutadores</li>
+                                            <li>Garantiza espacio en destino</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="flow-level">
+                                <div class="level-header">
+                                    <i class="fas fa-envelope"></i>
+                                    <h4>Control Extremo a Extremo (Paquete)</h4>
+                                </div>
+                                <div class="level-content">
+                                    <p><strong>Objetivo:</strong> Control de congestión y flujo</p>
+                                    <div class="level-functions">
+                                        <ul>
+                                            <li>Prevención de saturación de red</li>
+                                            <li>Control de ventana deslizante</li>
+                                            <li>Gestión de buffers de destino</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card protocols-card">
+                        <h3><i class="fas fa-handshake"></i> Protocolos de Control</h3>
+                        <div class="protocol-types">
+                            <div class="protocol-type">
+                                <h4><i class="fas fa-exchange-alt"></i> Basado en Señales</h4>
+                                <div class="protocol-description">
+                                    <p><strong>Petición/Reconocimiento:</strong></p>
+                                    <ul>
+                                        <li>Emisor envía petición</li>
+                                        <li>Receptor responde con reconocimiento</li>
+                                        <li>Control explícito de disponibilidad</li>
+                                        <li>Aplicable en líneas cortas</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <div class="protocol-type">
+                                <h4><i class="fas fa-credit-card"></i> Basado en Créditos</h4>
+                                <div class="protocol-description">
+                                    <p><strong>Optimista vs Crédito:</strong></p>
+                                    <ul>
+                                        <li><strong>Optimista:</strong> Envío sin verificación previa</li>
+                                        <li><strong>Crédito:</strong> Verificación de espacio disponible</li>
+                                        <li>Contador de créditos por canal</li>
+                                        <li>Aplicable en líneas largas</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Encaminamiento Section -->
+            <section id="encaminamiento" class="content-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-route"></i> Encaminamiento</h2>
+                    <p>Algoritmos de selección de rutas en redes de interconexión</p>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="card routing-functions-card">
+                        <h3><i class="fas fa-route"></i> Funciones del Encaminamiento</h3>
+                        <div class="routing-functions">
+                            <div class="function-item">
+                                <div class="function-header">
+                                    <i class="fas fa-search"></i>
+                                    <h4>Función de Encaminamiento</h4>
+                                </div>
+                                <div class="function-content">
+                                    <p>Determina cuáles caminos están disponibles para un par fuente/destino</p>
+                                    <ul>
+                                        <li>Identifica conjunto de caminos candidatos</li>
+                                        <li>Considera restricciones de topología</li>
+                                        <li>Evalúa disponibilidad de recursos</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <div class="function-item">
+                                <div class="function-header">
+                                    <i class="fas fa-mouse-pointer"></i>
+                                    <h4>Función de Selección</h4>
+                                </div>
+                                <div class="function-content">
+                                    <p>Elige el camino específico para cada paquete</p>
+                                    <ul>
+                                        <li>Selecciona entre caminos candidatos</li>
+                                        <li>Considera estado actual de la red</li>
+                                        <li>Optimiza métricas de rendimiento</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card routing-properties-card">
+                        <h3><i class="fas fa-shield-alt"></i> Propiedades Requeridas</h3>
+                        <div class="routing-properties">
+                            <div class="property-item">
+                                <i class="fas fa-ban"></i>
+                                <h4>Evitar Interbloqueos</h4>
+                                <p>Prevenir situaciones donde paquetes se bloquean mutuamente</p>
+                            </div>
+                            <div class="property-item">
+                                <i class="fas fa-ghost"></i>
+                                <h4>Evitar Livelock</h4>
+                                <p>Prevenir que paquetes vaguen indefinidamente por la red</p>
+                            </div>
+                            <div class="property-item">
+                                <i class="fas fa-link"></i>
+                                <h4>Conectividad</h4>
+                                <p>Garantizar comunicación entre cualquier par de nodos</p>
+                            </div>
+                            <div class="property-item">
+                                <i class="fas fa-tachometer-alt"></i>
+                                <h4>Baja Latencia</h4>
+                                <p>Minimizar tiempo de transporte de paquetes</p>
+                            </div>
+                            <div class="property-item">
+                                <i class="fas fa-balance-scale"></i>
+                                <h4>Balance de Carga</h4>
+                                <p>Distribuir tráfico equilibradamente por la red</p>
+                            </div>
+                            <div class="property-item">
+                                <i class="fas fa-heart"></i>
+                                <h4>Tolerancia a Fallos</h4>
+                                <p>Mantener funcionalidad ante fallos de componentes</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Simulador Section -->
+            <section id="simulador" class="content-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-play"></i> Simulador de Redes</h2>
+                    <p>Herramienta interactiva para experimentar con redes de interconexión</p>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="card simulator-config-card">
+                        <h3><i class="fas fa-cogs"></i> Configuración del Simulador</h3>
+                        <div class="simulator-config">
+                            <div class="config-group">
+                                <label for="topology-select">Topología:</label>
+                                <select id="topology-select">
+                                    <option value="mesh">Malla 2D</option>
+                                    <option value="torus">Toro 2D</option>
+                                    <option value="hypercube">Hipercubo</option>
+                                    <option value="tree">Árbol</option>
+                                    <option value="bus">Bus</option>
+                                </select>
+                            </div>
+                            
+                            <div class="config-group">
+                                <label for="switching-select">Técnica de Conmutación:</label>
+                                <select id="switching-select">
+                                    <option value="store-forward">Store & Forward</option>
+                                    <option value="wormhole">Wormhole</option>
+                                    <option value="vct">Virtual Cut-Through</option>
+                                    <option value="circuit">Circuit Switching</option>
+                                </select>
+                            </div>
+                            
+                            <div class="config-group">
+                                <label for="routing-select">Algoritmo de Encaminamiento:</label>
+                                <select id="routing-select">
+                                    <option value="xy">XY (Malla)</option>
+                                    <option value="dimension">Dimension Order</option>
+                                    <option value="adaptive">Adaptativo</option>
+                                    <option value="random">Aleatorio</option>
+                                </select>
+                            </div>
+                            
+                            <div class="config-group">
+                                <label for="network-size">Tamaño de Red:</label>
+                                <input type="range" id="network-size" min="4" max="64" value="16">
+                                <span id="network-size-display">16</span>
+                            </div>
+                            
+                            <button class="btn btn-primary" onclick="runSimulation()">
+                                <i class="fas fa-play"></i>
+                                Ejecutar Simulación
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="card simulation-results-card">
+                        <h3><i class="fas fa-chart-line"></i> Resultados de Simulación</h3>
+                        <div class="simulation-results" id="simulation-results">
+                            <div class="result-item">
+                                <strong>Latencia Media:</strong> <span id="avg-latency">-</span> ciclos
+                            </div>
+                            <div class="result-item">
+                                <strong>Ancho de Banda:</strong> <span id="bandwidth">-</span> flits/ciclo
+                            </div>
+                            <div class="result-item">
+                                <strong>Throughput:</strong> <span id="throughput">-</span> paquetes/ciclo
+                            </div>
+                            <div class="result-item">
+                                <strong>Utilización:</strong> <span id="utilization">-</span>%
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

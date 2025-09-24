@@ -1,0 +1,692 @@
+﻿
+Tema 11
+
+
+
+
+
+
+Estructura de Computadores
+
+Redes de interconexión
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Ideas clave
+
+11.1. Introducción y objetivos
+
+
+
+Este tema se ocupa de conocer las diferentes partes en las que se puede dividir el
+estudio o diseño de una red:
+
+ Topología.
+ Técnica de conmutación.
+ Control de flujo.
+ Encaminamiento.
+
+Las alternativas de implementación utilizadas en estas partes y las prestaciones que estas implementaciones ofrecen.
+
+
+11.2. Espacio de diseño y niveles de servicio
+
+La unidad de transferencia de información cambia, según el componente (nivel) del sistema de comunicación observado (figura 1):
+
+ El sistema de comunicación recibe mensajes.
+ La red de interconexión recibe paquetes.
+ Los conmutadores reciben flits.
+ Los controladores de enlace reciben phits.
+
+
+
+
+
+
+Estructura de Computadores Tema 11. Ideas clave
+
+Facetas en los que se puede dividir el estudio o diseño de una red:
+
+
+ Topología.
+• Estructura de interconexión física de la red. Se puede modelar mediante un grafo cuyos vértices son conmutadores o interfaces de red (a nodos de cómputo, a módulos de memoria, o a dispositivos de E/S) y las aristas son los enlaces.
+
+ Algoritmo de Encaminamiento.
+• Determina el camino a seguir por un paquete para alcanzar el destino.
+
+ Estrategia de Conmutación.
+• Determina cómo la información en un paquete atraviesa el camino hacia el destino.
+
+ Mecanismos de Control de Flujo.
+• Determinan cuándo una unidad de información se mueve entre componentes del sistema de comunicación avanzando hacia el destino. Arbitra ante colisiones entre unidades. Determina cómo y cuándo se asignan recursos a unidades.
+
+Figura 1. Unidades de transferencia y componentes del sistema de comunicación.
+Fuente: Ortega et al., 2005.
+
+Estructura de Computadores Tema 11. Ideas clave
+
+La figura 2 muestra los niveles de servicio que se pueden distinguir en una red de altas prestaciones y los relaciona con los componentes del sistema de comunicación:
+
+ Nivel físico.
+ Nivel de conmutación.
+ Nivel de encaminamiento.
+ Nivel de mensaje.
+ Nivel de interfaz al programador de aplicaciones (API).
+
+
+Figura 2. Niveles de servicio de una red de comunicación. Fuente: Ortega et al., 2005.
+
+
+
+11.3. Topología y tipos de redes de interconexión
+
+Según el patrón de la topología se pueden agrupar en:
+
+
+ Regulares: presentan un patrón reconocible que se repite.
+ Irregulares: no sigue un patrón reconocible.
+
+Estructura de Computadores Tema 11. Ideas clave
+
+La figura 3 muestra algunos ejemplos de esta clasificación. Atendiendo al modo de conexión entre nodos se clasifican en:
+ Redes estáticas o directas: La red visible está formada por un conjunto de conexiones fijas entre nodos. Cada conmutador está asociado a un nodo de cómputo.
+
+ Redes dinámicas: Los conmutadores están fuera de los nodos terminales y permiten variar las relaciones de entrada/salida que establecen. A su vez se clasifican en:
+• Redes de medio compartido: Los nodos comparten el mismo canal de conexión (Bus).
+• Redes indirectas: La conexión entre nodos de entrada y salida se hace a través de una agrupación de conmutadores.
+
+La figura 4 muestra algunos ejemplos de esta clasificación.
+
+
+Figura 3. Ejemplos de redes regulares e irregulares. Fuente: Ortega et al., 2005.
+
+
+
+Estructura de Computadores Tema 11. Ideas clave
+
+
+
+Figura 4. Ejemplos de redes estáticas y dinámicas. Fuente: Ortega et al., 2005.
+
+
+Redes estáticas o directas
+
+Se aplicaron inicialmente en multicomputadores.
+
+
+Los conmutadores están vinculados al nodo formando parte de la interfaz de red. Cada conmutador se asocia a un nodo.
+
+Figura 5. Ejemplo de red estrictamente ortogonal. Fuente: Ortega et al., 2005.
+
+Estructura de Computadores Tema 11. Ideas clave
+
+Se clasifican en:
+
+
+Redes ortogonales (figura 5)
+
+Si cada nodo equivale a un punto de un espacio vectorial ortogonal de dimensión n y cada enlace supone un único desplazamiento en una sola dimensión. Pueden ser:
+
+ Estrictamente ortogonal: cada nodo presenta al menos un enlace de salida para cada dimensión. A su vez se clasifican en:
+• Malla.
+• Toro.
+• Hipercubo.
+
+ Débilmente ortogonal: algunos nodos carecen de enlaces de salida hacia alguna dimensión.
+
+Redes no ortogonales (figura 6)
+
+A este grupo pertenecen grafos de tipo árbol en los que todos los conmutadores están asociados a un mismo interfaz de red.
+
+
+Figura 6. Ejemplos de grafos de redes no ortogonales.
+
+
+Un factor clave en este tipo de redes es la distancia mínima entre dos conmutadores o nodos de la red, que coincide con el número mínimo de enlaces que los separan. En el manual de la asignatura se describe cómo se calcula esta distancia para distintos tipos de redes estáticas.
+
+
+
+
+Estructura de Computadores Tema 11. Ideas clave
+
+Las redes estrictamente ortogonales simplifican considerablemente el encaminamiento de mensajes aprovechando sus características vectoriales, lo cual repercute en un aprovechamiento (latencia) más eficaz de la red.
+
+Redes dinámicas
+
+Estás redes se pueden clasificar, a su vez en (figura 7):
+
+
+Redes de medio compartido
+
+ Un conmutador que arbitra el acceso de entrada al canal común, el resto de usuarios pueden recibir la información (difusión, broadcast).
+ No admite múltiples conexiones uno a uno.
+ Facilita la implementación de mecanismos de coherencia de caché.
+ Se aplican típicamente en multiprocesadores.
+ Ejemplo: Bus.
+
+
+Figura 7. Ejemplos de redes dinámicas. Fuente: Ortega et al., 2005.
+
+
+
+
+
+Estructura de Computadores Tema 11. Ideas clave
+
+Redes indirectas
+
+
+Los nodos se conectan a una red de conmutadores. Tienen su origen en las redes telefónicas. Pueden ser:
+
+ Redes de barras cruzadas:
+
+• Se basan en un conmutador con conmutador interno de barras cruzadas.
+• Permiten que cualquier fuente se conecte con cualquier destino libre (biyección entrada/salida).
+• Alto coste para un gran número de entradas y salidas.
+
+ Redes	multietapa	o	de	interconexión	multietapa	(MIN,	Multistage Interconnection Networks):
+
+• Se emplean múltiples conmutadores distribuidos en varias etapas.
+• Las redes entre etapas implementan permutaciones.
+• Según los tipos de canales pueden ser unidireccionales o bidireccionales.
+• Un camino de un nodo fuente a un destino atraviesa conmutadores de etapas diferentes.
+
+Figura 8. Ejemplo de bloqueo y camino alternativo en redes indirectas. Fuente: Ortega et al., 2005.
+
+
+
+Estructura de Computadores Tema 11. Ideas clave
+
+Según la disponibilidad de caminos pueden ser (figuras 8 y 9):
+
+ Bloqueantes: cuando un camino establecido puede impedir que se establezca otro entre nodos libres. Se pueden implementar caminos alternativos añadiendo etapas. Ejemplos: Mariposa, Omega, Cúbica.
+ No bloqueantes: proporciona una funcionalidad de barras cruzadas, pero con mayor latencia. Requiere múltiples caminos entre cada par fuente-destino. Ejemplo: Red de Clos.
+ Redes reconfigurables: típica de procesadores matriciales. Permite conectar cualquier fuente con cualquier destino simultáneamente cambiando la configuración de las conexiones de la red. Disponen de varias etapas que garantizan más de un camino entre cada par fuente destino. Disponen de un sistema de control que gestiona la reconfiguración. Ejemplo: Red de Benes.
+
+Figura 9. Ejemplo de camino único y múltiples caminos en redes indirectas.
+Fuente: Ortega et al., 2005.
+
+
+
+
+
+
+
+
+
+
+
+
+Estructura de Computadores Tema 11. Ideas clave
+
+Prestaciones
+
+Los parámetros de la que caracterizan la topología de red en relación con sus prestaciones (latencia, ancho de banda, escalabilidad y coste) son:
+
+ Grado de los conmutadores.
+ Diámetro de la red (distancia media).
+ Ancho de bisección.
+ Número de enlaces.
+ Número de conmutadores.
+
+El esquema de la figura 10 relaciona estos parámetros con las prestaciones.
+
+
+Figura 10. Relación parámetros de topología de red—prestaciones/coste de la red de interconexión. Fuente: Basado en Ortega et al., 2005.
+
+
+
+11.4. Conmutación
+
+Las técnicas de conmutación (switching) determinan cómo recorren los datos el camino de la fuente al destino.
+
+Estructura de Computadores Tema 11. Ideas clave
+
+Se proponen distintas alternativas de conmutación:
+
+
+ Conmutación de almacenamiento y reenvío (AR, Store and Forward).
+• Utilizado inicialmente en redes WAN y primeros multicomputadores.
+• El conmutador antes de ejecutar el algoritmo de encaminamiento y reenviar debe almacenar todo el paquete, que es la unidad de transferencia fuente a destino.
+• En cada instante, la unidad de transferencia entre interfaces sólo ocupa un canal.
+• Buffer de un tamaño múltiplo de paquete.
+
+
+ Conmutación vermiforme (V, wormhole).
+• Origen en multicomputadores.
+• Segmenta el camino para poder transferir el paquete simultáneamente por varios canales.
+• En cuanto llega la cabecera el conmutador ejecuta el encaminamiento y reenvía.
+• Unidad de envío el mensaje.
+• Camino segmentado el número de etapas depende del tamaño del buffer que debe ser múltiplo de flit.
+• En cada instante, la unidad de transferencia entre interfaces puede ocupar múltiples canales.
+
+ Conmutación virtual cut-through (VCT).
+• Propuesto para redes de computadores.
+• Segmenta el camino en etapas como el vermiforme pero asigna buffer y enlace a nivel de paquete como el de almacenamiento y reenvío.
+• Unidad de envío el paquete.
+• Buffer de tamaño múltiplo de paquete.
+• Un paquete no bloqueado se puede estar transfiriendo por múltiples canales en paralelo.
+
+
+
+Estructura de Computadores Tema 11. Ideas clave
+
+ Conmutación de circuitos (CC,Circuit Switching).
+• Origen en redes de teléfonos.
+• Reserva el camino entre fuente y destino.
+• Envío de sonda (flit) con cabecera para reservar.
+• El mensaje es la unidad de transferencia.
+• Buffer puede tener que almacenar la sonda.
+• Unidad de envío el mensaje.
+
+
+Canales virtuales: permiten que varios paquetes compartan el mismo enlace (canal físico), a nivel de flit. Multiplexan el uso de los enlaces en el tiempo para optimizar su ocupación. En conmutación vermiforme disminuye la probabilidad de que queden canales ociosos (repercute en un incremento del ancho de banda global asintótico) y que los mensajes cortos esperen a los largos (mejora latencia).
+
+
+
+11.5. Control de flujo
+
+Determina cuándo se mueven las unidades de información (paquete, flit, phit) entre los componentes del sistema de comunicación (interfaces de red, conmutadores, controladores de enlace).
+
+Flit: es la unidad más pequeña en la red cuya transferencia se acepta si hay espacio en el destino para almacenarla o se rechaza si no lo hay.
+
+Para realizar el control se establece un diálogo o protocolo entre emisor y receptor (salvo si la transferencia la gobierna una señal de reloj):
+
+ Basado en intercambio señales de control entre E y R: petición/reconocimiento.
+ Basado en el envío señales de control del R al E: optimista o crédito.
+
+
+
+
+
+
+Estructura de Computadores Tema 11. Ideas clave
+
+
+
+Control de flujo extremo—a— extremo (paquete)
+
+
+Control de flujo de conmutación (flit)
+
+Control de flujo físico (phit)
+
+
+Figura 11. Relación tareas del control de flujo con niveles de aplicación del mismo. Fuente: Basado en Ortega et al., 2005.
+
+La figura 11 asocia las distintas tareas que puede realizar el control de flujo con el nivel de aplicación del mismo.
+
+La tabla 1 muestra para las técnicas de conmutación el tamaño de la unidad de control de flujo y el de la unidad de transferencia entre fuente y destino.
+
+Técnica de conmutaciónUnidad control de flujo extremo—a—extremoUnidad control de flujo de conmutación (flit)Almacenamiento y reenvíoPaquetePaqueteVermiformeMensajeFlitCut- Through VirtualPaquetePaqueteConmutación de circuitosMensajeFlit (tamaño sonda)Tabla 1. Unidad de control de flujo de conmutación y unidad de transferencia posible para cada técnica de conmutación. Fuente: Basado en Ortega et al., 2005.
+
+Control de flujo físico
+
+ Garantiza que los phits se transfieran por un enlace llegando al destino sin solapamiento.
+ Existen dos alternativas (figura 12):
+• Síncrono: gobernado mediante una señal de reloj, aplicable en líneas largas.
+
+
+
+Estructura de Computadores Tema 11. Ideas clave
+
+• Asíncrono: requiere dos señales de control petición/recepción. Aplicable en líneas cortas.
+
+Figura 12. Alternativas de control de flujo físico. Fuente: Ortega et al., 2005.
+
+
+Control de flujo de conmutación
+
+ Arbitra entre entradas que se quieren conectar simultáneamente a la misma salida.
+
+ Transfiere flit entre conmutadores garantizando almacenamiento en el destino para todo el flit.
+
+ Alternativas de transferencia:
+• Con transferencia asíncrona y flit = phit, situación probable en líneas cortas se puede aprovechar la señal de reconocimiento para indicar la disponibilidad de almacenamiento.
+• Con transferencia síncrona y flit ≠ phit, probable en líneas largas, se necesita una señal de control (rec.) desde el receptor al emisor que informe si hay (crédito) o ha habido (optimista) espacio para almacenar un flit. El emisor puede tener un contador de créditos asociado al canal (inicializado a la capacidad del buffer destino) que se decrementa en cada envío y se incrementa con cada crédito recibido.
+
+
+
+
+
+
+
+Estructura de Computadores Tema 11. Ideas clave
+
+11.6. Encaminamiento
+
+Dado que la red de interconexión puede disponer de múltiples caminos entre dos nodos, el encaminamiento se encarga de determinar cuáles de esos caminos se pueden seleccionar en la práctica. Además, para cada paquete, elige el camino concreto a seguir.
+
+El algoritmo de encaminamiento se puede dividir en dos funciones:
+
+
+ Función de encaminamiento: determina cuáles de los caminos que ofrece la topología para un par fuente/destino, se podrían utilizar en las transferencias entre ese par (conjunto de caminos candidatos o conjunto de canales candidatos para cada conmutador).
+ Función de selección: Para cada paquete en particular, determina el camino concreto a utilizar en la transferencia entre un par fuente/destino de entre los candidatos para ese par (para cada conmutado selecciona uno de los canales candidatos).
+
+El algoritmo de encaminamiento debe garantizar algunas propiedades:
+
+ Evitar interbloqueos.
+ Evitar que un paquete vague por la red (livelock).
+ Conectividad entre cualquier par de nodos.
+ Mantener una baja latencia de transporte.
+ Distribuir equilibradamente la carga de paquetes de la red.
+ Ser tolerante a fallos.
+
+
+
+
+
+
+
+
+
+
+
+Estructura de Computadores Tema 11. Ideas clave
+
+Facetas de diseño de los algoritmos de encaminamiento que hay que conocer:
+
+
+ Funcionalidad:
+• Un destino.
+• Múltiples destinos.
+
+ Selección del camino concreto:
+• Determinísticos.
+• Inconscientes.
+• Adaptativos.
+
+ Decisión de encaminamiento:
+• Circuitería común centralizada.
+• En la fuente.
+• Distribuido por los conmutadores de la ruta.
+• Multifase.
+
+ Implementación:
+• Basados en tablas de consulta.
+• Basados en algoritmos sin tablas.
+
+ Canales de salida candidatos y caminos alternativos.
+• Progresivo o con retroceso.
+• Provechoso (o mínimo) o mal-enrutado (o no mínimo).
+• Completamente adaptativo o parcialmente adaptativo.
+
+
+Es necesario conocer además el concepto de interbloqueo.
+
+
+
+
+
+
+
+
+
+
+
+
+Estructura de Computadores Tema 11. Ideas clave
+
+11.7. Referencias bibliográficas
+
+Ortega, J., Anguita, M. y Prieto, A. (2005). Arquitectura de computadores. Madrid: Thomson.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Estructura de Computadores Tema 11. Ideas clave
+
+
+
+A fondo
+
+
+La red de comunicación en computadores paralelos
+
+
+
+Para obtener otra visión sobre los conceptos desarrollados en este tema no dejes de revisar el capítulo 6 (páginas 170 a 239) de los apuntes desarrollados por los profesores de la asignatura de Arquitectura Paralelas, de la Facultad de Informática de la Universidad del País Vasco.
+
+Red de barras cruzadas
+
+
+En esta página puedes encontrar las características técnicas de una red de barras cruzadas real de la empresa Lattice.
+
+
+
+Accede a la página a través del aula virtual o desde la siguiente dirección web: http://www.latticesemi.com/en/Support/MatureAndDiscontinuedDevices/ispLSI50 00VE.aspx
+
+
+
+
+
+
+Estructura de Computadores
+Tema 11. A fondo
+
+Redes MIN en circuitos integrados SoC
+
+
+
+Este artículo plantea el desarrollo de redes MIN en circuitos integrados SoC.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Estructura de Computadores
+Tema 11. A fondo
+
+
+
+Test
+
+1. ¿Cuál de las siguientes afirmaciones respecto al control de flujo es falsa?
+A. Se dice que un control de flujo en conmutación, con transferencia síncrona, es optimista si las unidades de información se envían sin saber si hay espacio de almacenamiento disponible.
+B. Un control de flujo síncrono se basa en créditos si emplea una señal de control para comprobar la disponibilidad de almacenamiento en destino.
+C. El control de flujo en conmutación se puede llevar a cabo a nivel de flits.
+D. El control de flujo es asíncrono si solo usa la señal de reloj para los envíos pero no para los retornos.
+
+2. Una red MIN es…
+A. Bloqueante si un camino establecido puede impedir que se establezcan otros.
+B. Reconfigurable si admite que se incorporen elementos de ampliación a su estructura.
+C. No bloqueante si deja que se establezcan caminos aunque se produzcan colisiones.
+D. Todas las definiciones anteriores son ciertas.
+
+3. Las redes ortogonales:
+A. Se caracterizan porque sus enlaces son perpendiculares.
+B. Se caracterizan porque sus nodos son identificables mediante un sistema de coordenadas.
+C. Son un tipo particular de red dinámica.
+D. Las tres afirmaciones anteriores son falsas.
+
+
+
+
+
+
+
+
+Estructura de Computadores
+Tema 11. Test
+
+4. Las redes de medio compartido…
+A. Son redes estáticas.
+B. Admiten múltiples conexiones uno a uno.
+C. Son típicas de multicomputadores.
+D. Permiten la difusión de mensajes.
+
+5. Desde el punto de vista de la topología de red, el grado de los conmutadores:
+A. Indica cuántos de ellos intervienen en las conexiones existentes en un intervalo de tiempo.
+B. Mide el número de conmutadores de la red.
+C. Es el número de entradas y salidas de cada conmutador.
+D. Influye en que el conmutador sea bloqueante o no.
+
+6. En cuanto a las técnicas de conmutación se puede decir que…
+A. Solo la vermiforme segmenta el camino seguido por el paquete.
+B. En la de almacenamiento y reenvío basta con que llegue la cabecera al conmutador para que este aplique el encaminamiento.
+C. En la de conmutación de circuitos todas las partes del paquete usan el mismo camino.
+D. Ninguna de las anteriores es cierta.
+
+7. En redes de interconexión, el flit…
+A. Es la unidad física más pequeña que puede transitar por un componente de un sistema de comunicación.
+B. Es la unidad de información más pequeña en la red cuya transferencia se acepta si hay espacio en el destino para almacenarla o se rechaza si no lo hay.
+C. Es el mayor elemento de información sobre el que no se aplica control de flujo.
+D. Las tres afirmaciones anteriores son correctas.
+
+
+
+
+
+
+
+Estructura de Computadores
+Tema 11. Test
+
+8. ¿Cuál de las siguientes tareas no corresponde al control de flujo?
+A. Garantizar que la unidad de información se almacena en el destino.
+B. Asegurar que la unidad de información llega al destino sin solaparse con otras.
+C. Arbitrar entre unidades que quieren acceder al mismo recurso a la vez.
+D. Elegir el camino adecuado para el paquete.
+
+
+9. Respecto al algoritmo de encaminamiento, se puede decir que:
+A. Es adaptativo si elige el camino teniendo en cuenta el estado de la red.
+B. Es determinístico si el camino se escoge en función de encaminamientos previos.
+C. Es inconsciente si escoge el camino en función de las indicaciones del control de flujo.
+D. Ninguna de las respuestas anteriores es correcta.
+
+10. Se dice que un algoritmo de encaminamiento es…
+A. Provechoso si siempre escoge el mismo camino para el mismo par de nodos.
+B. Mal-enrutado si en algún conmutador se puede escoger una salida que aleje del destino.
+C. Completamente adaptativo si el criterio de selección del camino es aleatorio.
+D. Ninguna de las afirmaciones anteriores es cierta.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Estructura de Computadores
+Tema 11. Test
